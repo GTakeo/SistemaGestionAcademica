@@ -1,0 +1,188 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmMantenerEmpleado">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_mantenerEmpleado.primerTaller']}"
+					style="font-size:20px;" />
+				<br />
+				<p:outputLabel
+					value="#{i18n['min_mantenerEmpleado.primerTallerSub']}"
+					style="font-size:15px;" />
+				<br /> <br />
+				<p:outputLabel value="#{i18n['min_mantenerEmpleado.titulo']}"
+					style="font-size:15px;" />
+				<br />
+			</div>
+
+			<br />
+			<p:fieldset>
+				<br />
+				<p:commandButton id="btnAgregarEmpleado"
+					value="#{i18n['primerTaller.opcionAgregar']}"
+					actionListener="#{cMantenerEmpleado.iniciarAgregarEmpleado()}"
+					update=":frmAgregarEmpleado">
+					<p:resetInput target=":frmAgregarEmpleado" />
+				</p:commandButton>
+				<br />
+				<br />
+				<div align="center">
+					<br />
+					<p:dataTable id="tblEmpleado" widgetVar="wgvEmpleado"
+						value="#{cMantenerEmpleado.listaEmpleado}" var="empleado"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerEmpleado.tablaEmpleadoVacia']}">
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerEmpleado.listaEmpleado.indexOf(empleado)+1}
+						</p:column>
+						<p:column headerText="#{i18n['min_mantenerEmpleado.nombre']}"
+							filterBy="#{empleado.nombre}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{empleado.nombre}" />
+						</p:column>
+						<p:column headerText="#{i18n['min_mantenerEmpleado.cargo']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{empleado.cargo}" />
+						</p:column>
+						<p:column headerText="#{i18n['primerTaller.opciones']}"
+							style="width:150px;">
+							<div align="center">
+								<p:commandButton id="btnModificarEmpleado" icon="ui-icon-pencil"
+									actionListener="#{cMantenerEmpleado.iniciarModificarEmpleado(empleado)}"
+									update=":frmModificarEmpleado">
+									<p:resetInput target=":frmModificarEmpleado" />
+								</p:commandButton>
+								<p:tooltip for="btnModificarEmpleado"
+									value="#{i18n['primerTaller.opcionModificar']}" />
+								<p:commandButton id="btnEliminarEmpleado" icon="ui-icon-trash"
+									actionListener="#{cMantenerEmpleado.iniciarEliminarEmpleado(empleado)}"
+									update=":frmEliminarEmpleado" />
+								<p:tooltip for="btnEliminarEmpleado"
+									value="#{i18n['primerTaller.opcionEliminar']}" />
+							</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</p:fieldset>
+		</h:form>
+
+		<!-- DIÁLOGO AGREGAR EMPLEADO -->
+		<p:dialog header="#{i18n['min_mantenerEmpleado.agregarEmpleado']}"
+			widgetVar="wgvAgregarEmpleado" appendTo="@(body)"
+			id="dlgAgregarEmpleado" modal="true" resizable="false"
+			draggable="false" showEffect="fade" hideEffect="fade"
+			style="font: 80% sans-serif; ">
+			<h:form id="frmAgregarEmpleado">
+				<h:panelGrid columns="3">
+
+					<p:outputLabel for="txtNombreEmpleado"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerEmpleado.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreEmpleado"
+						value="#{cMantenerEmpleado.fEmpleado.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerEmpleado.nombreRequerido']}"
+						size="52" maxlength="30" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:outputLabel for="txtCargoEmpleado" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerEmpleado.cargo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCargoEmpleado"
+						value="#{cMantenerEmpleado.fEmpleado.cargo}" required="true"
+						requiredMessage="#{i18n['min_mantenerEmpleado.cargoRequerido']}"
+						size="52" maxlength="30" />
+				</h:panelGrid>
+				<br />
+				<div align="center">
+					<p:commandButton value="#{i18n['primerTaller.opcionGuardar']}"
+						actionListener="#{cMantenerEmpleado.agregarEmpleado()}"
+						update=":frmMantenerEmpleado :frmAgregarEmpleado"
+						oncomplete="PF('wgvEmpleado').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['primerTaller.opcionCancelar']}"
+						onclick="PF('wgvAgregarEmpleado').hide()" immediate="true" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<!-- DIÁLOGO MODIFICAR EMPLEADO -->
+
+		<p:dialog header="#{i18n['min_mantenerEmpleado.modificarEmpleado']}"
+			widgetVar="wgvModificarEmpleado" appendTo="@(body)"
+			id="dlgModificarempleadoIFI" modal="true" resizable="false"
+			draggable="false" showEffect="fade" hideEffect="fade"
+			style="font: 80% sans-serif; ">
+			<h:form id="frmModificarEmpleado">
+				<h:panelGrid columns="3">
+
+					<p:outputLabel for="txtNombEmp" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerEmpleado.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombEmp"
+						value="#{cMantenerEmpleado.fEmpleado.nombre}"
+						requiredMessage="#{i18n['min_mantenerempleadoRiesgoDeudor.nombreRequerido']}"
+						required="true" size="52" maxlength="30" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:outputLabel for="txtCargoEmp" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerEmpleado.cargo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCargoEmp"
+						value="#{cMantenerEmpleado.fEmpleado.cargo}" required="true"
+						autoResize="false" maxlength="30"
+						requiredMessage="#{i18n['min_mantenerEmpleado.cargoRequerido']}"
+						size="52" />
+				</h:panelGrid>
+				<br />
+				<div align="center">
+					<p:commandButton value="#{i18n['primerTaller.opcionGuardar']}"
+						actionListener="#{cMantenerEmpleado.modificarEmpleado()}"
+						update=":frmMantenerEmpleado :frmModificarEmpleado"
+						oncomplete="PF('wgvEmpleado').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['primerTaller.opcionCancelar']}"
+						onclick="PF('wgvModificarEmpleado').hide()" immediate="true" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<!-- DIÁLOGO ELIMINAR EMPLEADO -->
+		<p:confirmDialog header="#{i18n['primerTaller.confirmacion']}"
+			message="#{i18n['min_mantenerEmpleado.confirmarEliminacion']}"
+			widgetVar="wgvEliminarEmpleado" appendTo="@(body)" modal="true"
+			resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade" style="font: 80% sans-serif; ">
+			<h:form id="frmEliminarEmpleado">
+				<div align="center">
+					<p:commandButton value="#{i18n['primerTaller.opcionSi']}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						actionListener="#{cMantenerEmpleado.eliminarEmpleado()}"
+						update=":frmMantenerEmpleado"
+						oncomplete="PF('wgvEmpleado').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['primerTaller.opcionNo']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('wgvEliminarEmpleado').hide()" inmediate="true" />
+				</div>
+			</h:form>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>
