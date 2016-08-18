@@ -1,4 +1,4 @@
-package pe.com.cenpro.taller.negocio.servicio;
+package pe.com.test.negocio.servicio;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
