@@ -18,24 +18,43 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+			target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+			target="head" />
 	</h:head>
+	<style>
+		.ui-panelgrid td, .ui-panelgrid tr {
+			border-style: none !important
+		}
+	</style>
 	<h:body>
 
 		<p:ajaxStatus onstart="statusDialog.show();"
 			onsuccess="statusDialog.hide();" />
 
 		<p:layout fullPage="true" resizeTitle="resize">
+			<!--			 Menu -->
 
-			<p:layoutUnit styleClass="layoutUnitCenter" position="center"
-				style="font-size:11px">
+
+			<ui:include src="/secciones/cabecera.xhtml" />
+			<ui:include src="/secciones/menu.xhtml" />
+
+
+			<!--    		Parte central -->
+
+			<div style="font-size: 10px">
 				<p:scrollPanel mode="native" style="height: 100%">
 					<ui:insert name="content" />
 				</p:scrollPanel>
-			</p:layoutUnit>
+			</div>
 
-			<p:layoutUnit position="south" size="35" id="south">
-				<ui:include src="/secciones/piePagina.xhtml" />
-			</p:layoutUnit>
+
+
+			<!-- 			Pie de pagina -->
+
+			<ui:include src="/secciones/piePagina.xhtml" />
+
 		</p:layout>
 
 		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"
@@ -52,7 +71,7 @@
 				<p:outputLabel value="Cargando.." style="font-size:12px" />
 				<br />
 			</center>
-			<img src="#{request.contextPath}/recursos/img/ajaxloadingbar.gif" />
+			<img src="#{request.contextPath}/recursos/img/cargando.gif" />
 		</p:dialog>
 	</h:body>
 </f:view>

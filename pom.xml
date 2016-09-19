@@ -102,7 +102,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>home</artifactId>
+			<artifactId>bootstrap</artifactId>
 			<version>${primefaces.themes.version}</version>
 		</dependency>
 		<!-- /PRIMEFACES -->

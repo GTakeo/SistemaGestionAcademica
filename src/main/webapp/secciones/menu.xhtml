@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form>
+		<p:panelGrid columns="2">
+			<img src="#{request.contextPath}/recursos/img/logo_principal.jpg" />
+			<div align="center">
+			<p:menubar>
+				<p:submenu label="Opcion 1">
+					<p:menuitem value="Opcion 1">
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="Opcion 2">
+					<p:menuitem value="Opcion 2">
+					</p:menuitem>
+				</p:submenu>
+				<p:submenu label="Opcion 3">
+					<p:menuitem value="Opcion 3">
+					</p:menuitem>
+				</p:submenu>
+			</p:menubar>
+			</div>
+		</p:panelGrid>
+	</h:form>
+</ui:composition>
+
+<!-- 				<p:submenu label="Opcion 1" -->
+<!-- 					style="font-size:12px 'daxcompact-mediumregular';font-weight:bolder;"> -->
+<!-- 					<p:menuitem style="font:12px 'daxcompact-mediumregular';" -->
+<!-- 						value="Opcion 1" /> -->
+<!-- 					<p:separator /> -->
+<!-- 					<p:menuitem style="font:12px 'daxcompact-mediumregular';" -->
+<!-- 						value="Opcion 2" /> -->
+<!-- 					<p:menuitem style="font:12px 'daxcompact-mediumregular';" -->
+<!-- 						value="#{i18n['MFMF.submenu.gestionIFI.evaluarOtorgamientoLC']}" -->
+<!-- 						action="/paginas/gif_evaluarOtorgamientoLineaCredito.jsf?faces-redirect=true" -->
+<!-- 						actionListener="#{cEvaluarOtorgamientoLineaCredito.inicializarObjetos()}" /> -->
+<!-- 				</p:submenu> -->
