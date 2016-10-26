@@ -24,37 +24,31 @@
 			target="head" />
 	</h:head>
 	<style>
-		.ui-panelgrid td, .ui-panelgrid tr {
-			border-style: none !important
-		}
-	</style>
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+</style>
 	<h:body>
 
 		<p:ajaxStatus onstart="statusDialog.show();"
 			onsuccess="statusDialog.hide();" />
 
 		<p:layout fullPage="true" resizeTitle="resize">
-			<!--			 Menu -->
+			<div style="font-size: 13px">
+				<ui:include src="/secciones/cabecera.xhtml" />
+				<ui:include src="/secciones/menu.xhtml" />
+			</div>
 
 
-			<ui:include src="/secciones/cabecera.xhtml" />
-			<ui:include src="/secciones/menu.xhtml" />
-
-
-			<!--    		Parte central -->
-
-			<div style="font-size: 10px">
+			<div style="font-size: 12px">
 				<p:scrollPanel mode="native" style="height: 100%">
 					<ui:insert name="content" />
 				</p:scrollPanel>
 			</div>
 
-
-
-			<!-- 			Pie de pagina -->
-
-			<ui:include src="/secciones/piePagina.xhtml" />
-
+			<div style="font-size: 11px">
+				<ui:include src="/secciones/piePagina.xhtml" />
+			</div>
 		</p:layout>
 
 		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"

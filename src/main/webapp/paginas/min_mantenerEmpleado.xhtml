@@ -13,7 +13,7 @@
 			<br />
 			<div align="center" style="font-weight: bold;">
 				<br />
-				<p:outputLabel value="TITULO"
+				<p:outputLabel value="#{i18n['min_mantenerEmpleado.titulo']}"
 					style="font-size:20px;" />
 				<br />
 			</div>
@@ -77,11 +77,9 @@
 		<p:dialog header="#{i18n['min_mantenerEmpleado.agregarEmpleado']}"
 			widgetVar="wgvAgregarEmpleado" appendTo="@(body)"
 			id="dlgAgregarEmpleado" modal="true" resizable="false"
-			draggable="false" showEffect="fade" hideEffect="fade"
-			style="font: 80% sans-serif; ">
+			draggable="false" showEffect="fade" hideEffect="fade">
 			<h:form id="frmAgregarEmpleado">
 				<h:panelGrid columns="3">
-
 					<p:outputLabel for="txtNombreEmpleado"
 						styleClass="miEstiloEtiqueta"
 						value="#{i18n['min_mantenerEmpleado.nombre']}" />
@@ -90,9 +88,11 @@
 						value="#{cMantenerEmpleado.fEmpleado.nombre}" required="true"
 						requiredMessage="#{i18n['min_mantenerEmpleado.nombreRequerido']}"
 						size="52" maxlength="30" />
+						
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
+					
 					<p:outputLabel for="txtCargoEmpleado" styleClass="miEstiloEtiqueta"
 						value="#{i18n['min_mantenerEmpleado.cargo']}" />
 					<p:spacer width="10" />
@@ -101,6 +101,7 @@
 						requiredMessage="#{i18n['min_mantenerEmpleado.cargoRequerido']}"
 						size="52" maxlength="30" />
 				</h:panelGrid>
+				
 				<br />
 				<div align="center">
 					<p:commandButton value="#{i18n['primerTaller.opcionGuardar']}"
@@ -111,6 +112,7 @@
 					<p:commandButton value="#{i18n['primerTaller.opcionCancelar']}"
 						onclick="PF('wgvAgregarEmpleado').hide()" immediate="true" />
 				</div>
+				
 			</h:form>
 		</p:dialog>
 
@@ -119,8 +121,7 @@
 		<p:dialog header="#{i18n['min_mantenerEmpleado.modificarEmpleado']}"
 			widgetVar="wgvModificarEmpleado" appendTo="@(body)"
 			id="dlgModificarempleadoIFI" modal="true" resizable="false"
-			draggable="false" showEffect="fade" hideEffect="fade"
-			style="font: 80% sans-serif; ">
+			draggable="false" showEffect="fade" hideEffect="fade">
 			<h:form id="frmModificarEmpleado">
 				<h:panelGrid columns="3">
 
@@ -131,9 +132,11 @@
 						value="#{cMantenerEmpleado.fEmpleado.nombre}"
 						requiredMessage="#{i18n['min_mantenerempleadoRiesgoDeudor.nombreRequerido']}"
 						required="true" size="52" maxlength="30" />
+						
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
+					
 					<p:outputLabel for="txtCargoEmp" styleClass="miEstiloEtiqueta"
 						value="#{i18n['min_mantenerEmpleado.cargo']}" />
 					<p:spacer width="10" />
@@ -142,6 +145,7 @@
 						autoResize="false" maxlength="30"
 						requiredMessage="#{i18n['min_mantenerEmpleado.cargoRequerido']}"
 						size="52" />
+						
 				</h:panelGrid>
 				<br />
 				<div align="center">
