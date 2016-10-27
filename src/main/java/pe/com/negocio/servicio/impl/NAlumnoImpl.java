@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import pe.com.negocio.bo.BOEmpleado;
-import pe.com.negocio.servicio.NEmpleado;
-import pe.com.persistencia.entity.BEmpleado;
-import pe.com.persistencia.mapper.MEmpleado;
+import pe.com.negocio.bo.BOAlumno;
+import pe.com.negocio.servicio.NAlumno;
+import pe.com.persistencia.entity.BAlumno;
+import pe.com.persistencia.mapper.MAlumno;
 import pe.com.util.Constantes;
 import pe.com.util.excepcion.BusinessLogicException;
 import pe.com.util.excepcion.DataAccessException;
@@ -19,69 +19,58 @@ import pe.com.util.transformador.TransformadorEntityBO;
 
 @Transactional(propagation = Propagation.REQUIRED)
 @Service
-public class NEmpleadoImpl implements NEmpleado {
+public class NAlumnoImpl implements NAlumno {
 
 	@Autowired
-	MEmpleado mEmpleado;
+	MAlumno mAlumno;
 
 	@Autowired
-	@Qualifier("tEmpleadoEntityBO")
-	TransformadorEntityBO<BEmpleado, BOEmpleado> transformar;
+	@Qualifier("tAlumnoEntityBO")
+	TransformadorEntityBO<BAlumno, BOAlumno> transformar;
 
 	@Override
-	public List<BOEmpleado> listarEmpleados() {
-		List<BOEmpleado> listaCategoriasIFI = null;
+	public List<BOAlumno> listarAlumnos() {
+		List<BOAlumno> listarAlumnos = null;
 		try {
-			listaCategoriasIFI = transformar.toBO(mEmpleado.listarEmpleados());
+			listarAlumnos = transformar.toBO(mAlumno.listarAlumnos());
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
-		return listaCategoriasIFI;
+		return listarAlumnos;
 	}
 
 	@Override
-	public BOEmpleado obtenerEmpleadoXId(Integer id) {
-		BOEmpleado categoriaIFI = null;
+	public BOAlumno obtenerAlumnoXId(Integer id) {
+		BOAlumno boAlumno = null;
 		try {
-			categoriaIFI = transformar.toBO(mEmpleado.obtenerEmpleadoXId(id));
+			boAlumno = transformar.toBO(mAlumno.obtenerAlumnoXId(id));
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
-		return categoriaIFI;
+		return boAlumno;
 	}
 
 	@Override
-	public BOEmpleado obtenerEmpleadoXNombre(String nombreEmpleado) {
-		BOEmpleado empleado = null;
+	public BOAlumno obtenerAlumnoXNombre(String nombreAlumno) {
+		BOAlumno boAlumno = null;
 		try {
-			empleado = transformar.toBO(mEmpleado.obtenerEmpleadoXNombre(nombreEmpleado));
+			boAlumno = transformar.toBO(mAlumno.obtenerAlumnoXNombre(nombreAlumno));
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
-		return empleado;
+		return boAlumno;
 	}
 
 	@Override
-	public void insertarEmpleado(BOEmpleado empleado) {
+	public void insertarAlumno(BOAlumno Alumno) {
 		try {
-			mEmpleado.insertarEmpleado(transformar.toEntity(empleado));
-		} catch (DataAccessException dae) {
-			throw dae;
-		} catch (Exception e) {
-			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
-		}
-	}
-
-	@Override
-	public void modificarEmpleado(BOEmpleado empleado) {
-		try {
-			mEmpleado.modificarEmpleado(transformar.toEntity(empleado));
+			mAlumno.insertarAlumno(transformar.toEntity(Alumno));
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
@@ -90,9 +79,20 @@ public class NEmpleadoImpl implements NEmpleado {
 	}
 
 	@Override
-	public void eliminarEmpleado(Integer idEmpleado) {
+	public void modificarAlumno(BOAlumno Alumno) {
 		try {
-			mEmpleado.eliminarEmpleado(idEmpleado);
+			mAlumno.modificarAlumno(transformar.toEntity(Alumno));
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+	}
+
+	@Override
+	public void eliminarAlumno(Integer idAlumno) {
+		try {
+			mAlumno.eliminarAlumno(idAlumno);
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {

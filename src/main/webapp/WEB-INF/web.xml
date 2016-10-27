@@ -31,7 +31,7 @@
     <session-timeout>30</session-timeout>
   </session-config>
   <welcome-file-list>
-    <welcome-file>/paginas/min_mantenerEmpleado.jsf</welcome-file>
+    <welcome-file>/paginas/min_mantenerAlumnos.jsf</welcome-file>
   </welcome-file-list>
   <error-page>
     <error-code>500</error-code>

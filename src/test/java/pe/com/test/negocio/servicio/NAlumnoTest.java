@@ -13,31 +13,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import pe.com.negocio.bo.BOEmpleado;
-import pe.com.negocio.servicio.NEmpleado;
+import pe.com.negocio.bo.BOAlumno;
+import pe.com.negocio.servicio.NAlumno;
 import pe.com.util.excepcion.BusinessLogicException;
 import pe.com.util.excepcion.DataAccessException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContextTest.xml" })
-public class NEmpleadoTest {
+public class NAlumnoTest {
 
 	@Autowired
-	NEmpleado nEmpleado;
+	NAlumno nAlumno;
 
-	BOEmpleado empleado;
+	BOAlumno Alumno;
 
 	@Before
 	public void prepararPrueba() {
-		empleado = new BOEmpleado();
+		Alumno = new BOAlumno();
 	}
 
 	@Test
-	public void listarEmpleadoTest() {
+	public void listarAlumnoTest() {
 		try {
-			List<BOEmpleado> listaEmpelados = nEmpleado.listarEmpleados();
-			for (BOEmpleado bEmpleados : listaEmpelados) {
-				System.out.println(bEmpleados);
+			List<BOAlumno> listaEmpelados = nAlumno.listarAlumnos();
+			for (BOAlumno bAlumnos : listaEmpelados) {
+				System.out.println(bAlumnos);
 			}
 		} catch (DataAccessException e) {
 			System.out.println(e.getMessage());
@@ -49,17 +49,15 @@ public class NEmpleadoTest {
 	}
 
 	// @Test
-	public void insertarEmpleadoTest() {
-		String nombreEmpleado = "Brayan";
-		String cargoEmpleado = "Programador";
-		empleado.setNombre(nombreEmpleado);
-		empleado.setCargo(cargoEmpleado);
+	public void insertarAlumnoTest() {
+		String nombreAlumno = "Brayan";
+		String cargoAlumno = "Programador";
+		Alumno.setNombre(nombreAlumno);
 		try {
-			nEmpleado.insertarEmpleado(empleado);
-			BOEmpleado emp = new BOEmpleado();
-			emp = nEmpleado.obtenerEmpleadoXNombre(nombreEmpleado);
-			assertEquals(nombreEmpleado, emp.getNombre());
-			assertEquals(cargoEmpleado, emp.getCargo());
+			nAlumno.insertarAlumno(Alumno);
+			BOAlumno emp = new BOAlumno();
+			emp = nAlumno.obtenerAlumnoXNombre(nombreAlumno);
+			assertEquals(nombreAlumno, emp.getNombre());
 		} catch (DataAccessException e) {
 			System.out.println(e.getMessage());
 		} catch (BusinessLogicException e) {
@@ -71,16 +69,15 @@ public class NEmpleadoTest {
 	}
 
 	// @Test
-	public void obtenerEmpleadoXIdTest() {
+	public void obtenerAlumnoXIdTest() {
 		Integer id = 41;
 		try {
-			BOEmpleado empleado = nEmpleado.obtenerEmpleadoXId(id);
-			if (empleado == null) {
+			BOAlumno Alumno = nAlumno.obtenerAlumnoXId(id);
+			if (Alumno == null) {
 				fail("No existe la categoría IFI");
 			} else {
-				assertEquals("BRAYAN", empleado.getNombre());
-				assertEquals("PROGRAMADOR", empleado.getCargo());
-				System.out.println(empleado);
+				assertEquals("BRAYAN", Alumno.getNombre());
+				System.out.println(Alumno);
 			}
 		} catch (DataAccessException e) {
 			System.out.println(e.getMessage());
@@ -92,18 +89,17 @@ public class NEmpleadoTest {
 	}
 
 	// @Test
-	public void obtenerEmpleadoXNombreTest() {
+	public void obtenerAlumnoXNombreTest() {
 		Integer idCategoria = 41;
-		String nombreEmpleado = "BRAYAN";
-		String cargoEmpleado = "PROGRAMADOR";
+		String nombreAlumno = "BRAYAN";
+		String cargoAlumno = "PROGRAMADOR";
 		try {
-			BOEmpleado emp = nEmpleado.obtenerEmpleadoXNombre(nombreEmpleado);
+			BOAlumno emp = nAlumno.obtenerAlumnoXNombre(nombreAlumno);
 			if (emp == null) {
 				fail("No se encontró categoría IFI");
 			} else {
 				assertEquals(idCategoria.intValue(), emp.getId().intValue());
-				assertEquals(nombreEmpleado, emp.getNombre());
-				assertEquals(cargoEmpleado, emp.getCargo());
+				assertEquals(nombreAlumno, emp.getNombre());
 				System.out.println(emp);
 			}
 		} catch (DataAccessException e) {
@@ -116,19 +112,17 @@ public class NEmpleadoTest {
 	}
 
 	// @Test
-	public void modificarEmpleadoTest() {
+	public void modificarAlumnoTest() {
 		Integer idCategoria = 1;
-		String nombreEmpleado = "GUSTAVO";
-		String cargoEmpleado = "PROGRAMADOR";
-		empleado.setId(idCategoria);
-		empleado.setNombre(nombreEmpleado);
-		empleado.setCargo(cargoEmpleado);
+		String nombreAlumno = "GUSTAVO";
+		String cargoAlumno = "PROGRAMADOR";
+		Alumno.setId(idCategoria);
+		Alumno.setNombre(nombreAlumno);
 		try {
-			nEmpleado.modificarEmpleado(empleado);
-			BOEmpleado emp = nEmpleado.obtenerEmpleadoXNombre(nombreEmpleado);
+			nAlumno.modificarAlumno(Alumno);
+			BOAlumno emp = nAlumno.obtenerAlumnoXNombre(nombreAlumno);
 			assertEquals(idCategoria, emp.getId());
-			assertEquals(nombreEmpleado, emp.getNombre());
-			assertEquals(cargoEmpleado, emp.getCargo());
+			assertEquals(nombreAlumno, emp.getNombre());
 		} catch (DataAccessException e) {
 			System.out.println(e.getMessage());
 		} catch (BusinessLogicException e) {
@@ -139,12 +133,12 @@ public class NEmpleadoTest {
 	}
 
 	// @Test
-	public void eliminarEmpleadoTest() {
+	public void eliminarAlumnoTest() {
 		Integer id = 1;
-		String nombreEmpleado = "GUSTAVO";
+		String nombreAlumno = "GUSTAVO";
 		try {
-			nEmpleado.eliminarEmpleado(id);
-			BOEmpleado emp = nEmpleado.obtenerEmpleadoXNombre(nombreEmpleado);
+			nAlumno.eliminarAlumno(id);
+			BOAlumno emp = nAlumno.obtenerAlumnoXNombre(nombreAlumno);
 			assertNull(emp);
 		} catch (DataAccessException e) {
 			System.out.println(e.getMessage());

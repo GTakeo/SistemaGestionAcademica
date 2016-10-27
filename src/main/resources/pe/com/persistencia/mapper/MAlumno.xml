@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.persistencia.mapper.MAlumno"> <!-- interface java -->
+
+	<resultMap id="bAlumno"
+	type="pe.com.persistencia.entity.BAlumno">
+		<id column="ID_ALU" property="id" />
+		<result column="ALU_NOMBRE" property="nombre" />
+		<result column="ALU_APELLIDO" property="apellido" />
+		<result column="ALU_DIRECCION" property="direccion" />
+		<result column="ALU_TELEFONO" property="telefono" />
+		<result column="ALU_CELULAR" property="celular" />
+		<result column="ALU_FEC_NAC" property="fechaNacimiento" />
+		<result column="ALU_DNI" property="dni" />
+		<result column="ALU_CORREO" property="correo" />
+	</resultMap>
+</mapper>

@@ -1,0 +1,349 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmMantenerAlumno">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_mantenerAlumno.titulo']}"
+					style="font-size:20px;" />
+				<br />
+			</div>
+
+			<br />
+			<p:fieldset>
+				<br />
+				<p:commandButton id="btnAgregarAlumno"
+					value="#{i18n['SGA.opcionAgregar']}"
+					actionListener="#{cMantenerAlumno.iniciarAgregarAlumno()}"
+					update=":frmAgregarAlumno">
+					<p:resetInput target=":frmAgregarAlumno" />
+				</p:commandButton>
+				<br />
+				<br />
+				<div align="center">
+					<br />
+					<p:dataTable id="tblAlumno" widgetVar="wgvAlumno"
+						value="#{cMantenerAlumno.listaAlumno}" var="Alumno"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerAlumno.tablaAlumnoVacia']}">
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerAlumno.listaAlumno.indexOf(Alumno)+1}
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.dni']}"
+							filterBy="#{Alumno.dni}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.dni}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.apellido']}"
+							filterBy="#{Alumno.apellido}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.apellido}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.nombre']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.nombre}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['SGA.opciones']}"
+							style="width:150px;">
+							<div align="center">
+								<p:commandButton id="btnModificarAlumno" icon="ui-icon-pencil"
+									actionListener="#{cMantenerAlumno.iniciarModificarAlumno(Alumno)}"
+									update=":frmModificarAlumno">
+									<p:resetInput target=":frmModificarAlumno" />
+								</p:commandButton>
+								<p:tooltip for="btnModificarAlumno"
+									value="#{i18n['SGA.opcionModificar']}" />
+								<p:commandButton id="btnEliminarAlumno" icon="ui-icon-trash"
+									actionListener="#{cMantenerAlumno.iniciarEliminarAlumno(Alumno)}"
+									update=":frmEliminarAlumno" />
+								<p:tooltip for="btnEliminarAlumno"
+									value="#{i18n['SGA.opcionEliminar']}" />
+							</div>
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</p:fieldset>
+		</h:form>
+
+		<!-- DIÁLOGO AGREGAR Alumno -->
+		<p:dialog header="#{i18n['min_mantenerAlumno.agregarAlumno']}"
+			widgetVar="wgvAgregarAlumno" appendTo="@(body)" id="dlgAgregarAlumno"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade">
+			<h:form id="frmAgregarAlumno">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="txtNombreAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreAlumno"
+						value="#{cMantenerAlumno.fAlumno.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.nombreRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtApellidoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.apellido']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtApellidoAlumno"
+						value="#{cMantenerAlumno.fAlumno.apellido}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDireccionAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.direccion']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDireccionAlumno"
+						value="#{cMantenerAlumno.fAlumno.direccion}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtTelefonoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.telefono']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtTelefonoAlumno"
+						value="#{cMantenerAlumno.fAlumno.telefono}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCelularAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.celular']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCelularAlumno"
+						value="#{cMantenerAlumno.fAlumno.celular}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtFechaNAcimientoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.fechaNacimiento']}" />
+					<p:spacer width="10" />
+					<p:calendar id="txtFechaNAcimientoAlumno"
+						value="#{cMantenerAlumno.fAlumno.fechaNacimiento}" effect="fold"
+						required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimiento']}"
+						size="52" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDniAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.dni']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDniAlumno"
+						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCorreoAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.correo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCorreoAlumno"
+						value="#{cMantenerAlumno.fAlumno.correo}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+
+				</h:panelGrid>
+
+				<br />
+				<div align="center">
+					<p:commandButton value="#{i18n['SGA.opcionGuardar']}"
+						actionListener="#{cMantenerAlumno.agregarAlumno()}"
+						update=":frmMantenerAlumno :frmAgregarAlumno"
+						oncomplete="PF('wgvAlumno').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['SGA.opcionCancelar']}"
+						onclick="PF('wgvAgregarAlumno').hide()" immediate="true" />
+				</div>
+
+			</h:form>
+		</p:dialog>
+
+		<!-- DIÁLOGO MODIFICAR Alumno -->
+
+		<p:dialog header="#{i18n['min_mantenerAlumno.modificarAlumno']}"
+			widgetVar="wgvModificarAlumno" appendTo="@(body)"
+			id="dlgModificarAlumnoIFI" modal="true" resizable="false"
+			draggable="false" showEffect="fade" hideEffect="fade">
+			<h:form id="frmModificarAlumno">
+				<h:panelGrid columns="3">
+
+										<p:outputLabel for="txtNombreAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreAlumno"
+						value="#{cMantenerAlumno.fAlumno.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.nombreRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtApellidoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.apellido']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtApellidoAlumno"
+						value="#{cMantenerAlumno.fAlumno.apellido}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDireccionAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.direccion']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDireccionAlumno"
+						value="#{cMantenerAlumno.fAlumno.direccion}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtTelefonoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.telefono']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtTelefonoAlumno"
+						value="#{cMantenerAlumno.fAlumno.telefono}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCelularAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.celular']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCelularAlumno"
+						value="#{cMantenerAlumno.fAlumno.celular}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtFechaNAcimientoAlumno"
+						styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.fechaNacimiento']}" />
+					<p:spacer width="10" />
+					<p:calendar id="txtFechaNAcimientoAlumno"
+						value="#{cMantenerAlumno.fAlumno.fechaNacimiento}" effect="fold"
+						required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimiento']}"
+						size="52" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDniAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.dni']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDniAlumno"
+						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCorreoAlumno" styleClass="miEstiloEtiqueta"
+						value="#{i18n['min_mantenerAlumno.correo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCorreoAlumno"
+						value="#{cMantenerAlumno.fAlumno.correo}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						size="52" maxlength="50" />
+
+				</h:panelGrid>
+				<br />
+				<div align="center">
+					<p:commandButton value="#{i18n['SGA.opcionGuardar']}"
+						actionListener="#{cMantenerAlumno.modificarAlumno()}"
+						update=":frmMantenerAlumno :frmModificarAlumno"
+						oncomplete="PF('wgvAlumno').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['SGA.opcionCancelar']}"
+						onclick="PF('wgvModificarAlumno').hide()" immediate="true" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<!-- DIÁLOGO ELIMINAR Alumno -->
+		<p:confirmDialog header="#{i18n['SGA.confirmacion']}"
+			message="#{i18n['min_mantenerAlumno.confirmarEliminacion']}"
+			widgetVar="wgvEliminarAlumno" appendTo="@(body)" modal="true"
+			resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade" style="font: 80% sans-serif; ">
+			<h:form id="frmEliminarAlumno">
+				<div align="center">
+					<p:commandButton value="#{i18n['SGA.opcionSi']}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						actionListener="#{cMantenerAlumno.eliminarAlumno()}"
+						update=":frmMantenerAlumno"
+						oncomplete="PF('wgvAlumno').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['SGA.opcionNo']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('wgvEliminarAlumno').hide()" inmediate="true" />
+				</div>
+			</h:form>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>

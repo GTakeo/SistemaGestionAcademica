@@ -13,9 +13,9 @@ import pe.com.util.excepcion.DataAccessException;
 
 @Component
 @Aspect
-public class MEmpleadoException {
+public class MAlumnoException {
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.listarCategoriasIFI())", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.listarAlumnos())", throwing = "error")
 	public void listarCategoriasIFI(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof UncategorizedDataAccessException) {
 			throw new DataAccessException(Constantes.ERROR_ACCESO_DATOS_NO_CATEGORIZADO, error);
@@ -24,7 +24,7 @@ public class MEmpleadoException {
 		}
 	}
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.obtenerCategoriaIFIXId(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.obtenerAlumnoXId(..))", throwing = "error")
 	public void obtenerCategoriaIFIXId(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof UncategorizedDataAccessException) {
 			throw new DataAccessException(Constantes.ERROR_ACCESO_DATOS_NO_CATEGORIZADO, error);
@@ -33,7 +33,7 @@ public class MEmpleadoException {
 		}
 	}
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.obtenerCategoriaIFIXNombre(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.obtenerAlumnoXNombre(..))", throwing = "error")
 	public void obtenerCategoriaIFIXNombre(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof UncategorizedDataAccessException) {
 			throw new DataAccessException(Constantes.ERROR_ACCESO_DATOS_NO_CATEGORIZADO, error);
@@ -42,7 +42,7 @@ public class MEmpleadoException {
 		}
 	}
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.insertarEmpleado(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.insertarAlumno(..))", throwing = "error")
 	public void insertarEmpleado(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof DuplicateKeyException) {
 			throw new DataAccessException("Nombre debe ser único", error);
@@ -55,7 +55,7 @@ public class MEmpleadoException {
 		}
 	}
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.modificarCategoriaIFI(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.modificarAlumno(..))", throwing = "error")
 	public void modificarCategoriaIFI(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof DuplicateKeyException) {
 			throw new DataAccessException("Nombre debe ser único", error);
@@ -68,7 +68,7 @@ public class MEmpleadoException {
 		}
 	}
 
-	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MEmpleado.eliminarCategoriaIFI(..))", throwing = "error")
+	@AfterThrowing(pointcut = "execution(* pe.com.persistencia.mapper.MAlumno.eliminarAlumno(..))", throwing = "error")
 	public void eliminarCategoriaIFI(JoinPoint joinPoint, Throwable error) {
 		if (error instanceof DataIntegrityViolationException) {
 			throw new DataAccessException("No se pudo eliminar categoría IFI porque está siendo usada actualmente",
