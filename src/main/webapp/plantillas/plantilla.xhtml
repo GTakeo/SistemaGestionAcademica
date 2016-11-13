@@ -27,6 +27,20 @@
 .ui-panelgrid td, .ui-panelgrid tr {
 	border-style: none !important
 }
+
+.tipoLetra {
+	font-weight: bold;
+}
+
+footer {
+  background-color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  color: white;
+}
+
 </style>
 	<h:body>
 
@@ -34,21 +48,20 @@
 			onsuccess="statusDialog.hide();" />
 
 		<p:layout fullPage="true" resizeTitle="resize">
-			<div style="font-size: 13px">
-				<ui:include src="/secciones/cabecera.xhtml" />
+			<p:layoutUnit  position="north" size="145" style="font-size: 13px">
 				<ui:include src="/secciones/menu.xhtml" />
-			</div>
+			</p:layoutUnit >
 
 
-			<div style="font-size: 12px">
+			<p:layoutUnit position="center" style="font-size: 12px" >
 				<p:scrollPanel mode="native" style="height: 100%">
 					<ui:insert name="content" />
 				</p:scrollPanel>
-			</div>
+			</p:layoutUnit>
 
-			<div style="font-size: 11px">
+			<p:layoutUnit position="south" size="25"  style="font-size: 11px">
 				<ui:include src="/secciones/piePagina.xhtml" />
-			</div>
+			</p:layoutUnit>
 		</p:layout>
 
 		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"

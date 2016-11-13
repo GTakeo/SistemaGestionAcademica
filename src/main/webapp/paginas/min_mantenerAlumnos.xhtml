@@ -21,7 +21,7 @@
 			<br />
 			<p:fieldset>
 				<br />
-				<p:commandButton id="btnAgregarAlumno"
+				<p:commandButton id="btnAgregarAlumno" styleClass="tipoLetra"
 					value="#{i18n['SGA.opcionAgregar']}"
 					actionListener="#{cMantenerAlumno.iniciarAgregarAlumno()}"
 					update=":frmAgregarAlumno">
@@ -83,14 +83,26 @@
 			</p:fieldset>
 		</h:form>
 
-		<!-- DIÁLOGO AGREGAR Alumno -->
+		<!-- DIÁLOGO AGREGAR ALUMNO -->
 		<p:dialog header="#{i18n['min_mantenerAlumno.agregarAlumno']}"
 			widgetVar="wgvAgregarAlumno" appendTo="@(body)" id="dlgAgregarAlumno"
 			modal="true" resizable="false" draggable="false" showEffect="fade"
 			hideEffect="fade">
 			<h:form id="frmAgregarAlumno">
 				<h:panelGrid columns="3">
-					<p:outputLabel for="txtNombreAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtDniAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.dni']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDniAlumno"
+						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.dniRequerido']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtNombreAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.nombre']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtNombreAlumno"
@@ -102,8 +114,7 @@
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtApellidoAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtApellidoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.apellido']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtApellidoAlumno"
@@ -115,76 +126,65 @@
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtDireccionAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtDireccionAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.direccion']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtDireccionAlumno"
 						value="#{cMantenerAlumno.fAlumno.direccion}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.direccionRequerida']}"
 						size="52" maxlength="50" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtTelefonoAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtTelefonoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.telefono']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtTelefonoAlumno"
 						value="#{cMantenerAlumno.fAlumno.telefono}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
-						size="52" maxlength="50" />
+						requiredMessage="#{i18n['min_mantenerAlumno.telefonoRequerido']}"
+						size="52" maxlength="7" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtCelularAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtCelularAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.celular']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtCelularAlumno"
 						value="#{cMantenerAlumno.fAlumno.celular}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
-						size="52" maxlength="50" />
+						requiredMessage="#{i18n['min_mantenerAlumno.celularRequerido']}"
+						size="52" maxlength="9" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
 					<p:outputLabel for="txtFechaNAcimientoAlumno"
-						styleClass="miEstiloEtiqueta"
+						styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.fechaNacimiento']}" />
 					<p:spacer width="10" />
 					<p:calendar id="txtFechaNAcimientoAlumno"
-						value="#{cMantenerAlumno.fAlumno.fechaNacimiento}" effect="fold"
+						value="#{cMantenerAlumno.fAlumno.fechaNacimiento}" 
+						locale="de"
+						navigator="true" 
 						required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimiento']}"
+						maxdate="12/12/16"
+						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimientoRequerida']}"
 						size="52" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtDniAlumno" styleClass="miEstiloEtiqueta"
-						value="#{i18n['min_mantenerAlumno.dni']}" />
-					<p:spacer width="10" />
-					<p:inputText id="txtDniAlumno"
-						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
-						size="52" maxlength="8" />
-
-					<p:spacer width="10" />
-					<p:spacer width="10" />
-					<p:spacer width="10" />
-
-					<p:outputLabel for="txtCorreoAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtCorreoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.correo']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtCorreoAlumno"
 						value="#{cMantenerAlumno.fAlumno.correo}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.correoRequerido']}"
 						size="52" maxlength="50" />
 
 
@@ -192,12 +192,14 @@
 
 				<br />
 				<div align="center">
-					<p:commandButton value="#{i18n['SGA.opcionGuardar']}"
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionGuardar']}"
 						actionListener="#{cMantenerAlumno.agregarAlumno()}"
 						update=":frmMantenerAlumno :frmAgregarAlumno"
 						oncomplete="PF('wgvAlumno').clearFilters()" />
 					<p:spacer width="10" />
-					<p:commandButton value="#{i18n['SGA.opcionCancelar']}"
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionCancelar']}"
 						onclick="PF('wgvAgregarAlumno').hide()" immediate="true" />
 				</div>
 
@@ -213,7 +215,7 @@
 			<h:form id="frmModificarAlumno">
 				<h:panelGrid columns="3">
 
-										<p:outputLabel for="txtNombreAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtNombreAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.nombre']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtNombreAlumno"
@@ -225,8 +227,7 @@
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtApellidoAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtApellidoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.apellido']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtApellidoAlumno"
@@ -238,76 +239,74 @@
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtDireccionAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtDireccionAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.direccion']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtDireccionAlumno"
 						value="#{cMantenerAlumno.fAlumno.direccion}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.direccionRequerida']}"
 						size="52" maxlength="50" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtTelefonoAlumno"
-						styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtTelefonoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.telefono']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtTelefonoAlumno"
 						value="#{cMantenerAlumno.fAlumno.telefono}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
-						size="52" maxlength="50" />
+						requiredMessage="#{i18n['min_mantenerAlumno.telefonoRequerido']}"
+						size="52" maxlength="7" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtCelularAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtCelularAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.celular']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtCelularAlumno"
 						value="#{cMantenerAlumno.fAlumno.celular}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
-						size="52" maxlength="50" />
+						requiredMessage="#{i18n['min_mantenerAlumno.celularRequerido']}"
+						size="52" maxlength="9" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
 					<p:outputLabel for="txtFechaNAcimientoAlumno"
-						styleClass="miEstiloEtiqueta"
+						styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.fechaNacimiento']}" />
 					<p:spacer width="10" />
 					<p:calendar id="txtFechaNAcimientoAlumno"
 						value="#{cMantenerAlumno.fAlumno.fechaNacimiento}" effect="fold"
 						required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimiento']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimientoRequerida']}"
 						size="52" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtDniAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtDniAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.dni']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtDniAlumno"
 						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.alumnoRequerido']}"
 						size="52" maxlength="8" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 
-					<p:outputLabel for="txtCorreoAlumno" styleClass="miEstiloEtiqueta"
+					<p:outputLabel for="txtCorreoAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.correo']}" />
 					<p:spacer width="10" />
 					<p:inputText id="txtCorreoAlumno"
 						value="#{cMantenerAlumno.fAlumno.correo}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.apellidoRequerido']}"
+						requiredMessage="#{i18n['min_mantenerAlumno.correoRequerido']}"
 						size="52" maxlength="50" />
 
 				</h:panelGrid>
