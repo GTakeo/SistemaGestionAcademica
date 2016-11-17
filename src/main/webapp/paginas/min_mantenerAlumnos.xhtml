@@ -214,7 +214,18 @@
 			draggable="false" showEffect="fade" hideEffect="fade">
 			<h:form id="frmModificarAlumno">
 				<h:panelGrid columns="3">
+					<p:outputLabel for="txtDniAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.dni']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDniAlumno"
+						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.alumnoRequerido']}"
+						size="52" maxlength="8" />
 
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					
 					<p:outputLabel for="txtNombreAlumno" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerAlumno.nombre']}" />
 					<p:spacer width="10" />
@@ -284,18 +295,6 @@
 						required="true"
 						requiredMessage="#{i18n['min_mantenerAlumno.fechaNacimientoRequerida']}"
 						size="52" />
-
-					<p:spacer width="10" />
-					<p:spacer width="10" />
-					<p:spacer width="10" />
-
-					<p:outputLabel for="txtDniAlumno" styleClass="tipoLetra"
-						value="#{i18n['min_mantenerAlumno.dni']}" />
-					<p:spacer width="10" />
-					<p:inputText id="txtDniAlumno"
-						value="#{cMantenerAlumno.fAlumno.dni}" required="true"
-						requiredMessage="#{i18n['min_mantenerAlumno.alumnoRequerido']}"
-						size="52" maxlength="8" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />

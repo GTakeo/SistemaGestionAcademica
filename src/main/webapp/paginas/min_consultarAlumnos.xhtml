@@ -1,0 +1,171 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmConsultarAlumno">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_consultarAlumno.titulo']}"
+					style="font-size:20px;" />
+				<br />
+			</div>
+
+			<br />
+			<p:fieldset>
+				<br />
+				<br />
+				<div align="center">
+					<br />
+					<p:dataTable id="tblAlumno" widgetVar="wgvAlumno"
+						value="#{cConsultarAlumno.listaAlumno}" var="Alumno"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerAlumno.tablaAlumnoVacia']}">
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cConsultarAlumno.listaAlumno.indexOf(Alumno)+1}
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.dni']}"
+							filterBy="#{Alumno.dni}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.dni}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.apellido']}"
+							filterBy="#{Alumno.apellido}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.apellido}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerAlumno.nombre']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.nombre}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['SGA.opciones']}"
+							style="width:150px;">
+							<div align="center">
+								<p:commandButton id="btnConsultarAlumno" icon="	ui-icon-search"
+									actionListener="#{cConsultarAlumno.iniciarConsultarAlumno(Alumno)}"
+									update=":frmConsultaAlumno">
+								</p:commandButton>
+								<p:tooltip for="btnConsultarAlumno"
+									value="#{i18n['SGA.opcionConsultar']}" />
+							</div>
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</p:fieldset>
+		</h:form>
+
+		<!-- DIÁLOGO AGREGAR ALUMNO -->
+		<p:dialog header="#{i18n['min_consultarAlumno.consultarAlumno']}"
+			widgetVar="wgvConsularAlumno" appendTo="@(body)" id="dlgAgregarAlumno"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade">
+			<h:form id="frmConsultaAlumno">
+			<p:fieldset legend="#{i18n['SGA.informacionGeneral']}" style="width: 500px">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="txtDniAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.dni']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtDniAlumno"
+						value="#{cConsultarAlumno.fAlumno.dni}"/>
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtNombreAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.nombre']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtNombreAlumno"
+						value="#{cConsultarAlumno.fAlumno.nombre}"/>
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtApellidoAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.apellido']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtApellidoAlumno"
+						value="#{cConsultarAlumno.fAlumno.apellido}" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDireccionAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.direccion']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtDireccionAlumno"
+						value="#{cConsultarAlumno.fAlumno.direccion}"/>
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtTelefonoAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.telefono']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtTelefonoAlumno"
+						value="#{cConsultarAlumno.fAlumno.telefono}" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCelularAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.celular']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtCelularAlumno"
+						value="#{cConsultarAlumno.fAlumno.celular}"/>
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtFechaNAcimientoAlumno"
+						styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.fechaNacimiento']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtFechaNAcimientoAlumno"
+						value="#{cConsultarAlumno.fAlumno.fechaNacimiento}">
+						<f:convertDateTime pattern="dd.MM.yyyy" />
+					</p:outputLabel>		
+						
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtCorreoAlumno" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerAlumno.correo']}" />
+					<p:spacer width="10" />
+					<p:outputLabel id="txtCorreoAlumno"
+						value="#{cConsultarAlumno.fAlumno.correo}"/>
+				</h:panelGrid>
+				<br />
+				</p:fieldset>
+				<br />
+				<br />
+				<p:fieldset legend="#{i18n['SGA.informacionCursos']}" style="width: 500px">
+				</p:fieldset>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

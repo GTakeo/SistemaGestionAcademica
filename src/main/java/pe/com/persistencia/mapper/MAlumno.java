@@ -17,28 +17,28 @@ import pe.com.persistencia.entity.BAlumno;
 public interface MAlumno {
 
 	@ResultMap("bAlumno")
-	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNOS ORDER BY ALU_APELLIDO ASC")
+	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO ORDER BY ALU_APELLIDO ASC")
 	public List<BAlumno> listarAlumnos();
 
 	@ResultMap("bAlumno")
-	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNOS "
+	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO "
 			+ "WHERE ID_ALU = #{id}")
 	public BAlumno obtenerAlumnoXId(@Param("id") Integer id);
 
 	@ResultMap("bAlumno")
-	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNOS  "
+	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO  "
 			+ "WHERE ALU_NOMBRE = #{nombreAlumno}")
 	public BAlumno obtenerAlumnoXNombre(@Param("nombreAlumno") String nombreAlumno);
 
-	@Insert("INSERT INTO ALUMNOS (ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO) "
+	@Insert("INSERT INTO ALUMNO (ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO) "
 			+ "values (#{nombre}, #{apellido}, #{direccion}, #{telefono}, #{celular}, #{fechaNacimiento}, #{dni},#{correo} )")
 	public int insertarAlumno(BAlumno Alumno);
 
-	@Update("UPDATE ALUMNOS SET ALU_NOMBRE = #{nombre}, ALU_APELLIDO = #{apellido}, ALU_DIRECCION = #{direccion}, ALU_TELEFONO = #{telefono}, ALU_CELULAR = #{celular}, ALU_FEC_NAC = #{fechaNacimiento}, ALU_DNI = #{dni}, ALU_CORREO = #{correo} "
+	@Update("UPDATE ALUMNO SET ALU_NOMBRE = #{nombre}, ALU_APELLIDO = #{apellido}, ALU_DIRECCION = #{direccion}, ALU_TELEFONO = #{telefono}, ALU_CELULAR = #{celular}, ALU_FEC_NAC = #{fechaNacimiento}, ALU_DNI = #{dni}, ALU_CORREO = #{correo} "
 			+ "	WHERE ID_ALU = #{id}")
 	public int modificarAlumno(BAlumno Alumno);
 
-	@Delete("DELETE FROM ALUMNOS WHERE ID_ALU = #{id}")
+	@Delete("DELETE FROM ALUMNO WHERE ID_ALU = #{id}")
 	public int eliminarAlumno(@Param("id") Integer idAlumno);
 
 }

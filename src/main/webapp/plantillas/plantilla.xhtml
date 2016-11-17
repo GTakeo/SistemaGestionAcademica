@@ -33,14 +33,13 @@
 }
 
 footer {
-  background-color: black;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-  color: white;
+	background-color: black;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	color: white;
 }
-
 </style>
 	<h:body>
 
@@ -48,18 +47,13 @@ footer {
 			onsuccess="statusDialog.hide();" />
 
 		<p:layout fullPage="true" resizeTitle="resize">
-			<p:layoutUnit  position="north" size="145" style="font-size: 13px">
+
+			<p:layoutUnit position="center" style="font-size: 12px">
 				<ui:include src="/secciones/menu.xhtml" />
-			</p:layoutUnit >
-
-
-			<p:layoutUnit position="center" style="font-size: 12px" >
-				<p:scrollPanel mode="native" style="height: 100%">
-					<ui:insert name="content" />
-				</p:scrollPanel>
+				<ui:insert name="content" />
 			</p:layoutUnit>
 
-			<p:layoutUnit position="south" size="25"  style="font-size: 11px">
+			<p:layoutUnit position="south" size="25" style="font-size: 11px">
 				<ui:include src="/secciones/piePagina.xhtml" />
 			</p:layoutUnit>
 		</p:layout>

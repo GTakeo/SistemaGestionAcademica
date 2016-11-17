@@ -4,27 +4,31 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-	<h:form>
-		<p:panelGrid columns="2">
-			<img src="#{request.contextPath}/recursos/img/logo_principal.jpg" />
-			<div align="center">
-			<p:menubar>
-				<p:submenu label="#{i18n['SGA.menu.gestionEstudiantes']}">
-					<p:menuitem value="#{i18n['SGA.submenu.mantenerAlumnos']}"
-					action="/paginas/min_mantenerAlumnos.jsf?faces-redirect=true"
-					actionListener="#{cMantenerAlumno.inicializarObjetos()}"
-					/>
-				</p:submenu>
-				<p:submenu label="Opcion 2">
-					<p:menuitem value="Opcion 2">
-					</p:menuitem>
-				</p:submenu>
-				<p:submenu label="Opcion 3">
-					<p:menuitem value="Opcion 3">
-					</p:menuitem>
-				</p:submenu>
-			</p:menubar>
-			</div>
-		</p:panelGrid>
-	</h:form>
+	
+<h:form style="font-size: 13px">
+					<p:panelGrid columns="2">
+						<img src="#{request.contextPath}/recursos/img/logo_principal.jpg" />
+						<div align="center">
+							<p:menubar>
+								<p:submenu label="#{i18n['SGA.menu.gestionEstudiantes']}">
+									<p:menuitem value="#{i18n['SGA.submenu.mantenerAlumnos']}"
+										action="/paginas/min_mantenerAlumnos.jsf?faces-redirect=true"
+										actionListener="#{cMantenerAlumno.inicializarObjetos()}" />
+									<p:menuitem value="#{i18n['SGA.submenu.consultarAlumnos']}"
+										action="/paginas/min_consultarAlumnos.jsf?faces-redirect=true"
+										actionListener="#{cConsultarAlumno.inicializarObjetos()}" />
+								</p:submenu>
+								<p:submenu label="Opcion 2">
+									<p:menuitem value="Opcion 2">
+									</p:menuitem>
+								</p:submenu>
+								<p:submenu label="Opcion 3">
+									<p:menuitem value="Opcion 3">
+									</p:menuitem>
+								</p:submenu>
+							</p:menubar>
+						</div>
+					</p:panelGrid>
+				</h:form>
+	
 </ui:composition>
