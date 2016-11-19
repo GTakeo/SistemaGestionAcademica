@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.persistencia.mapper.MModulo"> <!-- interface java -->
+
+	<resultMap id="bModulo"
+	type="pe.com.persistencia.entity.BModulo">
+		<id column="ID_MOD" property="id" />
+		<result column="MOD_CODIGO" property="codigo" />
+		<result column="MOD_NOMBRE" property="nombre" />
+		<result column="MOD_DURACION" property="duracion" />
+	</resultMap>
+</mapper>

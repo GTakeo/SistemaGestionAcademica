@@ -1,0 +1,144 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmMantenerCursos">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_mantenerCursos.titulo']}"
+					style="font-size:20px;" />
+				<br />
+			</div>
+
+			<br />
+			<p:fieldset>
+				<br />
+				<p:commandButton id="btnAgregarCurso" styleClass="tipoLetra"
+					value="#{i18n['SGA.opcionAgregar']}"
+					actionListener="#{cMantenerCurso.iniciarAgregarCurso()}"
+					update=":frmAgregarCurso">
+					<p:resetInput target=":frmAgregarCurso" />
+				</p:commandButton>
+				<br />
+				<br />
+				<div align="center">
+					<br />
+					<p:dataTable id="tblCurso" widgetVar="wgvCurso"
+						value="#{cMantenerCurso.listaCurso}" var="Curso"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerCursos.tablaCursoVacia']}">
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerCurso.listaCurso.indexOf(Curso)+1}
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerCurso.codigo']}"
+							filterBy="#{Curso.codigo}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Curso.codigo}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerCurso.nombre']}"
+							filterBy="#{Curso.nombre}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Curso.nombre}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['SGA.opciones']}"
+							style="width:150px;">
+							<div align="center">
+								<p:commandButton id="btnEliminarCurso" icon="ui-icon-trash"
+									actionListener="#{cMantenerCurso.iniciarEliminarCurso(Curso)}"
+									update=":frmEliminarCurso" />
+								<p:tooltip for="btnEliminarCurso"
+									value="#{i18n['SGA.opcionEliminar']}" />
+							</div>
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</p:fieldset>
+		</h:form>
+			<!-- DIÁLOGO Agregar Curso -->
+		<p:dialog header="#{i18n['min_mantenerAlumno.agregarAlumno']}"
+			widgetVar="wgvAgregarCurso" appendTo="@(body)" id="dlgAgregarCurso"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade">
+			<h:form id="frmAgregarCurso">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="txtCodigoCurso" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.codigo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCodigoCurso"
+						value="#{cMantenerCurso.fCurso.codigo}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.codigoRequerido']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtNombreCurso" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreCurso"
+						value="#{cMantenerCurso.fCurso.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerCurso.nombreRequerido']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+				</h:panelGrid>
+
+				<br />
+				<div align="center">
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionGuardar']}"
+						actionListener="#{cMantenerCurso.agregarCurso()}"
+						update=":frmMantenerCursos :frmAgregarCurso"
+						oncomplete="PF('wgvCurso').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionCancelar']}"
+						onclick="PF('wgvAgregarCurso').hide()" immediate="true" />
+				</div>
+
+			</h:form>
+		</p:dialog>
+		
+				<!-- DIÁLOGO ELIMINAR Curso -->
+		<p:confirmDialog header="#{i18n['SGA.confirmacion']}"
+			message="#{i18n['min_mantenerCurso.confirmarEliminacion']}"
+			widgetVar="wgvEliminarCurso" appendTo="@(body)" modal="true"
+			resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade" style="font: 80% sans-serif; ">
+			<h:form id="frmEliminarCurso">
+				<div align="center">
+					<p:commandButton value="#{i18n['SGA.opcionSi']}"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						actionListener="#{cMantenerCurso.eliminarCurso()}"
+						update=":frmMantenerCursos"
+						oncomplete="PF('wgvCurso').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{i18n['SGA.opcionNo']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('wgvEliminarCurso').hide()" inmediate="true" />
+				</div>
+			</h:form>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>

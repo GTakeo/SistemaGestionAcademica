@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.persistencia.mapper.MPrograma"> <!-- interface java -->
+
+	<resultMap id="bPrograma"
+	type="pe.com.persistencia.entity.BPrograma">
+		<id column="ID_PRO" property="id" />
+		<result column="PRO_CODIGO" property="codigo" />
+		<result column="PRO_NOMBRE" property="nombre" />
+		<result column="PRO_DURACION" property="duracion" />
+	</resultMap>
+</mapper>

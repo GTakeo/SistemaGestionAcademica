@@ -14,13 +14,13 @@
 
 	<!-- Paquete Base para escanear anotaciones Spring -->
 	<context:component-scan
-		base-package="pe.com.negocio, pe.com.util.aspecto" />
+		base-package="pe.com.presentacion, pe.com.negocio, pe.com.util.aspecto" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<aop:aspectj-autoproxy />
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:location="classpath:jdbcTest.properties" />
+		p:location="classpath:jdbc.properties" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
@@ -39,7 +39,7 @@
 		<property name="dataSource" ref="dataSource" />
 
 		<!-- Ubicacion del archivo de configuración de mybatis -->
-		<property name="configLocation" value="classpath:mybatis-configuration.xml" />
+		<property name="configLocation" value="WEB-INF/mybatis-configuration.xml" />
 
 		<!-- Ubicacion de los mappers XML -->
 		<property name="mapperLocations"
