@@ -9,12 +9,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.negocio.bo.BOCurso;
+import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
 import pe.com.negocio.servicio.NCurso;
 import pe.com.negocio.servicio.NPrograma;
 import pe.com.persistencia.entity.BCurso;
+import pe.com.persistencia.entity.BModulo;
 import pe.com.persistencia.entity.BPrograma;
 import pe.com.persistencia.mapper.MCurso;
+import pe.com.persistencia.mapper.MModulo;
 import pe.com.persistencia.mapper.MPrograma;
 import pe.com.util.Constantes;
 import pe.com.util.excepcion.BusinessLogicException;
@@ -28,16 +31,25 @@ public class NProgramaImpl implements NPrograma {
 	MPrograma mPrograma;
 	
 	@Autowired
+	MModulo mModulo;
+	
+	@Autowired
 	@Qualifier("tProgramaEntityBO")
 	TransformadorEntityBO<BPrograma, BOPrograma> transformar;
+	
+	@Autowired
+	@Qualifier("tModuloEntityBO")
+	TransformadorEntityBO<BModulo, BOModulo> transformarModulo;
 	
 	@Override
 	public List<BOPrograma> ListarProgramas() {
 		List<BOPrograma> listaPrograma=null;
 		try {
-			System.out.println(mPrograma.listarProgramas());
 			listaPrograma = transformar.toBO(mPrograma.listarProgramas());
-			System.out.println(listaPrograma);
+			for(BOPrograma boPrograma :listaPrograma){
+				boPrograma.setListaModulo(transformarModulo.toBO(mModulo.obtenerModulosPorPrograma(boPrograma.getId())));
+			}
+			
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
@@ -45,5 +57,19 @@ public class NProgramaImpl implements NPrograma {
 		}
 		return listaPrograma;
 	}
+
+	@Override
+	public void agregarPrograma(BOPrograma bo) {
+		try {
+			System.out.println(bo);
+			mPrograma.agregarPrograma(transformar.toEntity(bo));
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		
+	}
+	
 	
 }

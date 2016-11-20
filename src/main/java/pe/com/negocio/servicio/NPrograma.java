@@ -9,5 +9,7 @@ public interface NPrograma {
 
 	List<BOPrograma> ListarProgramas();
 
+	void agregarPrograma(BOPrograma bo);
+
 
 }

@@ -20,6 +20,7 @@ public class TModulo implements TransformadorEntityBO<BModulo, BOModulo> {
 			boModulo= new BOModulo();
 			boModulo.setId(input.getId());
 			boModulo.setCodigo(input.getCodigo());
+			boModulo.setNombre(input.getNombre());
 			boModulo.setDuracion(input.getDuracion());;
 		}
 		return boModulo;

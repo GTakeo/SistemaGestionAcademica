@@ -9,5 +9,6 @@
 		<result column="MOD_CODIGO" property="codigo" />
 		<result column="MOD_NOMBRE" property="nombre" />
 		<result column="MOD_DURACION" property="duracion" />
+		<result column="FK_MOD_PRO" property="idPrograma" />
 	</resultMap>
 </mapper>

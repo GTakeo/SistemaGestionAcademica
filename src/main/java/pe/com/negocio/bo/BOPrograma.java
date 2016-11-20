@@ -46,6 +46,7 @@ public class BOPrograma {
 	}
 	@Override
 	public String toString() {
-		return "BOPrograma [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion + "]";
+		return "BOPrograma [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
+				+ ", listaModulo=" + listaModulo + "]";
 	}
 }

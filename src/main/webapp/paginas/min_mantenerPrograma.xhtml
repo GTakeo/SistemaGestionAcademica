@@ -1,0 +1,256 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmMantenerPrograma">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_mantenerPrograma.titulo']}"
+					style="font-size:20px;" />
+				<br />
+			</div>
+
+			<br />
+			<p:fieldset>
+				<br />
+				<p:commandButton id="btnAgregarPrograma" styleClass="tipoLetra"
+					value="#{i18n['SGA.opcionAgregar']}"
+					actionListener="#{cMantenerPrograma.iniciarAgregarPrograma()}"
+					update=":frmAgregarPrograma">
+					<p:resetInput target=":frmAgregarPrograma" />
+				</p:commandButton>
+				<br />
+				<br />
+				<div align="center">
+					<br />
+					<p:dataTable id="tblPrograma" widgetVar="wgvCurso"
+						value="#{cMantenerPrograma.listaPrograma}" var="Programa"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerPrograma.tablaProgramaVacia']}">
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerPrograma.listaPrograma.indexOf(Programa)+1}
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerPrograma.codigo']}"
+							filterBy="#{Programa.codigo}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Programa.codigo}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerPrograma.nombre']}"
+							filterBy="#{Programa.nombre}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Programa.nombre}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerPrograma.duracion']}"
+							filterBy="#{Programa.duracion}" filterStyle="width: 200px;"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Programa.duracion}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['SGA.opciones']}"
+							style="width:150px;">
+
+						</p:column>
+
+					</p:dataTable>
+				</div>
+			</p:fieldset>
+
+		</h:form>
+
+		<p:dialog header="#{i18n['min_mantenerAlumno.agregarPrograma']}"
+			widgetVar="wgvAgregarPrograma" appendTo="@(body)"
+			id="dlgAgregarPrograma" modal="true" resizable="false"
+			draggable="false" showEffect="fade" hideEffect="fade">
+			<h:form id="frmAgregarPrograma">
+				<p:fieldset legend="#{i18n['SGA.informacionGeneral']}"
+					style="width: 950px;">
+					<div align="center">
+						<h:panelGrid columns="3">
+							<p:outputLabel for="txtCodigoPrograma" styleClass="tipoLetra"
+								value="#{i18n['min_mantenerPrograma.codigo']}" />
+							<p:spacer width="10" />
+							<p:inputText id="txtCodigoPrograma"
+								value="#{cMantenerPrograma.fPrograma.codigo}" required="true"
+								requiredMessage="#{i18n['min_mantenerPrograma.codigoRequerido']}"
+								size="52" maxlength="8" />
+
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+
+							<p:outputLabel for="txtNombrePrograma" styleClass="tipoLetra"
+								value="#{i18n['min_mantenerPrograma.nombre']}" />
+							<p:spacer width="10" />
+							<p:inputText id="txtNombrePrograma"
+								value="#{cMantenerPrograma.fPrograma.nombre}" required="true"
+								requiredMessage="#{i18n['min_mantenerPrograma.nombreRequerido']}"
+								size="52" maxlength="8" />
+
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+
+							<p:outputLabel for="txtCodigoRequerido" styleClass="tipoLetra"
+								value="#{i18n['min_mantenerPrograma.duracion']}" />
+							<p:spacer width="10" />
+							<p:inputText id="txtCodigoRequerido"
+								value="#{cMantenerPrograma.fPrograma.duracion}" required="true"
+								requiredMessage="#{i18n['min_mantenerPrograma.duracionRequerida']}"
+								size="52" maxlength="8" />
+
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+							<p:spacer width="10" />
+
+
+
+						</h:panelGrid>
+					</div>
+				</p:fieldset>
+				<br />
+				<br />
+				<p:fieldset legend="#{i18n['SGA.informacionModulo']}"
+					style="width: 950px">
+					<br />
+					<p:commandButton id="btnAgregarModulo" styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionAgregar']}"
+						actionListener="#{cMantenerPrograma.iniciarAgregarModulo()}"
+						update=":frmAgregarModulo, :frmMantenerPrograma:mensajes :frmAgregarPrograma">
+						<p:resetInput target=":frmAgregarModulo" />
+					</p:commandButton>
+					<br />
+					<br />
+					<div align="center">
+						<br />
+						<p:dataTable id="tblModulo" widgetVar="wgvModulo"
+							value="#{cMantenerPrograma.fPrograma.listaModulo}" var="Modulo"
+							currentPageReportTemplate="{currentPage} de {totalPages}"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+							filterEvent="enter" paginator="true" rows="10"
+							paginatorPosition="bottom"
+							emptyMessage="#{i18n['min_mantenerModulo.tablaModuloVacia']}">
+							<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerPrograma.fPrograma.listaModulo.indexOf(Modulo)+1}
+						</p:column>
+
+							<p:column headerText="#{i18n['min_mantenerPrograma.codigo']}"
+								filterBy="#{Modulo.codigo}" filterStyle="width: 200px;"
+								style="width:300px; text-align: center;">
+								<h:outputText value="#{Modulo.codigo}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['min_mantenerPrograma.nombre']}"
+								filterBy="#{Modulo.nombre}" filterStyle="width: 200px;"
+								style="width:300px; text-align: center;">
+								<h:outputText value="#{Modulo.nombre}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['min_mantenerPrograma.duracion']}"
+								filterBy="#{Modulo.duracion}" filterStyle="width: 200px;"
+								style="width:300px; text-align: center;">
+								<h:outputText value="#{Modulo.duracion}" />
+							</p:column>
+							<p:column headerText="#{i18n['SGA.opciones']}"
+								style="width:150px;">
+
+							</p:column>
+						</p:dataTable>
+					</div>
+				</p:fieldset>
+
+				<br />
+				<div align="center">
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionGuardar']}"
+						actionListener="#{cMantenerPrograma.agregarPrograma()}"
+						update=":frmMantenerPrograma :frmAgregarPrograma"
+						oncomplete="PF('wgvPrograma').clearFilters()" />
+					<p:spacer width="10" />
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionCancelar']}"
+						onclick="PF('wgvAgregarPrograma').hide()" immediate="true" />
+				</div>
+
+			</h:form>
+
+		</p:dialog>
+
+
+		<p:dialog header="#{i18n['min_mantenerAlumno.agregarModulo']}"
+			widgetVar="wgvAgregarModulo" appendTo="@(body)" id="dlgAgregarModulo"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade">
+			<h:form id="frmAgregarModulo">
+				<h:panelGrid columns="3">
+					<p:outputLabel for="txtCodigoRequerido" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerPrograma.codigo']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtCodigoRequerido"
+						value="#{cMantenerPrograma.fModulo.codigo}" required="true"
+						requiredMessage="#{i18n['min_mantenerPrograma.codigoRequerida']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtNombreRequerido" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerPrograma.nombre']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreRequerido"
+						value="#{cMantenerPrograma.fModulo.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerPrograma.nombreRequerido']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDuracionRequerido" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerPrograma.duracion']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDuracionRequerido"
+						value="#{cMantenerPrograma.fModulo.duracion}" required="true"
+						requiredMessage="#{i18n['min_mantenerPrograma.duracionRequerida']}"
+						size="52" maxlength="8" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+				</h:panelGrid>
+			
+			<br />
+			<div align="center">
+				<p:commandButton styleClass="tipoLetra"
+					value="#{i18n['SGA.opcionGuardar']}"
+					actionListener="#{cMantenerPrograma.agregarModulo()}"
+					update=":frmMantenerPrograma :frmMantenerPrograma:mensajes :frmAgregarPrograma :frmAgregarModulo" />
+				<p:spacer width="10" />
+				<p:commandButton styleClass="tipoLetra"
+					value="#{i18n['SGA.opcionCancelar']}"
+					onclick="PF('wgvAgregarModulo').hide()" immediate="true" />
+			</div>
+			</h:form>
+		</p:dialog>
+
+
+
+
+	</ui:define>
+</ui:composition>
