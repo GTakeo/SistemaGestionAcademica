@@ -16,6 +16,10 @@
 					<p:menuitem value="#{i18n['SGA.submenu.consultarAlumnos']}"
 						action="/paginas/min_consultarAlumnos.jsf?faces-redirect=true"
 						actionListener="#{cConsultarAlumno.inicializarObjetos()}" />
+					<p:separator />
+					<p:menuitem value="#{i18n['SGA.submenu.matricularAlumno']}"
+						action="/paginas/min_matricularAlumno.jsf?faces-redirect=true"
+						actionListener="#{cMatricularAlumno.inicializarObjetos()}" />
 				</p:submenu>
 				<p:submenu label="#{i18n['SGA.menu.gestionCursos']}">
 					<p:menuitem value="#{i18n['SGA.submenu.mantenerCursos']}"

@@ -40,5 +40,7 @@ public interface MAlumno {
 
 	@Delete("DELETE FROM ALUMNO WHERE ID_ALU = #{id}")
 	public int eliminarAlumno(@Param("id") Integer idAlumno);
-
+	
+	@Select("INSERT INTO MATRICULA (FK_MTR_ALU,FK_MTR_GRU,MTR_NOTA) VALUES (#{idAlumno},#{idGrupo},#{nota})")
+	public void matricularAlumno(@Param("idAlumno") Integer idAlumno,@Param("idGrupo") Integer idGrupo,@Param("nota") Integer nota);
 }

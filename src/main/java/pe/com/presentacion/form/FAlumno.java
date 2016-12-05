@@ -1,9 +1,14 @@
 package pe.com.presentacion.form;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.faces.model.SelectItem;
 import javax.validation.constraints.Pattern;
+
+import pe.com.negocio.bo.BOGrupo;
 
 public class FAlumno implements Serializable {
 
@@ -20,6 +25,9 @@ public class FAlumno implements Serializable {
 	private Date fechaNacimiento;
 	private Integer dni;
 	private String correo;
+	private List<SelectItem> listaSelectPrograma;
+	private List<SelectItem> listaSelectModulo;
+	private List<SelectItem> listaSelectGrupo;
 	
 	public FAlumno() {
 	}
@@ -95,6 +103,30 @@ public class FAlumno implements Serializable {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+	
+	public List<SelectItem> getListaSelectPrograma() {
+		return listaSelectPrograma;
+	}
+
+	public void setListaSelectPrograma(List<SelectItem> listaSelectPrograma) {
+		this.listaSelectPrograma = listaSelectPrograma;
+	}
+
+	public List<SelectItem> getListaSelectModulo() {
+		return listaSelectModulo;
+	}
+
+	public void setListaSelectModulo(List<SelectItem> listaSelectModulo) {
+		this.listaSelectModulo = listaSelectModulo;
+	}
+	
+	public List<SelectItem> getListaSelectGrupo() {
+		return listaSelectGrupo;
+	}
+
+	public void setListaSelectGrupo(List<SelectItem> listaSelectGrupo) {
+		this.listaSelectGrupo = listaSelectGrupo;
+	}
 
 	@Override
 	public String toString() {
@@ -103,22 +135,41 @@ public class FAlumno implements Serializable {
 				+ dni + ", correo=" + correo + "]";
 	}
 
-	/*
-	 * *** CONVERTIDOR DE -List<BOCategoriaIFI>- A -List<SelectItem>- PARA
-	 * CATEGORIA IFI ********
-	 */
-//	public List<SelectItem> convertirSelectItemsCategoriaIFI(List<BOAlumno> lista) {
-//		List<SelectItem> listaItems = null;
-//		if (lista != null && lista.size() > 0) {
-//			listaItems = new ArrayList<SelectItem>();
-//			for (BOAlumno boCategoriaIFI : lista) {
-//				SelectItem item = new SelectItem();
-//				item.setLabel(boCategoriaIFI.getNombre());
-//				item.setValue(boCategoriaIFI.getId());
-//				listaItems.add(item);
-//			}
-//		}
-//		return listaItems;
-//	}
+	public void obtenerSelectItemsPrograma(List<FPrograma> lista) {
+		if (lista != null && lista.size() > 0) {
+			listaSelectPrograma = new ArrayList<SelectItem>();
+			for (FPrograma fPrograma : lista) {
+				SelectItem item = new SelectItem();
+				item.setLabel(fPrograma.getNombre());
+				item.setValue(fPrograma.getId());
+				listaSelectPrograma.add(item);
+			}
+		}
+	}	
+	
+	public void obtenerSelectItemsModulo(List<FModulo> lista) {
+		if (lista != null && lista.size() > 0) {
+			listaSelectModulo = new ArrayList<SelectItem>();
+			for (FModulo fModulo : lista) {
+				SelectItem item = new SelectItem();
+				item.setLabel(fModulo.getNombre());
+				item.setValue(fModulo.getId());
+				listaSelectModulo.add(item);
+			}
+		}
+	}	
+	
+	public void obtenerSelectItemsGrupo(List<BOGrupo> lista) {
+		if (lista != null && lista.size() > 0) {
+			listaSelectGrupo = new ArrayList<SelectItem>();
+			for (BOGrupo fGrupo : lista) {
+				SelectItem item = new SelectItem();
+				item.setLabel(fGrupo.getNombre());
+				item.setValue(fGrupo.getId());
+				listaSelectGrupo.add(item);
+			}
+		}
+	}	
+	
 
 }

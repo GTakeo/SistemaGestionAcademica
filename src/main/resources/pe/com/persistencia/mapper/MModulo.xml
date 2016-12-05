@@ -6,9 +6,9 @@
 	<resultMap id="bModulo"
 	type="pe.com.persistencia.entity.BModulo">
 		<id column="ID_MOD" property="id" />
+		<result column="FK_MOD_PRO" property="idPro" />
 		<result column="MOD_CODIGO" property="codigo" />
 		<result column="MOD_NOMBRE" property="nombre" />
 		<result column="MOD_DURACION" property="duracion" />
-		<result column="FK_MOD_PRO" property="idPrograma" />
 	</resultMap>
 </mapper>

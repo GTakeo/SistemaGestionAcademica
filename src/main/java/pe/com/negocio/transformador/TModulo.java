@@ -19,6 +19,7 @@ public class TModulo implements TransformadorEntityBO<BModulo, BOModulo> {
 		if(input!=null){
 			boModulo= new BOModulo();
 			boModulo.setId(input.getId());
+			boModulo.setIdPro(input.getIdPro());
 			boModulo.setCodigo(input.getCodigo());
 			boModulo.setNombre(input.getNombre());
 			boModulo.setDuracion(input.getDuracion());;
@@ -46,6 +47,7 @@ public class TModulo implements TransformadorEntityBO<BModulo, BOModulo> {
 		if(input!=null){
 			bModulo = new BModulo();
 			bModulo.setId(input.getId());
+			bModulo.setIdPro(input.getIdPro());
 			bModulo.setNombre(input.getNombre());
 			bModulo.setCodigo(input.getCodigo());
 			bModulo.setDuracion(input.getDuracion());

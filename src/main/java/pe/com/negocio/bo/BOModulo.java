@@ -6,6 +6,7 @@ import java.util.List;
 public class BOModulo {
 
 	private Integer id;
+	private Integer idPro;
 	private String codigo;
 	private String nombre;
 	private Integer duracion;
@@ -44,9 +45,16 @@ public class BOModulo {
 	public void setListaCurso(List<BOCurso> listaCurso) {
 		this.listaCurso = listaCurso;
 	}
+	public Integer getIdPro() {
+		return idPro;
+	}
+	public void setIdPro(Integer idPro) {
+		this.idPro = idPro;
+	}
 	@Override
 	public String toString() {
-		return "BOModulo [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
-				+ ", listaCurso=" + listaCurso + "]";
+		return "BOModulo [id=" + id + ", idPro=" + idPro + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion="
+				+ duracion + ", listaCurso=" + listaCurso + "]";
 	}
+
 }

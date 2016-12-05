@@ -1,5 +1,7 @@
 package pe.com.negocio.servicio.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +11,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.negocio.bo.BOCurso;
+import pe.com.negocio.bo.BOGrupo;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
-import pe.com.negocio.servicio.NCurso;
+import pe.com.negocio.servicio.NDetalleModulo;
+import pe.com.negocio.servicio.NGrupo;
 import pe.com.negocio.servicio.NPrograma;
-import pe.com.persistencia.entity.BCurso;
 import pe.com.persistencia.entity.BModulo;
 import pe.com.persistencia.entity.BPrograma;
-import pe.com.persistencia.mapper.MCurso;
 import pe.com.persistencia.mapper.MModulo;
 import pe.com.persistencia.mapper.MPrograma;
 import pe.com.util.Constantes;
@@ -32,6 +34,12 @@ public class NProgramaImpl implements NPrograma {
 	
 	@Autowired
 	MModulo mModulo;
+	
+	@Autowired
+	NDetalleModulo nDetalleModulo;
+	
+	@Autowired
+	NGrupo nGrupo;
 	
 	@Autowired
 	@Qualifier("tProgramaEntityBO")
@@ -61,14 +69,51 @@ public class NProgramaImpl implements NPrograma {
 	@Override
 	public void agregarPrograma(BOPrograma bo) {
 		try {
-			System.out.println(bo);
+			Integer idPrograma,idModulo;
+			BOGrupo boGrupo;
 			mPrograma.agregarPrograma(transformar.toEntity(bo));
+			idPrograma=mPrograma.obtenerUltimoId();
+			for(BOModulo boModulo :bo.getListaModulo()){
+				boGrupo = new BOGrupo();
+				
+				boModulo.setIdPro(idPrograma);
+				
+				mModulo.agregarModulo(boModulo);
+				idModulo=mModulo.obtenerUltimoId();
+				boGrupo.setIdModulo(idModulo);
+				boGrupo.setCodigo(boModulo.getCodigo());
+				boGrupo.setNombre("Grupo 1");
+				boGrupo.setVacantes(30);
+				boGrupo.setInscritos(0);
+				boGrupo.setFechaInicio(new Date());
+				System.out.println(boGrupo);
+				
+				nGrupo.agregarGrupo(boGrupo);
+				for(BOCurso boCurso:boModulo.getListaCurso()){
+					nDetalleModulo.agregarDetalleModulo(idModulo, boCurso.getId());
+				}
+			}
+			
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
 		
+	}
+
+	@Override
+	public List<BOModulo> listarModulos(Integer idPrograma) {
+		List<BOModulo> lista = null;
+		try {
+			lista = new ArrayList<BOModulo>();
+			lista = transformarModulo.toBO(mModulo.listarModulos(idPrograma));
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		return lista;
 	}
 	
 	

@@ -17,5 +17,7 @@ public interface NAlumno {
 	public void modificarAlumno(BOAlumno categoriaIFI);
 
 	public void eliminarAlumno(Integer idCategoria);
+	
+	public void matricularAlumno(Integer idAlumno,Integer idGrupo);
 
 }

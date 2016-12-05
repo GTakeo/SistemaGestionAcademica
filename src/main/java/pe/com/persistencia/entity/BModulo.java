@@ -3,6 +3,7 @@ package pe.com.persistencia.entity;
 public class BModulo {
 
 	private Integer id;
+	private Integer idPro;
 	private String codigo;
 	private String nombre;
 	private Integer duracion;
@@ -30,11 +31,16 @@ public class BModulo {
 	public void setDuracion(Integer duracion) {
 		this.duracion = duracion;
 	}
-
+	public Integer getIdPro() {
+		return idPro;
+	}
+	public void setIdPro(Integer idPro) {
+		this.idPro = idPro;
+	}
 	@Override
 	public String toString() {
-		return "BModulo [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
-				+ ", listaCurso=" + "]";
+		return "BModulo [id=" + id + ", idPro=" + idPro + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion="
+				+ duracion + "]";
 	}
 	
 }

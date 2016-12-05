@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.2//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.com.persistencia.mapper.MGrupo"> <!-- interface java -->
+
+	<resultMap id="bGrupo"
+	type="pe.com.persistencia.entity.BGrupo">
+		<id column="ID_GRU" property="id" />
+		<result column="FK_GRU_MOD" property="idModulo" />
+		<result column="GRU_CODIGO" property="codigo" />
+		<result column="GRU_NOMBRE" property="nombre" />
+		<result column="GRU_VAANTES" property="vacantes" />
+		<result column="GRU_INSCRITOS" property="inscritos" />
+		<result column="GRU_FINICIO" property="fechaInicio" />
+	</resultMap>
+</mapper>

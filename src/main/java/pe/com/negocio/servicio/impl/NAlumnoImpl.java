@@ -100,4 +100,16 @@ public class NAlumnoImpl implements NAlumno {
 		}
 	}
 
+	@Override
+	public void matricularAlumno(Integer idAlumno, Integer idGrupo) {
+		try {
+			mAlumno.matricularAlumno(idAlumno, idGrupo, 0);
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		
+	}
+
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 public class FModulo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,7 @@ public class FModulo implements Serializable {
 	private String nombre;
 	private Integer duracion;
 	private List<FCurso> listaCurso;
+	private List<SelectItem> listaSelectCurso;
 	
 	public FModulo() {
 		listaCurso = new ArrayList<FCurso>();
@@ -46,11 +49,31 @@ public class FModulo implements Serializable {
 	public void setListaCurso(List<FCurso> listaCurso) {
 		this.listaCurso = listaCurso;
 	}
+	public List<SelectItem> getListaSelectCurso() {
+		return listaSelectCurso;
+	}
+	public void setListaSelectCurso(List<SelectItem> listaSelectCurso) {
+		this.listaSelectCurso = listaSelectCurso;
+	}
+	
 	@Override
 	public String toString() {
 		return "FModulo [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
 				+ ", listaCurso=" + listaCurso + "]";
 	}
+	
+	public void obtenerSelectItemsCurso(List<FCurso> lista) {
+		if (lista != null && lista.size() > 0) {
+			listaSelectCurso = new ArrayList<SelectItem>();
+			for (FCurso fCurso : lista) {
+				SelectItem item = new SelectItem();
+				item.setLabel(fCurso.getNombre());
+				item.setValue(fCurso.getId());
+				listaSelectCurso.add(item);
+			}
+		}
+	}	
+
 
 	
 }
