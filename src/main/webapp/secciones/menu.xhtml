@@ -20,20 +20,30 @@
 					<p:menuitem value="#{i18n['SGA.submenu.matricularAlumno']}"
 						action="/paginas/min_matricularAlumno.jsf?faces-redirect=true"
 						actionListener="#{cMatricularAlumno.inicializarObjetos()}" />
+					<p:menuitem value="#{i18n['SGA.submenu.consolidadoNotas']}"
+						action="/paginas/min_consolidadoNotas.jsf?faces-redirect=true"
+						actionListener="#{cConsolidadoNotas.inicializarObjetos()}" />
+
 				</p:submenu>
 				<p:submenu label="#{i18n['SGA.menu.gestionCursos']}">
 					<p:menuitem value="#{i18n['SGA.submenu.mantenerCursos']}"
 						action="/paginas/min_mantenerCursos.jsf?faces-redirect=true"
-						actionListener="#{cMantenerCurso.inicializarObjetos()}">
-					</p:menuitem>
+						actionListener="#{cMantenerCurso.inicializarObjetos()}" />
+
 					<p:menuitem value="#{i18n['SGA.submenu.mantenerProgramas']}"
 						action="/paginas/min_mantenerPrograma.jsf?faces-redirect=true"
-						actionListener="#{cMantenerPrograma.inicializarObjetos()}">
-					</p:menuitem>
+						actionListener="#{cMantenerPrograma.inicializarObjetos()}" />
+
 				</p:submenu>
-				<p:submenu label="Opcion 3">
-					<p:menuitem value="Opcion 3">
-					</p:menuitem>
+				<p:submenu label="#{i18n['SGA.menu.gestionDocentes']}">
+					<p:menuitem value="#{i18n['SGA.submenu.mantenerDocentes']}" />
+
+					<p:menuitem value="#{i18n['SGA.submenu.consultarDocentes']}" />
+
+				</p:submenu>
+				<p:submenu label="#{i18n['SGA.menu.mantenimiento']}">
+					<p:menuitem value="#{i18n['SGA.submenu.mantenerTipoPago']}" />
+
 				</p:submenu>
 			</p:menubar>
 		</p:panelGrid>

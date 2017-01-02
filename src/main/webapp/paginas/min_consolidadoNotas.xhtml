@@ -1,0 +1,79 @@
+<ui:composition template="/plantillas/plantilla.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:form id="frmConsolidadoNotas">
+			<p:growl id="mensajes" showSummary="false" showDetail="true" />
+			<br />
+			<div align="center" style="font-weight: bold;">
+				<br />
+				<p:outputLabel value="#{i18n['min_consolidadoNotas.titulo']}"
+					style="font-size:20px;" />
+				<br />
+			</div>
+			<br />
+			<p:fieldset>
+				<div align="center">
+					<br />
+					<h:panelGrid columns="3">
+						<p:outputLabel for="slcPrograma" styleClass="tipoLetra"
+							value="Programa" />
+						<p:spacer width="10" />
+						<p:selectOneMenu id="slcPrograma" style="width: 400px"
+							value="#{cConsolidadoNotas.idPrograma}" required="true"
+							requiredMessage="#{i18n['min_mantenerPrograma.programaRequerido']}">
+							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{cConsolidadoNotas.fAlumno.listaSelectPrograma}" />
+							<p:ajax update="slcModulo slcGrupo"
+								listener="#{cConsolidadoNotas.obtenerSelectItemsModulo()}" />
+						</p:selectOneMenu>
+
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+
+						<p:outputLabel for="slcModulo" styleClass="tipoLetra"
+							value="Modulo" />
+						<p:spacer width="10" />
+						<p:selectOneMenu id="slcModulo" style="width: 400px"
+							value="#{cConsolidadoNotas.idModulo}" required="true"
+							requiredMessage="#{i18n['min_mantenerPrograma.moduloRequerido']}">
+							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{cConsolidadoNotas.fAlumno.listaSelectModulo}" />
+							<p:ajax update="slcGrupo "
+								listener="#{cConsolidadoNotas.obtenerSelectItemsGrupo()}" />
+						</p:selectOneMenu>
+
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+
+						<p:outputLabel for="slcGrupo" styleClass="tipoLetra" value="Grupo" />
+						<p:spacer width="10" />
+						<p:selectOneMenu id="slcGrupo" style="width: 400px"
+							value="#{cConsolidadoNotas.idGrupo}" required="true"
+							requiredMessage="#{i18n['min_mantenerPrograma.grupoRequerido']}">
+							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{cConsolidadoNotas.fAlumno.listaSelectGrupo}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</div>
+			</p:fieldset>
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
