@@ -148,8 +148,8 @@ public class FAlumno implements Serializable {
 	}	
 	
 	public void obtenerSelectItemsModulo(List<FModulo> lista) {
+		listaSelectModulo = new ArrayList<SelectItem>();
 		if (lista != null && lista.size() > 0) {
-			listaSelectModulo = new ArrayList<SelectItem>();
 			for (FModulo fModulo : lista) {
 				SelectItem item = new SelectItem();
 				item.setLabel(fModulo.getNombre());
@@ -160,8 +160,8 @@ public class FAlumno implements Serializable {
 	}	
 	
 	public void obtenerSelectItemsGrupo(List<BOGrupo> lista) {
+		listaSelectGrupo = new ArrayList<SelectItem>();
 		if (lista != null && lista.size() > 0) {
-			listaSelectGrupo = new ArrayList<SelectItem>();
 			for (BOGrupo fGrupo : lista) {
 				SelectItem item = new SelectItem();
 				item.setLabel(fGrupo.getNombre());

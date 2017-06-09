@@ -27,6 +27,7 @@
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcPrograma" style="width: 400px"
 							value="#{cConsolidadoNotas.idPrograma}" required="true"
+							disabled="#{cConsolidadoNotas.programaDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.programaRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
@@ -45,6 +46,7 @@
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcModulo" style="width: 400px"
 							value="#{cConsolidadoNotas.idModulo}" required="true"
+							disabled="#{cConsolidadoNotas.programaDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.moduloRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
@@ -62,6 +64,7 @@
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcGrupo" style="width: 400px"
 							value="#{cConsolidadoNotas.idGrupo}" required="true"
+							disabled="#{cConsolidadoNotas.programaDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.grupoRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
@@ -69,11 +72,60 @@
 								value="#{cConsolidadoNotas.fAlumno.listaSelectGrupo}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
+					<br />
+					<p:commandButton styleClass="tipoLetra" value="Consultar"
+						disabled="#{cConsolidadoNotas.programaDesactivado}"
+						actionListener="#{cConsolidadoNotas.consultarNotas()}"
+						update=":frmConsolidadoNotas " />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:commandButton styleClass="tipoLetra" value="Cancelar"
+						actionListener="#{cConsolidadoNotas.inicializarObjetos()}"
+						update=":frmConsolidadoNotas ">
+					</p:commandButton>
+				</div>
+				<br />
+				<br />
+				<div align="center">
+					<p:dataTable id="tblnOTAS" widgetVar="wgvNotas"
+						value="#{cConsolidadoNotas.listaAlumnoNota}" var="Alumno"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+						filterEvent="enter" paginator="true" rows="10"
+						paginatorPosition="bottom"
+						emptyMessage="#{i18n['min_mantenerPrograma.tablaProgramaVacia']}">
+
+						<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cConsolidadoNotas.listaAlumnoNota.indexOf(Alumno)+1}
+						</p:column>
+						<p:column headerText="#{i18n['min_mantenerAlumno.apellido']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.ALU_APELLIDO}" />
+						</p:column>
+						<p:column headerText="#{i18n['min_mantenerAlumno.nombre']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.ALU_NOMBRE}" />
+						</p:column>
+						<p:column headerText="#{i18n['min_consolidadoNotas.notas']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Alumno.MTR_NOTA}" />
+						</p:column>
+					</p:dataTable>
+				</div>
+				<br />
+				<br />
+				<div align="center">
+					<p:commandButton styleClass="tipoLetra" value="Guardar"
+						disabled="#{cConsolidadoNotas.guardarDesactivado}"
+						actionListener="#{cConsolidadoNotas.guardarNotas()}"
+						update=":frmConsolidadoNotas ">
+					</p:commandButton>
 				</div>
 			</p:fieldset>
 		</h:form>
-
-
-
 	</ui:define>
 </ui:composition>

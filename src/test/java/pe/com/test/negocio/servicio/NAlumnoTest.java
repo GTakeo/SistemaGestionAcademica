@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pe.com.negocio.bo.BOAlumno;
 import pe.com.negocio.servicio.NAlumno;
+import pe.com.persistencia.mapper.MAlumno;
 import pe.com.util.excepcion.BusinessLogicException;
 import pe.com.util.excepcion.DataAccessException;
 
@@ -24,6 +27,9 @@ public class NAlumnoTest {
 
 	@Autowired
 	NAlumno nAlumno;
+	
+	@Autowired
+	MAlumno mAlumno;
 
 	BOAlumno Alumno;
 
@@ -35,23 +41,20 @@ public class NAlumnoTest {
 	@Test
 	public void listarAlumnoTest() {
 		try {
-			List<BOAlumno> listaEmpelados = nAlumno.listarAlumnos();
-			for (BOAlumno bAlumnos : listaEmpelados) {
-				System.out.println(bAlumnos);
+			List<Map<String,String>> lista = new ArrayList<Map<String,String>>();
+			lista = mAlumno.listarAlumnosxGrupo(1);
+			for(Map<String,String> map:lista){
+				System.out.println(map.toString());
 			}
-		} catch (DataAccessException e) {
-			System.out.println(e.getMessage());
-		} catch (BusinessLogicException e) {
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
+		}catch(Exception e){
+			System.out.println(e);
 		}
 	}
 
 	// @Test
 	public void insertarAlumnoTest() {
 		String nombreAlumno = "Brayan";
-		String cargoAlumno = "Programador";
 		Alumno.setNombre(nombreAlumno);
 		try {
 			nAlumno.insertarAlumno(Alumno);

@@ -1,6 +1,7 @@
 package pe.com.persistencia.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -19,6 +20,9 @@ public interface MAlumno {
 	@ResultMap("bAlumno")
 	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO ORDER BY ALU_APELLIDO ASC")
 	public List<BAlumno> listarAlumnos();
+
+	@Select("SELECT ALU.ID_ALU ,ALU.ALU_APELLIDO ,ALU.ALU_NOMBRE ,MAT.MTR_NOTA FROM MATRICULA MAT,ALUMNO ALU WHERE MAT.FK_MTR_GRU = #{idGrupo} AND MAT.FK_MTR_ALU=ALU.ID_ALU ")
+	public List<Map<String, String>> listarAlumnosxGrupo(@Param("idGrupo") Integer idGrupo);
 
 	@ResultMap("bAlumno")
 	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO "
@@ -43,4 +47,7 @@ public interface MAlumno {
 	
 	@Select("INSERT INTO MATRICULA (FK_MTR_ALU,FK_MTR_GRU,MTR_NOTA) VALUES (#{idAlumno},#{idGrupo},#{nota})")
 	public void matricularAlumno(@Param("idAlumno") Integer idAlumno,@Param("idGrupo") Integer idGrupo,@Param("nota") Integer nota);
+	
+	@Update("UPDATE MATRICULA SET MTR_NOTA = #{nota} WHERE FK_MTR_ALU=#{codigoAlumno} AND FK_MTR_GRU=#{codigoGrupo}")
+	public void agregarNota(@Param("codigoAlumno")Integer codigoAlumno,@Param("codigoGrupo") Integer codigoGrupo,@Param("nota") Integer nota);
 }

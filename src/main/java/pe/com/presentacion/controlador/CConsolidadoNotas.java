@@ -1,6 +1,8 @@
 package pe.com.presentacion.controlador;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -48,11 +50,16 @@ public class CConsolidadoNotas {
 	TransformadorBOForm<BOModulo, FModulo> transfMod;
 	
 	
-	List<FAlumno> listaAlumno;
 	FAlumno fAlumno;
 	Integer idPrograma;
 	Integer idModulo;
 	Integer idGrupo;
+	
+	List<Map<String,String>> listaAlumnoNota;
+	boolean programaDesactivado;
+	boolean guardarDesactivado;
+
+
 
 
 	@PostConstruct
@@ -62,10 +69,13 @@ public class CConsolidadoNotas {
 
 	public void inicializarObjetos() {
 		try {
-			listaAlumno = transformar.toForm(nAlumno.listarAlumnos());
 			fAlumno = new FAlumno();
+			listaAlumnoNota = null;
 			fAlumno.obtenerSelectItemsPrograma(transfPro.toForm(nPrograma.ListarProgramas()));;
+			programaDesactivado=false;
+			guardarDesactivado=true;
 			
+
 		} catch (DataAccessException e) {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, e.getMessage());
 		} catch (BusinessLogicException e) {
@@ -75,24 +85,33 @@ public class CConsolidadoNotas {
 		}
 	}
 	
+	public void consultarNotas(){
+		guardarDesactivado=false;
+		programaDesactivado=true;
+		listaAlumnoNota = nAlumno.listarAlumnosxGrupo(idGrupo);
+	}
+	
+	public void guardarNotas(){
+		Integer nota,idAlumno;
+		for(Map<String, String> map:listaAlumnoNota){
+//			System.out.println(map);
+//			nota = Integer.parseInt(map.get("MTR_NOTA").toString());
+//			System.out.println("---------------------------");
+//			idAlumno = Integer.parseInt(map.get("ID_ALU").toString());
+			nAlumno.agregarNotaAlumno(1,idGrupo,20);
+		}
+	}
+		
 	public void obtenerSelectItemsModulo(){
+
 		fAlumno.obtenerSelectItemsModulo(transfMod.toForm(nPrograma.listarModulos(idPrograma)));
 	}
 	
 	public void obtenerSelectItemsGrupo(){
+
 		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupos(idModulo));
 	}
 	
-
-	
-	public List<FAlumno> getListaAlumno() {
-		return listaAlumno;
-	}
-
-	public void setListaAlumno(List<FAlumno> listaAlumno) {
-		this.listaAlumno = listaAlumno;
-	}
-
 	public FAlumno getfAlumno() {
 		return fAlumno;
 	}
@@ -125,5 +144,28 @@ public class CConsolidadoNotas {
 		this.idGrupo = idGrupo;
 	}
 	
+	public List<Map<String, String>> getListaAlumnoNota() {
+		return listaAlumnoNota;
+	}
+
+	public void setLista(List<Map<String, String>> listaAlumnoNota) {
+		this.listaAlumnoNota = listaAlumnoNota;
+	}
 	
+	public boolean isProgramaDesactivado() {
+		return programaDesactivado;
+	}
+
+	public void setProgramaDesactivado(boolean programaDesactivado) {
+		this.programaDesactivado = programaDesactivado;
+	}
+	
+	public boolean isGuardarDesactivado() {
+		return guardarDesactivado;
+	}
+
+	public void setGuardarDesactivado(boolean guardarDesactivado) {
+		this.guardarDesactivado = guardarDesactivado;
+	}
+
 }
