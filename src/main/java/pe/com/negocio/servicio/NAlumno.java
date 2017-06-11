@@ -21,7 +21,7 @@ public interface NAlumno {
 	
 	public void matricularAlumno(Integer idAlumno,Integer idGrupo);
 
-	public List<Map<String, String>> listarAlumnosxGrupo(Integer idGrupo);
+	public List<Map<String, Object>> listarAlumnosxGrupo(Integer idGrupo);
 
 	public void agregarNotaAlumno(Integer codigoAlumno,Integer codigoGrupo,Integer nota);
 

@@ -114,8 +114,8 @@ public class NAlumnoImpl implements NAlumno {
 	}
 
 	@Override
-	public List<Map<String, String>> listarAlumnosxGrupo(Integer idGrupo) {
-		List<Map<String, String>>  lista = null;
+	public List<Map<String, Object>> listarAlumnosxGrupo(Integer idGrupo) {
+		List<Map<String, Object>>  lista = null;
 		try {
 			lista = mAlumno.listarAlumnosxGrupo(idGrupo);
 			

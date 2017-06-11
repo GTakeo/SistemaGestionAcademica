@@ -41,11 +41,11 @@ public class NAlumnoTest {
 	@Test
 	public void listarAlumnoTest() {
 		try {
-			List<Map<String,String>> lista = new ArrayList<Map<String,String>>();
-			lista = mAlumno.listarAlumnosxGrupo(1);
-			for(Map<String,String> map:lista){
-				System.out.println(map.toString());
-			}
+//			List<Map<String,String>> lista = new ArrayList<Map<String,String>>();
+//			lista = mAlumno.listarAlumnosxGrupo(1);
+//			for(Map<String,String> map:lista){
+//				System.out.println(map.toString());
+//			}
 			
 		}catch(Exception e){
 			System.out.println(e);

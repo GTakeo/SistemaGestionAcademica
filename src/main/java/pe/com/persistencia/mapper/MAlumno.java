@@ -22,7 +22,7 @@ public interface MAlumno {
 	public List<BAlumno> listarAlumnos();
 
 	@Select("SELECT ALU.ID_ALU ,ALU.ALU_APELLIDO ,ALU.ALU_NOMBRE ,MAT.MTR_NOTA FROM MATRICULA MAT,ALUMNO ALU WHERE MAT.FK_MTR_GRU = #{idGrupo} AND MAT.FK_MTR_ALU=ALU.ID_ALU ")
-	public List<Map<String, String>> listarAlumnosxGrupo(@Param("idGrupo") Integer idGrupo);
+	public List<Map<String, Object>> listarAlumnosxGrupo(@Param("idGrupo") Integer idGrupo);
 
 	@ResultMap("bAlumno")
 	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO "

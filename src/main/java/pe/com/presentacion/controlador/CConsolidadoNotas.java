@@ -55,7 +55,7 @@ public class CConsolidadoNotas {
 	Integer idModulo;
 	Integer idGrupo;
 	
-	List<Map<String,String>> listaAlumnoNota;
+	List<Map<String,Object>> listaAlumnoNota;
 	boolean programaDesactivado;
 	boolean guardarDesactivado;
 
@@ -93,12 +93,10 @@ public class CConsolidadoNotas {
 	
 	public void guardarNotas(){
 		Integer nota,idAlumno;
-		for(Map<String, String> map:listaAlumnoNota){
-//			System.out.println(map);
-//			nota = Integer.parseInt(map.get("MTR_NOTA").toString());
-//			System.out.println("---------------------------");
-//			idAlumno = Integer.parseInt(map.get("ID_ALU").toString());
-			nAlumno.agregarNotaAlumno(1,idGrupo,20);
+		for(Map<String, Object> map:listaAlumnoNota){		
+			nota = Integer.parseInt(map.get("MTR_NOTA").toString());
+			idAlumno = Integer.parseInt(map.get("ID_ALU").toString());
+			nAlumno.agregarNotaAlumno(idAlumno,idGrupo,nota);
 		}
 	}
 		
@@ -144,11 +142,11 @@ public class CConsolidadoNotas {
 		this.idGrupo = idGrupo;
 	}
 	
-	public List<Map<String, String>> getListaAlumnoNota() {
+	public List<Map<String, Object>> getListaAlumnoNota() {
 		return listaAlumnoNota;
 	}
 
-	public void setLista(List<Map<String, String>> listaAlumnoNota) {
+	public void setLista(List<Map<String, Object>> listaAlumnoNota) {
 		this.listaAlumnoNota = listaAlumnoNota;
 	}
 	
