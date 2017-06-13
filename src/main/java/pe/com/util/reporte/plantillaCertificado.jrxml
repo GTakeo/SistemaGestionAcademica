@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="plantillaCertificado" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4642829d-890f-4dea-a848-a51a7de1a2fe">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="5"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<field name="nombreAlumno" class="java.lang.String"/>
+	<field name="nombreCurso" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement x="99" y="37" width="627" height="79" uuid="4d7b98a2-9575-4ff4-bc08-03ec9406b2a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Serif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[<style isBold="true" size="40" isItalic="true" pdfFontName="Helvetica-Bold">CERTIFICADO DE ESTUDIOS</style>]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="38" width="802" height="60" uuid="da730017-0fb1-4113-9043-d919bf66e6f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[ <style size="20" pdfFontName="Helvetica-Bold">Mediante el presente documento se acredita que</style>]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-1" width="802" height="55" uuid="78a1d24c-0008-4791-ac93-8a7eb99d57e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font fontName="Times New Roman" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[
+"<style size='40'  isItalic='true' pdfFontName='Helvetica-Bold'>" + $F{nombreAlumno} + "</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="187" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="33" uuid="4f4fdb2a-367e-4d64-b050-831772e7649b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[ <style size="20" pdfFontName="Helvetica-Bold">Aprobó con exito el curso de</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="32" width="802" height="60" uuid="7f75f27c-f10a-41e3-90e2-256f10bb1d7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font fontName="Times New Roman" size="16" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[
+"<style size='40'  isItalic='true' pdfFontName='Helvetica-Bold'>" + $F{nombreCurso}  + "</style>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

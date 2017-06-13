@@ -3,12 +3,19 @@ package pe.com.presentacion.form;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.model.SelectItem;
 import javax.validation.constraints.Pattern;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.com.negocio.bo.BOGrupo;
+import pe.com.util.ArchivoUtil;
 
 public class FAlumno implements Serializable {
 
@@ -28,6 +35,13 @@ public class FAlumno implements Serializable {
 	private List<SelectItem> listaSelectPrograma;
 	private List<SelectItem> listaSelectModulo;
 	private List<SelectItem> listaSelectGrupo;
+	
+	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException {
+		HashMap<String, Object> parametros = new HashMap<String, Object>();
+		String fileName = "C:/Users/Gustavo/git/SistemaGestionAcademica/src/main/java/pe/com/util/reporte/plantillaCertificado.jasper";
+		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
+		ArchivoUtil.prepararArchivo(jasperPrint, nombreArchivo, ".pdf");
+	}
 	
 	public FAlumno() {
 	}

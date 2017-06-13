@@ -23,7 +23,10 @@
 		<junit.version>4.11</junit.version>
 		<joda.time.version>2.9.1</joda.time.version>
 		<log4j.version>1.2.17</log4j.version>
+		<apache.poi.version>3.14</apache.poi.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jasper.reports.version>6.3.0</jasper.reports.version>
+		<jasper.fonts.version>5.6.1</jasper.fonts.version>
 	</properties>
 
 	<repositories>
@@ -107,9 +110,15 @@
 		</dependency>
 		<!-- /PRIMEFACES -->
 
-
-
-
+		<!-- APACHE POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${apache.poi.version}</version>
+		</dependency>
+				
+		<!-- /APACHE POI -->
+		
 		<!-- SPRING -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -208,6 +217,20 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- /ORACLE DRIVER -->
+		
+		<!-- JASPERT REPORT -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasper.reports.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>${jasper.fonts.version}</version>
+		</dependency>
+		<!-- /JASPERT REPORT -->
 	</dependencies>
 	<build>
 		<finalName>SGA</finalName>
