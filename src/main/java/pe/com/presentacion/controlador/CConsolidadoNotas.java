@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
-import net.sf.jasperreports.engine.JRException;
 import pe.com.negocio.bo.BOAlumno;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
@@ -97,6 +96,15 @@ public class CConsolidadoNotas {
 		try {
 			Integer nota, idAlumno;
 			String nombre,apellido,nombreModulo = null;
+			
+			a= new ArrayList<FModulo>();
+			a = transfMod.toForm(nPrograma.listarModulos(idPrograma));
+			for(FModulo fModulo:a){
+				if(fModulo.getId() == idModulo){
+					nombreModulo = fModulo.getNombre();
+				}
+			}
+
 			for (Map<String, Object> map : listaAlumnoNota) {
 				
 				nota = Integer.parseInt(map.get("MTR_NOTA").toString());
@@ -109,25 +117,17 @@ public class CConsolidadoNotas {
 				nombre = map.get("ALU_APELLIDO").toString();
 				apellido = map.get("ALU_NOMBRE").toString();
 				
-				a= new ArrayList<FModulo>();
-				a = transfMod.toForm(nPrograma.listarModulos(idPrograma));
-				for(FModulo fModulo:a){
-					if(fModulo.getId() == idModulo){
-						nombreModulo = fModulo.getNombre();
-						break;
-					}
-				}
-				
+
+
 				jasperInfo.put("nombreAlumno", apellido+" "+nombre);
 				jasperInfo.put("nombreCurso", nombreModulo);
 				
 				jasperLista.add(jasperInfo);
 				
 				fAlumno.exportarPDF(jasperLista,apellido+"_"+nombre+"_"+nombreModulo);
-			}
-
-		} catch (JRException e) {
-			System.out.println(e.getMessage());
+			}			
+		}catch(Exception e){
+			System.out.println(e);
 		}
 
 	}
