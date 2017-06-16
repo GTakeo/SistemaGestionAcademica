@@ -125,7 +125,11 @@ public class CConsolidadoNotas {
 				jasperLista.add(jasperInfo);
 				
 				fAlumno.exportarPDF(jasperLista,apellido+"_"+nombre+"_"+nombreModulo);
-			}			
+			
+		
+			}	
+		
+//		fAlumno.validarPDF();
 		}catch(Exception e){
 			System.out.println(e);
 		}

@@ -1,27 +1,34 @@
 package pe.com.presentacion.form;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.faces.model.SelectItem;
 import javax.validation.constraints.Pattern;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfPKCS7;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfSignatureAppearance;
 import com.lowagie.text.pdf.PdfStamper;
@@ -80,6 +87,41 @@ public class FAlumno implements Serializable {
         // Añade la firma visible. Podemos comentarla para que no sea visible.
         sap.setVisibleSignature(new Rectangle(100,100,200,200),1,null);
         stp.close();
+	}
+	
+	public void validarPDF() throws IOException{
+		 Random rnd = new Random();
+         KeyStore kall = PdfPKCS7.loadCacertsKeyStore();
+         PdfReader reader = new PdfReader("C:/Users/Gustavo/Desktop/MARIO_DE LA CRUZ CASTRO_qweFirmado.pdf");
+         AcroFields af = reader.getAcroFields();
+         
+          ArrayList names = af.getSignatureNames();
+         for (int k = 0; k < names.size(); ++k) {
+            String name = (String)names.get(k);
+            int random = rnd.nextInt();
+            FileOutputStream out = new FileOutputStream("C:/Users/Gustavo/Desktop/revision_" + random + "_" + af.getRevision(name) + ".pdf");
+
+            byte bb[] = new byte[8192];
+            InputStream ip = af.extractRevision(name);
+            int n = 0;
+            while ((n = ip.read(bb)) > 0)
+            out.write(bb, 0, n);
+            out.close();
+            ip.close();
+
+            PdfPKCS7 pk = af.verifySignature(name);
+            Calendar cal = pk.getSignDate();
+            Certificate pkc[] = pk.getCertificates();
+            Object fails[] = PdfPKCS7.verifyCertificates(pkc, kall, null, cal);
+            if (fails == null) {
+                System.out.println(pk.getSignName());
+            }
+            else {
+                System.out.println("Firma no válida");
+            }
+            File f = new File("revision_" + random + "_" + af.getRevision(name) + ".pdf");
+            f.delete();
+         }
 	}
 	
 	public FAlumno() {
