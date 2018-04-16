@@ -61,25 +61,21 @@ public class FAlumno implements Serializable {
 	
 	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		String fileName = "C:/Users/Gustavo/git/SistemaGestionAcademica/src/main/java/pe/com/util/reporte/plantillaCertificado.jasper";
+		String fileName = "C:/Users/gusta/git/SistemaGestionAcademica/src/main/java/pe/com/util/reporte/plantillaCertificado.jasper";
 		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
 		ArchivoUtil.prepararArchivo(jasperPrint, nombreArchivo, ".pdf");
 		
 		
         KeyStore ks = KeyStore.getInstance("pkcs12");
-        ks.load(new FileInputStream("C:/Users/Gustavo/Desktop/cert-key-20170613-231724.p12"), "123456".toCharArray());
-        System.out.println("-----------------------------");
+        ks.load(new FileInputStream("C:/Users/gusta/Desktop/cert-key-20170613-231724.p12"), "123456".toCharArray());
         String alias = (String)ks.aliases().nextElement();
         PrivateKey key = (PrivateKey)ks.getKey(alias, "123456".toCharArray());
          java.security.cert.Certificate[] chain = ks.getCertificateChain(alias);
         // Recibimos como parámetro de entrada el nombre del archivo PDF a firmar
-         System.out.println("-----------------------------");
-        PdfReader reader = new PdfReader("C:/Users/Gustavo/Desktop/"+nombreArchivo+".pdf"); 
-        FileOutputStream fout = new FileOutputStream("C:/Users/Gustavo/Desktop/"+nombreArchivo+"Firmado"+".pdf");
-        System.out.println("-----------------------------");
+        PdfReader reader = new PdfReader("C:/Users/gusta/Desktop/"+nombreArchivo+".pdf"); 
+        FileOutputStream fout = new FileOutputStream("C:/Users/gusta/Desktop/"+nombreArchivo+"Firmado"+".pdf");
         // Añadimos firma al documento PDF
         PdfStamper stp = PdfStamper.createSignature(reader, fout, '?');
-        System.out.println("-----------------------------");
         PdfSignatureAppearance sap = stp.getSignatureAppearance();
         sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
         sap.setReason("Firma PKCS12");
@@ -92,14 +88,14 @@ public class FAlumno implements Serializable {
 	public void validarPDF() throws IOException{
 		 Random rnd = new Random();
          KeyStore kall = PdfPKCS7.loadCacertsKeyStore();
-         PdfReader reader = new PdfReader("C:/Users/Gustavo/Desktop/MARIO_DE LA CRUZ CASTRO_qweFirmado.pdf");
+         PdfReader reader = new PdfReader("C:/Users/gusta/Desktop/GUSTAVO_DE LA CRUZ_PRUEBAFirmado.pdf");
          AcroFields af = reader.getAcroFields();
          
           ArrayList names = af.getSignatureNames();
          for (int k = 0; k < names.size(); ++k) {
             String name = (String)names.get(k);
             int random = rnd.nextInt();
-            FileOutputStream out = new FileOutputStream("C:/Users/Gustavo/Desktop/revision_" + random + "_" + af.getRevision(name) + ".pdf");
+            FileOutputStream out = new FileOutputStream("C:/Users/gusta/Desktop/revision_" + random + "_" + af.getRevision(name) + ".pdf");
 
             byte bb[] = new byte[8192];
             InputStream ip = af.extractRevision(name);
@@ -114,6 +110,7 @@ public class FAlumno implements Serializable {
             Certificate pkc[] = pk.getCertificates();
             Object fails[] = PdfPKCS7.verifyCertificates(pkc, kall, null, cal);
             if (fails == null) {
+            	System.out.println("Firma válida");
                 System.out.println(pk.getSignName());
             }
             else {
