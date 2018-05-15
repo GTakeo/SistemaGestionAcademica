@@ -12,7 +12,6 @@
        http://www.springframework.org/schema/context 
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<import resource="spring-security.xml"/>
 
 	<!-- Paquete Base para escanear anotaciones Spring -->
 	<context:component-scan
@@ -58,7 +57,4 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	
-
-	<bean class="pe.com.presentacion.controlador.CLoginControler" id="loginController"/>
-
 </beans>
