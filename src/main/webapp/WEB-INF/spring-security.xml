@@ -9,13 +9,13 @@
     http://www.springframework.org/schema/security/spring-security-3.2.xsd">
   
 <http auto-config="true" use-expressions="true">                                                    
-        <intercept-url pattern="/index.htm" access="hasAnyRole('Administrador')"/>
+        <intercept-url pattern="/principal.jsf" access="hasAnyRole('Administrador')"/>
               
-        <form-login login-page="/login.htm" default-target-url="/index.htm"  
-                    login-processing-url="/j_spring_security_check" authentication-failure-url="/login.htm?error" 
+        <form-login login-page="/login.html" default-target-url="/principal.jsf"  
+                    login-processing-url="/j_spring_security_check" authentication-failure-url="/loginError.jsf" 
                     username-parameter="username"
                     password-parameter="password" />  
-         <logout logout-success-url="/login.htm" logout-url="/salir" />  
+         <logout logout-success-url="/login.html" logout-url="/salir" />  
     </http>
     
     <authentication-manager alias="authenticationManager">
