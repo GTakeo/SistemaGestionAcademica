@@ -64,9 +64,6 @@
 						<p:column headerText="#{i18n['SGA.opciones']}"
 							style="width:150px;">
 							<div align="center">
-								<p:commandButton id="btnModificarPrograma" icon="ui-icon-pencil" />
-								<p:tooltip for="btnModificarPrograma"
-									value="#{i18n['SGA.opcionModificar']}" />
 								<p:commandButton id="btnEliminarPrograma" icon="ui-icon-trash" />
 								<p:tooltip for="btnEliminarPrograma"
 									value="#{i18n['SGA.opcionEliminar']}" />
@@ -107,7 +104,7 @@
 							<p:inputText id="txtNombrePrograma"
 								value="#{cMantenerPrograma.fPrograma.nombre}" required="true"
 								requiredMessage="#{i18n['min_mantenerPrograma.nombreRequerido']}"
-								size="52" maxlength="8" />
+								size="52" maxlength="50" />
 
 							<p:spacer width="10" />
 							<p:spacer width="10" />
@@ -236,7 +233,7 @@
 							<p:inputText id="txtNombreRequerido"
 								value="#{cMantenerPrograma.fModulo.nombre}" required="true"
 								requiredMessage="#{i18n['min_mantenerPrograma.nombreRequerido']}"
-								size="52" maxlength="8" />
+								size="52" maxlength="50" />
 
 							<p:spacer width="10" />
 							<p:spacer width="10" />

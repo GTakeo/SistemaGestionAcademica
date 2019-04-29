@@ -6,7 +6,7 @@
 	<resultMap id="bGrupo"
 	type="pe.com.persistencia.entity.BGrupo">
 		<id column="ID_GRU" property="id" />
-		<result column="FK_GRU_MOD" property="idModulo" />
+		<result column="FK_GRU_CUR" property="idCurso" />
 		<result column="GRU_CODIGO" property="codigo" />
 		<result column="GRU_NOMBRE" property="nombre" />
 		<result column="GRU_VAANTES" property="vacantes" />

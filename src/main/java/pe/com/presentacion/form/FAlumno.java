@@ -61,13 +61,13 @@ public class FAlumno implements Serializable {
 	
 	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		String fileName = "C:/Users/gusta/git/SistemaGestionAcademica/src/main/java/pe/com/util/reporte/plantillaCertificado.jasper";
+		String fileName = "C:/Users/gusta/Dropbox/2019.Tesis/Desarrollo/PlantillaCertificación/plantillaCertificado.jasper";
 		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
 		ArchivoUtil.prepararArchivo(jasperPrint, nombreArchivo, ".pdf");
 		
 		
         KeyStore ks = KeyStore.getInstance("pkcs12");
-        ks.load(new FileInputStream("C:/Users/gusta/Desktop/cert-key-20170613-231724.p12"), "123456".toCharArray());
+        ks.load(new FileInputStream("C:/Users/gusta/Dropbox/2019.Tesis/Desarrollo/Certificado/cert-key-20170613-231724.p12"), "123456".toCharArray());
         String alias = (String)ks.aliases().nextElement();
         PrivateKey key = (PrivateKey)ks.getKey(alias, "123456".toCharArray());
          java.security.cert.Certificate[] chain = ks.getCertificateChain(alias);

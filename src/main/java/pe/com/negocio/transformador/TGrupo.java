@@ -18,7 +18,7 @@ public class TGrupo implements TransformadorEntityBO<BGrupo, BOGrupo> {
 		if(input != null){
 			boGrupo = new BOGrupo();
 			boGrupo.setId(input.getId());
-			boGrupo.setIdModulo(input.getIdModulo());
+			boGrupo.setIdCurso(input.getIdCurso());
 			boGrupo.setCodigo(input.getCodigo());
 			boGrupo.setNombre(input.getNombre());
 			boGrupo.setVacantes(input.getVacantes());
@@ -47,7 +47,7 @@ public class TGrupo implements TransformadorEntityBO<BGrupo, BOGrupo> {
 		if(input != null){
 			bGrupo = new BGrupo();
 			bGrupo.setId(input.getId());
-			bGrupo.setIdModulo(input.getIdModulo());
+			bGrupo.setIdCurso(input.getIdCurso());
 			bGrupo.setCodigo(input.getCodigo());
 			bGrupo.setNombre(input.getNombre());
 			bGrupo.setVacantes(input.getVacantes());

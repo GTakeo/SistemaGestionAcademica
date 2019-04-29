@@ -35,16 +35,11 @@ public class NGrupoImpl implements NGrupo {
 	public void agregarGrupo(BOGrupo bo) {
 		try {
 			mGrupo.agregarGrupo(transformar.toEntity(bo));
-		}catch(Exception e){
-			System.out.println(e.getMessage());
+		}catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
-		
-		
-//		catch (DataAccessException dae) {
-//			throw dae;
-//		} catch (Exception e) {
-//			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
-//		}
 	}
 
 	@Override

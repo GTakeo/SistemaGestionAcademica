@@ -80,21 +80,22 @@ public class NProgramaImpl implements NPrograma {
 				boModulo.setIdPro(idPrograma);
 				mModulo.agregarModulo(boModulo);
 				
-				boGrupo = new BOGrupo();
-				
 				idModulo=mModulo.obtenerUltimoId();
-				
-				boGrupo.setIdModulo(idModulo);
-				boGrupo.setCodigo(boModulo.getCodigo());
-				boGrupo.setNombre("Grupo 1");
-				boGrupo.setVacantes(30);
-				boGrupo.setInscritos(0);
-				boGrupo.setFechaInicio(new Date());
-				
-				nGrupo.agregarGrupo(boGrupo);
 				
 				for(BOCurso boCurso:boModulo.getListaCurso()){
 					nDetalleModulo.agregarDetalleModulo(idModulo, boCurso.getId());
+					
+					boGrupo = new BOGrupo();
+					
+					boGrupo.setIdCurso(boCurso.getId());
+					boGrupo.setCodigo(boCurso.getCodigo());
+					boGrupo.setNombre("Grupo 1 - "+boCurso.getNombre());
+					boGrupo.setVacantes(30);
+					boGrupo.setInscritos(0);
+					boGrupo.setFechaInicio(new Date());
+					
+					nGrupo.agregarGrupo(boGrupo);
+					
 				}
 			}
 			

@@ -5,7 +5,7 @@ import java.util.Date;
 public class BOGrupo {
 
 	private Integer id;
-	private Integer idModulo;
+	private Integer idCurso;
 	private String codigo;
 	private String nombre;
 	private Integer vacantes;
@@ -17,11 +17,11 @@ public class BOGrupo {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getIdModulo() {
-		return idModulo;
+	public Integer getIdCurso() {
+		return idCurso;
 	}
-	public void setIdModulo(Integer idModulo) {
-		this.idModulo = idModulo;
+	public void setIdCurso(Integer idCurso) {
+		this.idCurso = idCurso;
 	}
 	public String getCodigo() {
 		return codigo;
@@ -55,7 +55,7 @@ public class BOGrupo {
 	}
 	@Override
 	public String toString() {
-		return "BOGrupo [id=" + id + ", idModulo=" + idModulo + ", codigo=" + codigo + ", nombre=" + nombre
+		return "BOGrupo [id=" + id + ", idCurso=" + idCurso + ", codigo=" + codigo + ", nombre=" + nombre
 				+ ", vacantes=" + vacantes + ", inscritos=" + inscritos + ", fechaInicio=" + fechaInicio + "]";
 	}
 }

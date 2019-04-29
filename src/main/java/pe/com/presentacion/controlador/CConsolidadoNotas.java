@@ -73,7 +73,6 @@ public class CConsolidadoNotas {
 			fAlumno = new FAlumno();
 			listaAlumnoNota = null;
 			fAlumno.obtenerSelectItemsPrograma(transfPro.toForm(nPrograma.ListarProgramas()));
-			;
 			programaDesactivado = false;
 			guardarDesactivado = true;
 
@@ -121,6 +120,8 @@ public class CConsolidadoNotas {
 
 				jasperInfo.put("nombreAlumno", apellido+" "+nombre);
 				jasperInfo.put("nombreCurso", nombreModulo);
+				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
+				jasperInfo.put("fechaInicioFin","10/02/2019 al 10/04/2019 ");
 				
 				jasperLista.add(jasperInfo);
 				
@@ -130,8 +131,11 @@ public class CConsolidadoNotas {
 			}	
 		
 //		fAlumno.validarPDF();
+			
+			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");	
 		}catch(Exception e){
 			System.out.println(e);
+			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " +e.getMessage());	
 		}
 
 	}
