@@ -15,6 +15,7 @@ import pe.com.negocio.bo.BOAlumno;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
 import pe.com.negocio.servicio.NAlumno;
+import pe.com.negocio.servicio.NCurso;
 import pe.com.negocio.servicio.NGrupo;
 import pe.com.negocio.servicio.NPrograma;
 import pe.com.presentacion.form.FAlumno;
@@ -36,6 +37,9 @@ public class CConsolidadoNotas {
 	NPrograma nPrograma;
 
 	@Autowired
+	NCurso nCurso;
+	
+	@Autowired
 	NGrupo nGrupo;
 
 	@Autowired
@@ -53,6 +57,7 @@ public class CConsolidadoNotas {
 	FAlumno fAlumno;
 	Integer idPrograma;
 	Integer idModulo;
+	Integer idCurso;
 	Integer idGrupo;
 
 	List<Map<String, Object>> listaAlumnoNota;
@@ -61,7 +66,7 @@ public class CConsolidadoNotas {
 
 	private List<Map<String, Object>> jasperLista;
 	private Map<String, Object> jasperInfo;
-	List<FModulo> a ;
+	List<FModulo> a;
 
 	@PostConstruct
 	public void init() {
@@ -94,48 +99,45 @@ public class CConsolidadoNotas {
 	public void guardarNotas() {
 		try {
 			Integer nota, idAlumno;
-			String nombre,apellido,nombreModulo = null;
-			
-			a= new ArrayList<FModulo>();
+			String nombre, apellido, nombreModulo = null;
+
+			a = new ArrayList<FModulo>();
 			a = transfMod.toForm(nPrograma.listarModulos(idPrograma));
-			for(FModulo fModulo:a){
-				if(fModulo.getId() == idModulo){
+			for (FModulo fModulo : a) {
+				if (fModulo.getId() == idModulo) {
 					nombreModulo = fModulo.getNombre();
 				}
 			}
 
 			for (Map<String, Object> map : listaAlumnoNota) {
-				
+
 				nota = Integer.parseInt(map.get("MTR_NOTA").toString());
 				idAlumno = Integer.parseInt(map.get("ID_ALU").toString());
 				nAlumno.agregarNotaAlumno(idAlumno, idGrupo, nota);
-				
+
 				jasperLista = new ArrayList<Map<String, Object>>();
 				jasperInfo = new HashMap<String, Object>();
-				
+
 				nombre = map.get("ALU_APELLIDO").toString();
 				apellido = map.get("ALU_NOMBRE").toString();
-				
 
-
-				jasperInfo.put("nombreAlumno", apellido+" "+nombre);
+				jasperInfo.put("nombreAlumno", apellido + " " + nombre);
 				jasperInfo.put("nombreCurso", nombreModulo);
 				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
-				jasperInfo.put("fechaInicioFin","10/02/2019 al 10/04/2019 ");
-				
+				jasperInfo.put("fechaInicioFin", "10/02/2019 al 10/04/2019 ");
+
 				jasperLista.add(jasperInfo);
-				
-				fAlumno.exportarPDF(jasperLista,apellido+"_"+nombre+"_"+nombreModulo);
-			
-		
-			}	
-		
-//		fAlumno.validarPDF();
-			
-			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");	
-		}catch(Exception e){
+
+				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + nombreModulo);
+
+			}
+
+			// fAlumno.validarPDF();
+
+			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");
+		} catch (Exception e) {
 			System.out.println(e);
-			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " +e.getMessage());	
+			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " + e.getMessage());
 		}
 
 	}
@@ -145,9 +147,13 @@ public class CConsolidadoNotas {
 		fAlumno.obtenerSelectItemsModulo(transfMod.toForm(nPrograma.listarModulos(idPrograma)));
 	}
 
-	public void obtenerSelectItemsGrupo() {
+	public void obtenerSelectItemsCurso() {
 
-		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupos(idModulo));
+		fAlumno.obtenerSelectItemsCurso(nCurso.listarCursoXIdModulo(idModulo) );
+	}
+	
+	public void obtenerSelectItemsGrupo() {
+		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupoXIdCurso(idCurso));
 	}
 
 	public FAlumno getfAlumno() {
@@ -174,14 +180,6 @@ public class CConsolidadoNotas {
 		this.idModulo = idModulo;
 	}
 
-	public Integer getIdGrupo() {
-		return idGrupo;
-	}
-
-	public void setIdGrupo(Integer idGrupo) {
-		this.idGrupo = idGrupo;
-	}
-
 	public List<Map<String, Object>> getListaAlumnoNota() {
 		return listaAlumnoNota;
 	}
@@ -206,4 +204,19 @@ public class CConsolidadoNotas {
 		this.guardarDesactivado = guardarDesactivado;
 	}
 
+	public Integer getIdCurso() {
+		return idCurso;
+	}
+
+	public void setIdCurso(Integer idCurso) {
+		this.idCurso = idCurso;
+	}
+
+	public Integer getIdGrupo() {
+		return idGrupo;
+	}
+
+	public void setIdGrupo(Integer idGrupo) {
+		this.idGrupo = idGrupo;
+	}
 }

@@ -18,8 +18,8 @@ public interface MGrupo {
 	public void agregarGrupo(BGrupo bGrupo);
 
 	@ResultMap("bGrupo")
-	@Select("SELECT ID_GRU,  FK_GRU_CUR,  GRU_CODIGO,  GRU_NOMBRE,  GRU_VACANTES,  GRU_INSCRITOS,  GRU_FINICIO FROM GRUPO WHERE FK_GRU_MOD=#{id}  ")
-	public List<BGrupo> listarGrupos(@Param("id")Integer idModulo);
+	@Select("SELECT ID_GRU,  FK_GRU_CUR,  GRU_CODIGO,  GRU_NOMBRE,  GRU_VACANTES,  GRU_INSCRITOS,  GRU_FINICIO FROM GRUPO WHERE FK_GRU_CUR=#{idCurso}  ")
+	public List<BGrupo> listarGruposXIdCurso(@Param("idCurso")Integer idCurso);
 	
 
 }

@@ -26,4 +26,8 @@ public interface MCurso {
 	@Insert("INSERT INTO CURSO(CUR_CODIGO,CUR_NOMBRE) VALUES(#{codigo},#{nombre})")
 	public void agregarCurso(BCurso entity);
 
+	@ResultMap("bCurso")
+	@Select("SELECT ID_CUR ,CUR_CODIGO ,CUR_NOMBRE FROM CURSO , DETALLEMODULO WHERE DETALLEMODULO.FK_DTM_MOD=#{idModulo} AND DETALLEMODULO.FK_DTM_CUR=CURSO.ID_CUR ")
+	public List<BCurso> listarCursoXIdModulo(@Param("idModulo")Integer idModulo);
+
 }

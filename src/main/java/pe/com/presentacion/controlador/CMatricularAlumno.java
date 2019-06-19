@@ -12,6 +12,7 @@ import pe.com.negocio.bo.BOAlumno;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
 import pe.com.negocio.servicio.NAlumno;
+import pe.com.negocio.servicio.NCurso;
 import pe.com.negocio.servicio.NGrupo;
 import pe.com.negocio.servicio.NPrograma;
 import pe.com.presentacion.form.FAlumno;
@@ -33,6 +34,9 @@ public class CMatricularAlumno {
 	NPrograma nPrograma;
 	
 	@Autowired
+	NCurso nCurso;
+	
+	@Autowired
 	NGrupo nGrupo;
 		
 	@Autowired
@@ -52,6 +56,7 @@ public class CMatricularAlumno {
 	FAlumno fAlumno;
 	Integer idPrograma;
 	Integer idModulo;
+	Integer idCurso;
 	Integer idGrupo;
 
 
@@ -78,8 +83,12 @@ public class CMatricularAlumno {
 		fAlumno.obtenerSelectItemsModulo(transfMod.toForm(nPrograma.listarModulos(idPrograma)));
 	}
 	
+	public void obtenerSelectItemsCurso(){
+		fAlumno.obtenerSelectItemsCurso(nCurso.listarCursoXIdModulo(idModulo));
+	}
+	
 	public void obtenerSelectItemsGrupo(){
-		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupos(idModulo));
+		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupoXIdCurso(idCurso));
 	}
 	
 	public void iniciarMatricula(FAlumno fAlumno){
@@ -90,6 +99,7 @@ public class CMatricularAlumno {
 	
 	public void matricularAlumno(){
 		try {
+
 			nAlumno.matricularAlumno(fAlumno.getId(), idGrupo);
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Alumno matriculado exitosamente");
 			PaginaUtil.ejecutar("PF('wgvMAtricularAlumno').hide()");
@@ -135,6 +145,14 @@ public class CMatricularAlumno {
 		this.idModulo = idModulo;
 	}
 
+	public Integer getIdCurso() {
+		return idCurso;
+	}
+
+	public void setIdCurso(Integer idCurso) {
+		this.idCurso = idCurso;
+	}
+
 	public Integer getIdGrupo() {
 		return idGrupo;
 	}
@@ -142,6 +160,4 @@ public class CMatricularAlumno {
 	public void setIdGrupo(Integer idGrupo) {
 		this.idGrupo = idGrupo;
 	}
-	
-	
 }

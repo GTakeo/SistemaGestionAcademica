@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import pe.com.negocio.bo.BOCurso;
 import pe.com.negocio.bo.BOGrupo;
 import pe.com.negocio.servicio.NGrupo;
-import pe.com.persistencia.entity.BCurso;
 import pe.com.persistencia.entity.BGrupo;
-import pe.com.persistencia.mapper.MCurso;
 import pe.com.persistencia.mapper.MGrupo;
 import pe.com.util.Constantes;
 import pe.com.util.excepcion.BusinessLogicException;
@@ -43,11 +40,11 @@ public class NGrupoImpl implements NGrupo {
 	}
 
 	@Override
-	public List<BOGrupo> listarGrupos(Integer idModulo) {
+	public List<BOGrupo> listarGrupoXIdCurso(Integer idCurso) {
 		List<BOGrupo> lista=null;
 		try {
 			lista = new ArrayList<BOGrupo>();
-		    lista = transformar.toBO(mGrupo.listarGrupos(idModulo));
+		    lista = transformar.toBO(mGrupo.listarGruposXIdCurso(idCurso));
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {

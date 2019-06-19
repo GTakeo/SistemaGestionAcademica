@@ -37,6 +37,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import pe.com.negocio.bo.BOCurso;
 import pe.com.negocio.bo.BOGrupo;
 import pe.com.util.ArchivoUtil;
 
@@ -57,6 +58,7 @@ public class FAlumno implements Serializable {
 	private String correo;
 	private List<SelectItem> listaSelectPrograma;
 	private List<SelectItem> listaSelectModulo;
+	private List<SelectItem> listaSelectCurso;
 	private List<SelectItem> listaSelectGrupo;
 	
 	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException {
@@ -219,6 +221,13 @@ public class FAlumno implements Serializable {
 	public void setListaSelectGrupo(List<SelectItem> listaSelectGrupo) {
 		this.listaSelectGrupo = listaSelectGrupo;
 	}
+	public List<SelectItem> getListaSelectCurso() {
+		return listaSelectCurso;
+	}
+
+	public void setListaSelectCurso(List<SelectItem> listaSelectCurso) {
+		this.listaSelectCurso = listaSelectCurso;
+	}
 
 	@Override
 	public String toString() {
@@ -251,6 +260,18 @@ public class FAlumno implements Serializable {
 		}
 	}	
 	
+	public void obtenerSelectItemsCurso(List<BOCurso> lista) {
+		listaSelectCurso = new ArrayList<SelectItem>();
+		if (lista != null && lista.size() > 0) {
+			for (BOCurso fCurso : lista) {
+				SelectItem item = new SelectItem();
+				item.setLabel(fCurso.getNombre());
+				item.setValue(fCurso.getId());
+				listaSelectCurso.add(item);
+			}
+		}
+	}
+
 	public void obtenerSelectItemsGrupo(List<BOGrupo> lista) {
 		listaSelectGrupo = new ArrayList<SelectItem>();
 		if (lista != null && lista.size() > 0) {
@@ -261,6 +282,7 @@ public class FAlumno implements Serializable {
 				listaSelectGrupo.add(item);
 			}
 		}
+		
 	}	
 	
 

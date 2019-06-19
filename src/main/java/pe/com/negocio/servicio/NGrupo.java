@@ -8,7 +8,7 @@ public interface NGrupo {
 
 	void agregarGrupo(BOGrupo bo);
 
-	List<BOGrupo> listarGrupos(Integer idModulo);
+	List<BOGrupo> listarGrupoXIdCurso(Integer idCurso);
 
 
 }

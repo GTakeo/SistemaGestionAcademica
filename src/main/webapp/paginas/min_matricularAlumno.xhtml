@@ -132,7 +132,7 @@
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cMatricularAlumno.fAlumno.listaSelectPrograma}" />
-							<p:ajax update="slcModulo slcGrupo"
+							<p:ajax update="slcModulo slcCurso slcGrupo"
 								listener="#{cMatricularAlumno.obtenerSelectItemsModulo()}" />
 						</p:selectOneMenu>
 
@@ -150,10 +150,27 @@
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cMatricularAlumno.fAlumno.listaSelectModulo}" />
-							<p:ajax update="slcGrupo "
-								listener="#{cMatricularAlumno.obtenerSelectItemsGrupo()}" />
+							<p:ajax update="slcCurso slcGrupo"
+								listener="#{cMatricularAlumno.obtenerSelectItemsCurso()}" />
 						</p:selectOneMenu>
 
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+
+						<p:outputLabel for="slcCurso" styleClass="tipoLetra" value="Curso" />
+						<p:spacer width="10" />
+						<p:selectOneMenu id="slcCurso" style="width: 400px"
+							value="#{cMatricularAlumno.idCurso}" required="true"
+							requiredMessage="#{i18n['min_mantenerPrograma.grupoRequerido']}">
+							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{cMatricularAlumno.fAlumno.listaSelectCurso}" />
+							<p:ajax update="slcGrupo"
+								listener="#{cMatricularAlumno.obtenerSelectItemsGrupo()}" />
+						</p:selectOneMenu>
+						
 						<p:spacer width="10" />
 						<p:spacer width="10" />
 						<p:spacer width="10" />
@@ -168,7 +185,7 @@
 							<f:selectItems
 								value="#{cMatricularAlumno.fAlumno.listaSelectGrupo}" />
 						</p:selectOneMenu>
-
+								
 					</h:panelGrid>
 					<br />
 				</p:fieldset>

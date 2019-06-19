@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.negocio.bo.BOCurso;
+import pe.com.negocio.bo.BOGrupo;
 import pe.com.negocio.servicio.NCurso;
 import pe.com.persistencia.entity.BCurso;
 import pe.com.persistencia.mapper.MCurso;
@@ -63,6 +64,17 @@ public class NCursoImpl implements NCurso {
 		
 	}
 
-	
+	@Override
+	public List<BOCurso> listarCursoXIdModulo(Integer idModulo) {
+		List<BOCurso> listaCurso = null;
+		try {
+			listaCurso = transformar.toBO(mCurso.listarCursoXIdModulo(idModulo));
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		return listaCurso;
+	}	
 
 }

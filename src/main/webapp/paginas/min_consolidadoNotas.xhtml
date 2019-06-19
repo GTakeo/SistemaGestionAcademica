@@ -33,7 +33,7 @@
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cConsolidadoNotas.fAlumno.listaSelectPrograma}" />
-							<p:ajax update="slcModulo slcGrupo"
+							<p:ajax update="slcModulo slcCurso slcGrupo"
 								listener="#{cConsolidadoNotas.obtenerSelectItemsModulo()}" />
 						</p:selectOneMenu>
 
@@ -52,10 +52,28 @@
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cConsolidadoNotas.fAlumno.listaSelectModulo}" />
-							<p:ajax update="slcGrupo "
-								listener="#{cConsolidadoNotas.obtenerSelectItemsGrupo()}" />
+							<p:ajax update="slcCurso slcGrupo"
+								listener="#{cConsolidadoNotas.obtenerSelectItemsCurso()}" />
 						</p:selectOneMenu>
 
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+
+						<p:outputLabel for="slcCurso" styleClass="tipoLetra" value="Curso" />
+						<p:spacer width="10" />
+						<p:selectOneMenu id="slcCurso" style="width: 400px"
+							value="#{cConsolidadoNotas.idCurso}" required="true"
+							disabled="#{cConsolidadoNotas.programaDesactivado}"
+							requiredMessage="#{i18n['min_mantenerPrograma.cursoRequerido']}">
+							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{cConsolidadoNotas.fAlumno.listaSelectCurso}" />
+							<p:ajax update="slcGrupo" 
+								listener="#{cConsolidadoNotas.obtenerSelectItemsGrupo()}"/>	
+						</p:selectOneMenu>
+						
 						<p:spacer width="10" />
 						<p:spacer width="10" />
 						<p:spacer width="10" />
@@ -71,6 +89,7 @@
 							<f:selectItems
 								value="#{cConsolidadoNotas.fAlumno.listaSelectGrupo}" />
 						</p:selectOneMenu>
+						
 					</h:panelGrid>
 					<br />
 					<p:commandButton styleClass="tipoLetra" value="Consultar"
