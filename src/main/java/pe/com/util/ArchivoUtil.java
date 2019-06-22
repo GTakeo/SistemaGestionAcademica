@@ -68,7 +68,7 @@ public class ArchivoUtil {
 	}
 	
 	public static void prepararArchivo(JasperPrint jasperPrint, String nombreArchivo, String extensionArchivo){ 
-		String outFileName = "C:/Users/gusta/Desktop/" + nombreArchivo + extensionArchivo;
+		String outFileName = "C:/ProyectoSGA/DocumentosGenerados/" + nombreArchivo + extensionArchivo;
         SimpleOutputStreamExporterOutput simpleOutputStreamExporterOutput = null;
         JRPdfExporter exporter = null;
         try {
