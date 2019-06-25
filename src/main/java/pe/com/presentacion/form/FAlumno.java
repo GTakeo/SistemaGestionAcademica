@@ -23,7 +23,10 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.faces.model.SelectItem;
+import javax.mail.MessagingException;
 import javax.validation.constraints.Pattern;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Rectangle;
@@ -39,10 +42,11 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.com.negocio.bo.BOCurso;
 import pe.com.negocio.bo.BOGrupo;
+import pe.com.util.ApplicationMailer;
 import pe.com.util.ArchivoUtil;
 
 public class FAlumno implements Serializable {
-
+		
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 
@@ -61,7 +65,7 @@ public class FAlumno implements Serializable {
 	private List<SelectItem> listaSelectCurso;
 	private List<SelectItem> listaSelectGrupo;
 	
-	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException {
+	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException, MessagingException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		String fileName = "C:/ProyectoSGA/Configuracion/plantillaCertificado.jasper";
 		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
@@ -85,6 +89,18 @@ public class FAlumno implements Serializable {
         // Añade la firma visible. Podemos comentarla para que no sea visible.
         sap.setVisibleSignature(new Rectangle(100,100,200,200),1,null);
         stp.close();
+        
+        //enviamos pdf
+        //Create the application context
+//        ApplicationContext context = new FileSystemXmlApplicationContext("C:/Users/gusta/git/SistemaGestionAcademica/src/main/webapp/WEB-INF/applicationContext.xml");
+         
+        //Get the mailer instance
+//        ApplicationMailer mailer = (ApplicationMailer) context.getBean("mailService");}
+        
+        ApplicationMailer mailer = new ApplicationMailer();
+
+        mailer.sendMail("gustavo_dlcX@hotmail.com", "Resultados del curso de Programacion", "Felicitaciones, aprobaste el curso","C:/ProyectoSGA/DocumentosGenerados/"+nombreArchivo+"Firmado"+".pdf");
+ 
 	}
 	
 	/*

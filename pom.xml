@@ -256,6 +256,12 @@
 		</dependency>
 		<!-- /JASYPT -->
 		
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>SGA</finalName>
