@@ -25,4 +25,6 @@ public interface NAlumno {
 
 	public void agregarNotaAlumno(Integer codigoAlumno,Integer codigoGrupo,Integer nota);
 
+	public List<Map<String, Object>> listarAlumnosxCodGrupo(String codGrupo);
+
 }

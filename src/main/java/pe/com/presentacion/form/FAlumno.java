@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
@@ -65,41 +66,57 @@ public class FAlumno implements Serializable {
 	private List<SelectItem> listaSelectCurso;
 	private List<SelectItem> listaSelectGrupo;
 	
+	private ResourceBundle properties;
+	
+	public FAlumno () {
+		properties = ResourceBundle.getBundle("i18n.messages");
+	}
+	
+	
 	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException, MessagingException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
-		String fileName = "C:/ProyectoSGA/Configuracion/plantillaCertificado.jasper";
+		String fileName = properties.getString("generarCertificado_rutaJasper");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
 		ArchivoUtil.prepararArchivo(jasperPrint, nombreArchivo, ".pdf");
 		
 		
         KeyStore ks = KeyStore.getInstance("pkcs12");
-        ks.load(new FileInputStream("C:/ProyectoSGA/Configuracion/cert-key-20170613-231724.p12"), "123456".toCharArray());
+        ks.load(new FileInputStream(properties.getString("generarCertificado_rutaCertificadoDigital")), properties.getString("generarCertificado_claveCertificadoDigital").toCharArray());
         String alias = (String)ks.aliases().nextElement();
-        PrivateKey key = (PrivateKey)ks.getKey(alias, "123456".toCharArray());
+        PrivateKey key = (PrivateKey)ks.getKey(alias, properties.getString("generarCertificado_claveCertificadoDigital").toCharArray());
          java.security.cert.Certificate[] chain = ks.getCertificateChain(alias);
+         
         // Recibimos como parámetro de entrada el nombre del archivo PDF a firmar
-        PdfReader reader = new PdfReader("C:/ProyectoSGA/DocumentosGenerados/"+nombreArchivo+".pdf"); 
-        FileOutputStream fout = new FileOutputStream("C:/ProyectoSGA/DocumentosGenerados/"+nombreArchivo+"Firmado"+".pdf");
+        PdfReader reader = new PdfReader(properties.getString("generarCertificado_rutaDocumentoSinFirma").replace("$nombreArchivo", nombreArchivo)); 
+        FileOutputStream fout = new FileOutputStream(properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo));
+        
         // Añadimos firma al documento PDF
         PdfStamper stp = PdfStamper.createSignature(reader, fout, '?');
         PdfSignatureAppearance sap = stp.getSignatureAppearance();
         sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
         sap.setReason("Firma PKCS12");
         sap.setLocation("Imaginanet");
+        
         // Añade la firma visible. Podemos comentarla para que no sea visible.
-        sap.setVisibleSignature(new Rectangle(100,100,200,200),1,null);
+        //sap.setVisibleSignature(new Rectangle(100,100,200,200),1,null);
         stp.close();
         
-        //enviamos pdf
-        //Create the application context
-//        ApplicationContext context = new FileSystemXmlApplicationContext("C:/Users/gusta/git/SistemaGestionAcademica/src/main/webapp/WEB-INF/applicationContext.xml");
-         
-        //Get the mailer instance
-//        ApplicationMailer mailer = (ApplicationMailer) context.getBean("mailService");}
+        
+        //Enivar PDF por correo
+        
+        String correo,asunto,cuerpo;
+        
+        correo = listaAlumnoNota.get(0).get("correo").toString();
+        asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso", listaAlumnoNota.get(0).get("nombreCurso").toString());
+        cuerpo = "<font face='serif' size=4 >Estimado Alumno Gustavo<br/><br/>"+
+        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para felicitarlo por la aprobación del curso <i><b>X</b></i> .<br/>"+
+        		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
+        		 "Saludos<br/>"+
+        		 "Equipo X</font>";
         
         ApplicationMailer mailer = new ApplicationMailer();
-
-        mailer.sendMail("gustavo_dlcX@hotmail.com", "Resultados del curso de Programacion", "Felicitaciones, aprobaste el curso","C:/ProyectoSGA/DocumentosGenerados/"+nombreArchivo+"Firmado"+".pdf");
+        
+        mailer.sendMail(correo, asunto,cuerpo,properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo));
  
 	}
 	
@@ -143,9 +160,6 @@ public class FAlumno implements Serializable {
          }
 	}
 	
-	public FAlumno() {
-	}
-
 	public Integer getId() {
 		return id;
 	}

@@ -23,11 +23,11 @@ import pe.com.util.transformador.TransformadorEntityBO;
 public class NCursoImpl implements NCurso {
 	@Autowired
 	MCurso mCurso;
-	
+
 	@Autowired
 	@Qualifier("tCursoEntityBO")
 	TransformadorEntityBO<BCurso, BOCurso> transformar;
-	
+
 	@Override
 	public List<BOCurso> listarCursos() {
 		List<BOCurso> listaCurso = null;
@@ -61,7 +61,7 @@ public class NCursoImpl implements NCurso {
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
-		
+
 	}
 
 	@Override
@@ -75,6 +75,20 @@ public class NCursoImpl implements NCurso {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
 		return listaCurso;
-	}	
+	}
+
+	@Override
+	public String obtenerNombreCursoXCodGrupo(String codGrupo) {
+		String nombreCurso = null;
+		try {
+			nombreCurso = mCurso.obtenerNombreCursoXCodGrupo(codGrupo);
+			
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		return nombreCurso;
+	}
 
 }

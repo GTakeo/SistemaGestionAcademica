@@ -11,5 +11,6 @@ public interface NCurso {
 	public void eleminarCurso(Integer id);
 	public void agregarCurso(BOCurso boCurso);
 	public List<BOCurso> listarCursoXIdModulo(Integer idModulo);
+	public String obtenerNombreCursoXCodGrupo(String codGrupo);
 
 }

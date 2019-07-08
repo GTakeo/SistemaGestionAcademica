@@ -21,9 +21,12 @@ public interface MAlumno {
 	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO ORDER BY ALU_APELLIDO ASC")
 	public List<BAlumno> listarAlumnos();
 
-	@Select("SELECT ALU.ID_ALU ,ALU.ALU_APELLIDO ,ALU.ALU_NOMBRE ,MAT.MTR_NOTA FROM MATRICULA MAT,ALUMNO ALU WHERE MAT.FK_MTR_GRU = #{idGrupo} AND MAT.FK_MTR_ALU=ALU.ID_ALU ")
+	@Select("SELECT ALU.ID_ALU ,ALU.ALU_APELLIDO ,ALU.ALU_NOMBRE ,ALU.ALU_CORREO ,MAT.MTR_NOTA FROM MATRICULA MAT,ALUMNO ALU WHERE MAT.FK_MTR_GRU = #{idGrupo} AND MAT.FK_MTR_ALU=ALU.ID_ALU ")
 	public List<Map<String, Object>> listarAlumnosxGrupo(@Param("idGrupo") Integer idGrupo);
 
+	@Select("SELECT ALU.ID_ALU ,ALU.ALU_APELLIDO ,ALU.ALU_NOMBRE ,ALU.ALU_CORREO ,MAT.MTR_NOTA FROM MATRICULA MAT,ALUMNO ALU, GRUPO GRU WHERE GRU.GRU_CODIGO = #{codGrupo} AND MAT.FK_MTR_GRU = GRU.ID_GRU AND MAT.FK_MTR_ALU=ALU.ID_ALU ")
+	public List<Map<String, Object>> listarAlumnosxCodGrupo(@Param("codGrupo")String codGrupo);
+	
 	@ResultMap("bAlumno")
 	@Select("SELECT ID_ALU ,ALU_NOMBRE ,ALU_APELLIDO ,ALU_DIRECCION ,ALU_TELEFONO ,ALU_CELULAR ,ALU_FEC_NAC ,ALU_DNI ,ALU_CORREO  FROM ALUMNO "
 			+ "WHERE ID_ALU = #{id}")
@@ -50,4 +53,5 @@ public interface MAlumno {
 	
 	@Update("UPDATE MATRICULA SET MTR_NOTA = #{nota} WHERE FK_MTR_ALU=#{codigoAlumno} AND FK_MTR_GRU=#{codigoGrupo}")
 	public void agregarNota(@Param("codigoAlumno")Integer codigoAlumno,@Param("codigoGrupo") Integer codigoGrupo,@Param("nota") Integer nota);
+
 }

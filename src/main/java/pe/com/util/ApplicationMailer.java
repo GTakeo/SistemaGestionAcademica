@@ -24,19 +24,13 @@ public class ApplicationMailer {
 		try {
 			JavaMailSender mailSender = getJavaMailSender();
 
-//			SimpleMailMessage message = new SimpleMailMessage();
-//			message.setFrom("gustavo.dlcX@gmail.com");
-//			message.setTo(to);
-//			message.setSubject(subject);
-//			message.setText(body);
-//			mailSender.send(message);
 		    MimeMessage message = mailSender.createMimeMessage();
 		      
 		    MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		    helper.setFrom("gustavo.dlcX@gmail.com");
 		    helper.setTo(to);
 		    helper.setSubject(subject);
-		    helper.setText(body);
+		    helper.setText("",body);
 		         
 		    FileSystemResource file 
 		      = new FileSystemResource(new File(pathToAttachment));

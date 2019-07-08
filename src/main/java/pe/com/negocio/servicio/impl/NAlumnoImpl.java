@@ -139,4 +139,18 @@ public class NAlumnoImpl implements NAlumno {
 		
 	}
 
+	@Override
+	public List<Map<String, Object>> listarAlumnosxCodGrupo(String codGrupo) {
+		List<Map<String, Object>>  lista = null;
+		try {
+			lista = mAlumno.listarAlumnosxCodGrupo(codGrupo);
+			
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		return lista;
+	}
+
 }

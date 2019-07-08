@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import pe.com.negocio.bo.BOAlumno;
+import pe.com.negocio.bo.BOGrupo;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
 import pe.com.negocio.servicio.NAlumno;
@@ -38,7 +41,7 @@ public class CConsolidadoNotas {
 
 	@Autowired
 	NCurso nCurso;
-	
+
 	@Autowired
 	NGrupo nGrupo;
 
@@ -59,14 +62,21 @@ public class CConsolidadoNotas {
 	Integer idModulo;
 	Integer idCurso;
 	Integer idGrupo;
+	String codGrupo;
 
 	List<Map<String, Object>> listaAlumnoNota;
 	boolean programaDesactivado;
+	boolean moduloDesactivado;
+	boolean cursoDesactivado;
+	boolean grupoDesactivado;
 	boolean guardarDesactivado;
+	boolean consultarXCodGrupoDesactivado;
+	boolean consultarXIdGrupoDesactivado;
 
 	private List<Map<String, Object>> jasperLista;
 	private Map<String, Object> jasperInfo;
-	List<FModulo> a;
+
+	List<BOGrupo> listaGrupo;
 
 	@PostConstruct
 	public void init() {
@@ -79,6 +89,13 @@ public class CConsolidadoNotas {
 			listaAlumnoNota = null;
 			fAlumno.obtenerSelectItemsPrograma(transfPro.toForm(nPrograma.ListarProgramas()));
 			programaDesactivado = false;
+			moduloDesactivado = true;
+			cursoDesactivado = true;
+			grupoDesactivado = true;
+
+			// buttons
+			consultarXCodGrupoDesactivado = false;
+			consultarXIdGrupoDesactivado = true;
 			guardarDesactivado = true;
 
 		} catch (DataAccessException e) {
@@ -91,22 +108,52 @@ public class CConsolidadoNotas {
 	}
 
 	public void consultarNotas() {
-		guardarDesactivado = false;
-		programaDesactivado = true;
+
 		listaAlumnoNota = nAlumno.listarAlumnosxGrupo(idGrupo);
+
+		if (listaAlumnoNota.size() == 0) {
+			PaginaUtil.mensajeJSF(Constantes.ERROR, "El grupo seleccionado no cuenta con alumnos matriculados");
+		} else {
+			programaDesactivado = true;
+			moduloDesactivado = true;
+			cursoDesactivado = true;
+			grupoDesactivado = true;
+
+			consultarXCodGrupoDesactivado = true;
+			consultarXIdGrupoDesactivado = true;
+			guardarDesactivado = false;
+
+		}
+	}
+
+	public void consultarNotasxCodGrupo() {
+		// Se asumira que cada curso tiene el mismo codigo de grupo
+		listaAlumnoNota = nAlumno.listarAlumnosxCodGrupo(codGrupo);
+
+		if (listaAlumnoNota.size() == 0) {
+			PaginaUtil.mensajeJSF(Constantes.ERROR, "El codigo ingresado no existe o no tiene alumnos matriculados");
+		} else {
+			programaDesactivado = true;
+			moduloDesactivado = true;
+			cursoDesactivado = true;
+			grupoDesactivado = true;
+
+			consultarXCodGrupoDesactivado = true;
+			consultarXIdGrupoDesactivado = true;
+			guardarDesactivado = false;
+
+		}
 	}
 
 	public void guardarNotas() {
 		try {
 			Integer nota, idAlumno;
-			String nombre, apellido, nombreModulo = null;
+			String nombre, apellido, correo, curso = null;
 
-			a = new ArrayList<FModulo>();
-			a = transfMod.toForm(nPrograma.listarModulos(idPrograma));
-			for (FModulo fModulo : a) {
-				if (fModulo.getId() == idModulo) {
-					nombreModulo = fModulo.getNombre();
-				}
+			// Obtener el nombre del Curso X id Curso o cod Grupo
+
+			if (codGrupo.length() > 0) {
+				curso = nCurso.obtenerNombreCursoXCodGrupo(codGrupo);
 			}
 
 			for (Map<String, Object> map : listaAlumnoNota) {
@@ -120,15 +167,17 @@ public class CConsolidadoNotas {
 
 				nombre = map.get("ALU_APELLIDO").toString();
 				apellido = map.get("ALU_NOMBRE").toString();
+				correo = map.get("ALU_CORREO").toString();
 
 				jasperInfo.put("nombreAlumno", apellido + " " + nombre);
-				jasperInfo.put("nombreCurso", nombreModulo);
+				jasperInfo.put("nombreCurso", curso);
 				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
 				jasperInfo.put("fechaInicioFin", "10/02/2019 al 10/04/2019 ");
+				jasperInfo.put("correo", correo);
 
 				jasperLista.add(jasperInfo);
 
-				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + nombreModulo);
+				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + curso);
 
 			}
 
@@ -144,15 +193,19 @@ public class CConsolidadoNotas {
 	public void obtenerSelectItemsModulo() {
 
 		fAlumno.obtenerSelectItemsModulo(transfMod.toForm(nPrograma.listarModulos(idPrograma)));
+		moduloDesactivado = false;
 	}
 
 	public void obtenerSelectItemsCurso() {
 
-		fAlumno.obtenerSelectItemsCurso(nCurso.listarCursoXIdModulo(idModulo) );
+		fAlumno.obtenerSelectItemsCurso(nCurso.listarCursoXIdModulo(idModulo));
+		cursoDesactivado = false;
 	}
-	
+
 	public void obtenerSelectItemsGrupo() {
 		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupoXIdCurso(idCurso));
+		grupoDesactivado = false;
+		consultarXIdGrupoDesactivado = false;
 	}
 
 	public FAlumno getfAlumno() {
@@ -218,4 +271,56 @@ public class CConsolidadoNotas {
 	public void setIdGrupo(Integer idGrupo) {
 		this.idGrupo = idGrupo;
 	}
+
+	public String getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(String codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+
+	public boolean isCursoDesactivado() {
+		return cursoDesactivado;
+	}
+
+	public void setCursoDesactivado(boolean cursoDesactivado) {
+		this.cursoDesactivado = cursoDesactivado;
+	}
+
+	public boolean isGrupoDesactivado() {
+		return grupoDesactivado;
+	}
+
+	public void setGrupoDesactivado(boolean grupoDesactivado) {
+		this.grupoDesactivado = grupoDesactivado;
+	}
+
+	public boolean isConsultarXCodGrupoDesactivado() {
+		return consultarXCodGrupoDesactivado;
+	}
+
+	public void setConsultarXCodGrupoDesactivado(boolean consultarXCodGrupoDesactivado) {
+		this.consultarXCodGrupoDesactivado = consultarXCodGrupoDesactivado;
+	}
+
+	public boolean isConsultarXIdGrupoDesactivado() {
+		return consultarXIdGrupoDesactivado;
+	}
+
+	public void setConsultarXIdGrupoDesactivado(boolean consultarXIdGrupoDesactivado) {
+		this.consultarXIdGrupoDesactivado = consultarXIdGrupoDesactivado;
+	}
+
+	
+	public boolean isModuloDesactivado() {
+		return moduloDesactivado;
+	}
+	
+
+	public void setModuloDesactivado(boolean moduloDesactivado) {
+		this.moduloDesactivado = moduloDesactivado;
+	}
+	
+	
 }

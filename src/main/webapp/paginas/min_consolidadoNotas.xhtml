@@ -19,14 +19,30 @@
 			</div>
 			<br />
 			<p:fieldset>
-				<div align="center">
-					<br />
-					<h:panelGrid columns="3">
+
+				<br />
+
+				<h:panelGrid columns="2" width="100%">
+
+
+
+					<h:panelGrid columns="3" style="margin: 0 auto;">
+						<p:outputLabel for="txtIdGrupo" styleClass="tipoLetra"
+							value="Id Grupo" />
+						<p:spacer width="10" />
+						<p:inputText id="txtIdGrupo" required="false"
+							disabled="#{cConsolidadoNotas.programaDesactivado}"
+							value="#{cConsolidadoNotas.codGrupo}" size="52" maxlength="8" />
+					</h:panelGrid>
+
+
+					<h:panelGrid columns="3" style="margin: 0 auto;">
+
 						<p:outputLabel for="slcPrograma" styleClass="tipoLetra"
 							value="Programa" />
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcPrograma" style="width: 400px"
-							value="#{cConsolidadoNotas.idPrograma}" required="true"
+							value="#{cConsolidadoNotas.idPrograma}" required="false"
 							disabled="#{cConsolidadoNotas.programaDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.programaRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
@@ -45,8 +61,8 @@
 							value="Modulo" />
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcModulo" style="width: 400px"
-							value="#{cConsolidadoNotas.idModulo}" required="true"
-							disabled="#{cConsolidadoNotas.programaDesactivado}"
+							value="#{cConsolidadoNotas.idModulo}" required="false"
+							disabled="#{cConsolidadoNotas.moduloDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.moduloRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
@@ -63,17 +79,17 @@
 						<p:outputLabel for="slcCurso" styleClass="tipoLetra" value="Curso" />
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcCurso" style="width: 400px"
-							value="#{cConsolidadoNotas.idCurso}" required="true"
-							disabled="#{cConsolidadoNotas.programaDesactivado}"
+							value="#{cConsolidadoNotas.idCurso}" required="false"
+							disabled="#{cConsolidadoNotas.cursoDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.cursoRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cConsolidadoNotas.fAlumno.listaSelectCurso}" />
-							<p:ajax update="slcGrupo" 
-								listener="#{cConsolidadoNotas.obtenerSelectItemsGrupo()}"/>	
+							<p:ajax update="slcGrupo buttonConsultarXIdGrupo"
+								listener="#{cConsolidadoNotas.obtenerSelectItemsGrupo()}" />
 						</p:selectOneMenu>
-						
+
 						<p:spacer width="10" />
 						<p:spacer width="10" />
 						<p:spacer width="10" />
@@ -81,31 +97,35 @@
 						<p:outputLabel for="slcGrupo" styleClass="tipoLetra" value="Grupo" />
 						<p:spacer width="10" />
 						<p:selectOneMenu id="slcGrupo" style="width: 400px"
-							value="#{cConsolidadoNotas.idGrupo}" required="true"
-							disabled="#{cConsolidadoNotas.programaDesactivado}"
+							value="#{cConsolidadoNotas.idGrupo}" required="false"
+							disabled="#{cConsolidadoNotas.grupoDesactivado}"
 							requiredMessage="#{i18n['min_mantenerPrograma.grupoRequerido']}">
 							<f:selectItem itemLabel="#{i18n['SGA.seleccione']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{cConsolidadoNotas.fAlumno.listaSelectGrupo}" />
 						</p:selectOneMenu>
-						
 					</h:panelGrid>
-					<br />
-					<p:commandButton styleClass="tipoLetra" value="Consultar"
-						disabled="#{cConsolidadoNotas.programaDesactivado}"
-						actionListener="#{cConsolidadoNotas.consultarNotas()}"
-						update=":frmConsolidadoNotas " />
 
-					<p:spacer width="10" />
-					<p:spacer width="10" />
-					<p:spacer width="10" />
+<p:spacer width="10" />
+<p:spacer width="10" />
 
-					<p:commandButton styleClass="tipoLetra" value="Cancelar"
-						actionListener="#{cConsolidadoNotas.inicializarObjetos()}"
-						update=":frmConsolidadoNotas ">
-					</p:commandButton>
-				</div>
+					<h:panelGrid columns="1" style="margin: 0 auto;">
+						<p:commandButton styleClass="tipoLetra" value="Consultar"
+							disabled="#{cConsolidadoNotas.consultarXCodGrupoDesactivado}"
+							actionListener="#{cConsolidadoNotas.consultarNotasxCodGrupo()}"
+							update=":frmConsolidadoNotas" />
+					</h:panelGrid>
+
+					
+					<h:panelGrid columns="1" style="margin: 0 auto;">
+						<p:commandButton id="buttonConsultarXIdGrupo" styleClass="tipoLetra" value="Consultar"
+							disabled="#{cConsolidadoNotas.consultarXIdGrupoDesactivado}"
+							actionListener="#{cConsolidadoNotas.consultarNotas()}"
+							update=":frmConsolidadoNotas " />
+					</h:panelGrid>
+				</h:panelGrid>
+
 				<br />
 				<br />
 				<div align="center">
@@ -141,6 +161,14 @@
 					<p:commandButton styleClass="tipoLetra" value="Guardar"
 						disabled="#{cConsolidadoNotas.guardarDesactivado}"
 						actionListener="#{cConsolidadoNotas.guardarNotas()}"
+						update=":frmConsolidadoNotas ">
+					</p:commandButton>
+
+					<p:spacer width="30" />
+
+					<p:commandButton styleClass="tipoLetra" value="Cancelar"
+						disabled="#{cConsolidadoNotas.guardarDesactivado}"
+						actionListener="#{cConsolidadoNotas.inicializarObjetos()}"
 						update=":frmConsolidadoNotas ">
 					</p:commandButton>
 				</div>

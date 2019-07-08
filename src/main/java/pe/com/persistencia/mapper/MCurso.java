@@ -30,4 +30,7 @@ public interface MCurso {
 	@Select("SELECT ID_CUR ,CUR_CODIGO ,CUR_NOMBRE FROM CURSO , DETALLEMODULO WHERE DETALLEMODULO.FK_DTM_MOD=#{idModulo} AND DETALLEMODULO.FK_DTM_CUR=CURSO.ID_CUR ")
 	public List<BCurso> listarCursoXIdModulo(@Param("idModulo")Integer idModulo);
 
+	@Select("SELECT CUR.CUR_NOMBRE FROM GRUPO GRU, CURSO CUR WHERE GRU.FK_GRU_CUR=CUR.ID_CUR AND GRU.GRU_CODIGO = #{codGrupo} ")
+	public String obtenerNombreCursoXCodGrupo(@Param("codGrupo")String codGrupo);
+
 }
