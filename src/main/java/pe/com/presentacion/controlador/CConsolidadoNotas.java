@@ -72,6 +72,8 @@ public class CConsolidadoNotas {
 	boolean guardarDesactivado;
 	boolean consultarXCodGrupoDesactivado;
 	boolean consultarXIdGrupoDesactivado;
+	int alumnosAprobados;
+	int alumnosDesaprobados;
 
 	private List<Map<String, Object>> jasperLista;
 	private Map<String, Object> jasperInfo;
@@ -125,6 +127,16 @@ public class CConsolidadoNotas {
 
 		}
 	}
+	
+	public void confirmarConsolidadoNotas() {
+		int notaAprobatoria=13;
+		
+		alumnosAprobados = fAlumno.obtenerCantidadAprobados(listaAlumnoNota,notaAprobatoria);
+		alumnosDesaprobados = fAlumno.obtenerCantidadDesaprobados(listaAlumnoNota,notaAprobatoria);
+		
+		PaginaUtil.ejecutar("PF('wgvEliminarConsolidadoNotas').show()");
+		
+	}
 
 	public void consultarNotasxCodGrupo() {
 		// Se asumira que cada curso tiene el mismo codigo de grupo
@@ -148,14 +160,16 @@ public class CConsolidadoNotas {
 	public void guardarNotas() {
 		try {
 			Integer nota, idAlumno;
-			String nombre, apellido, correo, curso = null;
+			String nombre, apellido, correo, nombreCurso = null;
 
 			// Obtener el nombre del Curso X id Curso o cod Grupo
 
 			if (codGrupo.length() > 0) {
-				curso = nCurso.obtenerNombreCursoXCodGrupo(codGrupo);
+				nombreCurso = nCurso.obtenerNombreCursoXCodGrupo(codGrupo);
+			}else {
+				nombreCurso = fAlumno.obtenerNombreCursoXIdCurso(idCurso);
 			}
-
+			
 			for (Map<String, Object> map : listaAlumnoNota) {
 
 				nota = Integer.parseInt(map.get("MTR_NOTA").toString());
@@ -165,19 +179,19 @@ public class CConsolidadoNotas {
 				jasperLista = new ArrayList<Map<String, Object>>();
 				jasperInfo = new HashMap<String, Object>();
 
-				nombre = map.get("ALU_APELLIDO").toString();
-				apellido = map.get("ALU_NOMBRE").toString();
+				nombre = map.get("ALU_NOMBRE").toString();
+				apellido = map.get("ALU_APELLIDO").toString();
 				correo = map.get("ALU_CORREO").toString();
 
 				jasperInfo.put("nombreAlumno", apellido + " " + nombre);
-				jasperInfo.put("nombreCurso", curso);
+				jasperInfo.put("nombreCurso", nombreCurso);
 				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
 				jasperInfo.put("fechaInicioFin", "10/02/2019 al 10/04/2019 ");
 				jasperInfo.put("correo", correo);
 
 				jasperLista.add(jasperInfo);
 
-				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + curso);
+				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + nombreCurso);
 
 			}
 
@@ -321,6 +335,21 @@ public class CConsolidadoNotas {
 	public void setModuloDesactivado(boolean moduloDesactivado) {
 		this.moduloDesactivado = moduloDesactivado;
 	}
-	
+
+	public int getAlumnosAprobados() {
+		return alumnosAprobados;
+	}
+
+	public void setAlumnosAprobados(int alumnosAprobados) {
+		this.alumnosAprobados = alumnosAprobados;
+	}
+
+	public int getAlumnosDesaprobados() {
+		return alumnosDesaprobados;
+	}
+
+	public void setAlumnosDesaprobados(int alumnosDesaprobados) {
+		this.alumnosDesaprobados = alumnosDesaprobados;
+	}
 	
 }

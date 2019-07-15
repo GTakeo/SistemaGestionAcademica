@@ -104,22 +104,37 @@ public class FAlumno implements Serializable {
         
         //Enivar PDF por correo
         
-        String correo,asunto,cuerpo;
-        
-        correo = listaAlumnoNota.get(0).get("correo").toString();
-        asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso", listaAlumnoNota.get(0).get("nombreCurso").toString());
-        cuerpo = "<font face='serif' size=4 >Estimado Alumno Gustavo<br/><br/>"+
-        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para felicitarlo por la aprobación del curso <i><b>X</b></i> .<br/>"+
-        		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
-        		 "Saludos<br/>"+
-        		 "Equipo X</font>";
-        
+        String correo,asunto,cuerpo,nombreAlumno,nombreCurso;
         ApplicationMailer mailer = new ApplicationMailer();
         
-        mailer.sendMail(correo, asunto,cuerpo,properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo));
+        nombreAlumno = obtenerPrimerNombre(listaAlumnoNota.get(0).get("nombreAlumno").toString());
+        nombreCurso = listaAlumnoNota.get(0).get("nombreCurso").toString();
+        		
+        correo = listaAlumnoNota.get(0).get("correo").toString();
+        asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso",nombreCurso );
+        cuerpo = "<font face='serif' size=4 >Estimado(a) Alumno(a) "+ nombreAlumno+",<br/><br/>"+
+        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para felicitarlo por la aprobación del curso <i><b>"+ nombreCurso +"</b></i> y enviarle su certificado de estudio(Adjunto).<br/>"+
+        		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
+        		 "Saludos<br/><br/>"+
+        		 "<img src='https://i.ibb.co/0mFGMnS/Firma-Correo.png'> </font>";
+        
+        
+        
+        mailer.sendMail(correo, asunto,cuerpo,properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo),nombreArchivo+".pdf");
  
 	}
 	
+	private String obtenerPrimerNombre(String nombreCompleto) {
+		String primerNombre=null;
+				
+		nombreCompleto = nombreCompleto.substring(0, nombreCompleto.lastIndexOf(" "));
+		System.out.println(nombreCompleto);
+		primerNombre = nombreCompleto.substring(nombreCompleto.lastIndexOf(" "));
+		
+		return primerNombre;
+	}
+
+
 	/*
 	 * Funcionalidad no utilizada por ahora
 	 */
@@ -317,7 +332,41 @@ public class FAlumno implements Serializable {
 			}
 		}
 		
-	}	
+	}
+	
+	public String obtenerNombreCursoXIdCurso(Integer idCurso) {
+		String nombreCurso= null;
+		
+		for ( SelectItem a : listaSelectCurso) {
+			if(a.getValue().equals(idCurso)) {
+				nombreCurso = a.getLabel();
+			}
+		}
+		return nombreCurso;
+	}
+
+
+	public int obtenerCantidadAprobados(List<Map<String, Object>> listaAlumnoNota, int notaAprobatoria) {
+		int cantidadAprobados = 0;
+		for(Map<String,Object> alumno : listaAlumnoNota) {
+			if(Integer.parseInt(alumno.get("MTR_NOTA").toString()) >=  notaAprobatoria) {
+				cantidadAprobados++;
+			}
+		}
+		
+		return cantidadAprobados;
+	}
+
+
+	public int obtenerCantidadDesaprobados(List<Map<String, Object>> listaAlumnoNota, int notaAprobatoria) {
+		int cantidadDesaprobados = 0;
+		for(Map<String,Object> alumno : listaAlumnoNota) {
+			if(Integer.parseInt(alumno.get("MTR_NOTA").toString()) <  notaAprobatoria) {
+				cantidadDesaprobados++;
+			}
+		}		
+		return cantidadDesaprobados;
+	}
 	
 
 }

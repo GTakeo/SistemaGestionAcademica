@@ -20,7 +20,7 @@ public class ApplicationMailer {
 	 * This method will send compose and send the message
 	 * @throws MessagingException 
 	 */
-	public void sendMail(String to, String subject, String body, String pathToAttachment) throws MessagingException {
+	public void sendMail(String to, String subject, String body, String pathToAttachment, String nombreDocumento) throws MessagingException {
 		try {
 			JavaMailSender mailSender = getJavaMailSender();
 
@@ -34,7 +34,7 @@ public class ApplicationMailer {
 		         
 		    FileSystemResource file 
 		      = new FileSystemResource(new File(pathToAttachment));
-		    helper.addAttachment("Certificado.pdf", file);
+		    helper.addAttachment(nombreDocumento , file);
 		 
 		    mailSender.send(message);
 			

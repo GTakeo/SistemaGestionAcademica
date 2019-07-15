@@ -107,8 +107,8 @@
 						</p:selectOneMenu>
 					</h:panelGrid>
 
-<p:spacer width="10" />
-<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
 
 					<h:panelGrid columns="1" style="margin: 0 auto;">
 						<p:commandButton styleClass="tipoLetra" value="Consultar"
@@ -117,9 +117,10 @@
 							update=":frmConsolidadoNotas" />
 					</h:panelGrid>
 
-					
+
 					<h:panelGrid columns="1" style="margin: 0 auto;">
-						<p:commandButton id="buttonConsultarXIdGrupo" styleClass="tipoLetra" value="Consultar"
+						<p:commandButton id="buttonConsultarXIdGrupo"
+							styleClass="tipoLetra" value="Consultar"
 							disabled="#{cConsolidadoNotas.consultarXIdGrupoDesactivado}"
 							actionListener="#{cConsolidadoNotas.consultarNotas()}"
 							update=":frmConsolidadoNotas " />
@@ -160,9 +161,10 @@
 				<div align="center">
 					<p:commandButton styleClass="tipoLetra" value="Guardar"
 						disabled="#{cConsolidadoNotas.guardarDesactivado}"
-						actionListener="#{cConsolidadoNotas.guardarNotas()}"
-						update=":frmConsolidadoNotas ">
+						actionListener="#{cConsolidadoNotas.confirmarConsolidadoNotas()}"
+						update=":frmConfirmarConsolidadoNotas ">
 					</p:commandButton>
+
 
 					<p:spacer width="30" />
 
@@ -173,6 +175,90 @@
 					</p:commandButton>
 				</div>
 			</p:fieldset>
+
+
+
+
 		</h:form>
+
+		<!-- 			CONFIRMACION DE CONSOLIDADO DE NOTAS -->
+		<p:dialog 
+			message="#{i18n['min_consolidadoNotas.confirmarConsolidadoNotas']}"
+			widgetVar="wgvEliminarConsolidadoNotas" appendTo="@(body)"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade" style="font: 80% sans-serif; ">
+			<h:form id="frmConfirmarConsolidadoNotas">
+
+			<div align="center" style="font-weight: bold;">
+				<p:outputLabel value="#{i18n['min_consolidadoNotas.titulo']}"
+					style="font-size:20px;" />
+
+			</div>
+							<br />
+				<p:dataTable id="tblConfirmarNotas" widgetVar="wgvConfirmarNotas"
+					value="#{cConsolidadoNotas.listaAlumnoNota}" var="Alumno"
+					currentPageReportTemplate="{currentPage} de {totalPages}"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+					filterEvent="enter" paginator="true" rows="10"
+					paginatorPosition="bottom"
+					emptyMessage="#{i18n['min_mantenerPrograma.tablaProgramaVacia']}">
+
+					<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cConsolidadoNotas.listaAlumnoNota.indexOf(Alumno)+1}
+						</p:column>
+					<p:column headerText="#{i18n['min_mantenerAlumno.apellido']}"
+						style="width:300px; text-align: center;">
+						<h:outputText value="#{Alumno.ALU_APELLIDO}" />
+					</p:column>
+					<p:column headerText="#{i18n['min_mantenerAlumno.nombre']}"
+						style="width:300px; text-align: center;">
+						<h:outputText value="#{Alumno.ALU_NOMBRE}" />
+					</p:column>
+					<p:column headerText="#{i18n['min_consolidadoNotas.notas']}"
+						style="width:300px; text-align: center;">
+						<h:outputText value="#{Alumno.MTR_NOTA}" />
+					</p:column>
+				</p:dataTable>
+				<br />
+
+
+				<p:fieldset legend="Resumen">
+					<h:panelGrid columns="3" style="margin: 0 auto;">
+						<h:outputText value="Cantidad de alumnos Aprobados:" />
+						<p:spacer width="10" />
+						<h:outputText style= "color:green;font-weight: bold;" value="#{cConsolidadoNotas.alumnosAprobados}" />
+
+
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+						<p:spacer width="10" />
+
+						<h:outputText value="Cantidad de alumnos Desaprobados:" />
+						<p:spacer width="10" />
+						<h:outputText style= "color:red;font-weight: bold;" value="#{cConsolidadoNotas.alumnosDesaprobados}" />
+					</h:panelGrid>
+				</p:fieldset>
+
+<br/>
+				<div align="center">
+				<p:commandButton styleClass="tipoLetra" value="Confirmar"
+					disabled="#{cConsolidadoNotas.guardarDesactivado}"
+					actionListener="#{cConsolidadoNotas.guardarNotas()}"
+					update=":frmConsolidadoNotas "
+					onclick="PF('wgvEliminarConsolidadoNotas').hide()">
+				</p:commandButton>
+				
+				<p:spacer width="10" />
+				
+				<p:commandButton styleClass="tipoLetra" value="Cancelar"
+					onclick="PF('wgvEliminarConsolidadoNotas').hide()">
+				</p:commandButton>
+				
+				</div>
+
+			</h:form>
+		</p:dialog>
+		
 	</ui:define>
 </ui:composition>
