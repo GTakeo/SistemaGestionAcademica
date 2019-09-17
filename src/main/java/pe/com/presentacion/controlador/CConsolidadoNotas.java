@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
-import javax.faces.model.SelectItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -74,9 +72,12 @@ public class CConsolidadoNotas {
 	boolean consultarXIdGrupoDesactivado;
 	int alumnosAprobados;
 	int alumnosDesaprobados;
-
+	int notaAprobatoria=13;
+	
 	private List<Map<String, Object>> jasperLista;
+	private List<Map<String, Object>> jasperLista2;
 	private Map<String, Object> jasperInfo;
+	private Map<String, Object> jasperInfo2;
 
 	List<BOGrupo> listaGrupo;
 
@@ -129,7 +130,7 @@ public class CConsolidadoNotas {
 	}
 	
 	public void confirmarConsolidadoNotas() {
-		int notaAprobatoria=13;
+
 		
 		alumnosAprobados = fAlumno.obtenerCantidadAprobados(listaAlumnoNota,notaAprobatoria);
 		alumnosDesaprobados = fAlumno.obtenerCantidadDesaprobados(listaAlumnoNota,notaAprobatoria);
@@ -178,7 +179,7 @@ public class CConsolidadoNotas {
 
 				jasperLista = new ArrayList<Map<String, Object>>();
 				jasperInfo = new HashMap<String, Object>();
-
+				
 				nombre = map.get("ALU_NOMBRE").toString();
 				apellido = map.get("ALU_APELLIDO").toString();
 				correo = map.get("ALU_CORREO").toString();
@@ -188,10 +189,44 @@ public class CConsolidadoNotas {
 				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
 				jasperInfo.put("fechaInicioFin", "10/02/2019 al 10/04/2019 ");
 				jasperInfo.put("correo", correo);
+				jasperInfo.put("curso", "prueba");
 
 				jasperLista.add(jasperInfo);
-
-				fAlumno.exportarPDF(jasperLista, apellido + "_" + nombre + "_" + nombreCurso);
+				
+				
+				jasperLista2 = new ArrayList<Map<String, Object>>();
+				
+				jasperInfo2  = new HashMap<String, Object>();
+				jasperInfo2.put("curso","Microsoft Windows");
+				jasperInfo2.put("duracion",8);
+				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("promedioNumero",nota);
+				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+				
+				jasperLista2.add(jasperInfo2);
+				
+				jasperInfo2  = new HashMap<String, Object>();
+				jasperInfo2.put("curso","Microsoft Word");
+				jasperInfo2.put("duracion",8);
+				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("promedioNumero",nota);
+				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+				jasperLista2.add(jasperInfo2);
+				
+				jasperInfo2  = new HashMap<String, Object>();
+				jasperInfo2.put("curso","Microsoft Excel");
+				jasperInfo2.put("duracion",14);
+				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("promedioNumero",nota);
+				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+				jasperLista2.add(jasperInfo2);
+				
+				if(nota>=notaAprobatoria) {
+					fAlumno.exportarPDF(jasperLista,jasperLista2, apellido + "_" + nombre + "_" + nombreCurso);
+				}else {
+					fAlumno.enviarConstancia(jasperLista,apellido + "_" + nombre + "_" + nombreCurso);
+				}
+				
 
 			}
 
@@ -202,6 +237,35 @@ public class CConsolidadoNotas {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " + e.getMessage());
 		}
 
+	}
+
+	private String obtenerNombreNota(Integer nota) {
+		String nombreNota = "";
+		
+		switch(nota) {
+			case 1 : nombreNota = "Uno";break;
+			case 2 : nombreNota = "Dos";break;
+			case 3 : nombreNota = "Tres";break;
+			case 4 : nombreNota = "Cuatro";break;
+			case 5 : nombreNota = "Cinco";break;
+			case 6 : nombreNota = "Seis";break;
+			case 7 : nombreNota = "Siete";break;
+			case 8 : nombreNota = "Ocho";break;
+			case 9 : nombreNota = "Nueve";break;
+			case 10 : nombreNota = "Diez";break;
+			case 11 : nombreNota = "Once";break;
+			case 12 : nombreNota = "Doce";break;
+			case 13 : nombreNota = "Trece";break;
+			case 14 : nombreNota = "Catorce";break;
+			case 15 : nombreNota = "Quince";break;
+			case 16 : nombreNota = "Dieciséis";break;
+			case 17 : nombreNota = "Diecisiete";break;
+			case 18 : nombreNota = "Dieciocho";break;
+			case 19 : nombreNota = "Diecinueve";break;
+			case 20 : nombreNota = "Veinte";break;
+		}
+		
+		return nombreNota;
 	}
 
 	public void obtenerSelectItemsModulo() {

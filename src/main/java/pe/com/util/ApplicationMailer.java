@@ -18,26 +18,28 @@ public class ApplicationMailer {
 
 	/**
 	 * This method will send compose and send the message
-	 * @throws MessagingException 
+	 * 
+	 * @throws MessagingException
 	 */
-	public void sendMail(String to, String subject, String body, String pathToAttachment, String nombreDocumento) throws MessagingException {
+	public void sendMail(String to, String subject, String body, String pathToAttachment, String nombreDocumento,
+			boolean adjunto) throws MessagingException {
 		try {
 			JavaMailSender mailSender = getJavaMailSender();
 
-		    MimeMessage message = mailSender.createMimeMessage();
-		      
-		    MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		    helper.setFrom("gustavo.dlcX@gmail.com");
-		    helper.setTo(to);
-		    helper.setSubject(subject);
-		    helper.setText("",body);
-		         
-		    FileSystemResource file 
-		      = new FileSystemResource(new File(pathToAttachment));
-		    helper.addAttachment(nombreDocumento , file);
-		 
-		    mailSender.send(message);
-			
+			MimeMessage message = mailSender.createMimeMessage();
+
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setFrom("gustavo.dlcX@gmail.com");
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText("", body);
+
+			if (adjunto == true) {
+				FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
+				helper.addAttachment(nombreDocumento, file);
+			}
+
+			mailSender.send(message);
 
 		} catch (MailException e) {
 			System.out.println(e.getMessage());

@@ -3,6 +3,8 @@ package pe.com.util;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.context.FacesContext;
 
@@ -67,7 +69,7 @@ public class ArchivoUtil {
 		return streamedContent;
 	}
 	
-	public static void prepararArchivo(JasperPrint jasperPrint, String nombreArchivo, String extensionArchivo){ 
+	public static void prepararArchivo(JasperPrint jasperPrint,JasperPrint jasperPrint2, String nombreArchivo, String extensionArchivo){ 
 		String outFileName = "C:/ProyectoSGA/DocumentosGenerados/" + nombreArchivo + extensionArchivo;
         SimpleOutputStreamExporterOutput simpleOutputStreamExporterOutput = null;
         JRPdfExporter exporter = null;
@@ -75,7 +77,13 @@ public class ArchivoUtil {
         	
         	exporter = new JRPdfExporter();
             simpleOutputStreamExporterOutput = new SimpleOutputStreamExporterOutput(outFileName);
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+            
+            List<JasperPrint> jasperPrintList = new ArrayList<JasperPrint>();
+            
+            jasperPrintList.add(jasperPrint);
+            jasperPrintList.add(jasperPrint2);
+            
+            exporter.setExporterInput(SimpleExporterInput.getInstance(jasperPrintList));
             exporter.setExporterOutput(simpleOutputStreamExporterOutput);
             exporter.exportReport();
         } catch (Exception e) {

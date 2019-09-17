@@ -73,11 +73,17 @@ public class FAlumno implements Serializable {
 	}
 	
 	
-	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException, MessagingException {
+	public void exportarPDF(List<Map<String,Object>> listaAlumnoNota,List<Map<String,Object>> jasperLista2,String nombreArchivo) throws JRException, KeyStoreException, NoSuchAlgorithmException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException, DocumentException, MessagingException {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		String fileName = properties.getString("generarCertificado_rutaJasper");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(fileName, parametros, new JRBeanCollectionDataSource(listaAlumnoNota));
-		ArchivoUtil.prepararArchivo(jasperPrint, nombreArchivo, ".pdf");
+		
+		HashMap<String, Object> parametros2 = new HashMap<String, Object>();
+		String fileName2 = properties.getString("generarCertificado_rutaJasper2");
+		JasperPrint jasperPrint2 = JasperFillManager.fillReport(fileName2, parametros2, new JRBeanCollectionDataSource(jasperLista2));
+		
+		
+		ArchivoUtil.prepararArchivo(jasperPrint,jasperPrint2, nombreArchivo, ".pdf");
 		
 		
         KeyStore ks = KeyStore.getInstance("pkcs12");
@@ -120,15 +126,36 @@ public class FAlumno implements Serializable {
         
         
         
-        mailer.sendMail(correo, asunto,cuerpo,properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo),nombreArchivo+".pdf");
+        mailer.sendMail(correo, asunto,cuerpo,properties.getString("generarCertificado_rutaDocumentoFirmado").replace("$nombreArchivo", nombreArchivo),nombreArchivo+".pdf",true);
  
+	}
+	
+	public void enviarConstancia(List<Map<String, Object>> listaAlumnoNota,String nombreArchivo) throws MessagingException {
+        String correo,asunto,cuerpo,nombreAlumno,nombreCurso;
+        ApplicationMailer mailer = new ApplicationMailer();
+        
+        nombreAlumno = obtenerPrimerNombre(listaAlumnoNota.get(0).get("nombreAlumno").toString());
+        
+        nombreCurso = listaAlumnoNota.get(0).get("nombreCurso").toString();
+        		
+        correo = listaAlumnoNota.get(0).get("correo").toString();
+        asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso",nombreCurso );
+        cuerpo = "<font face='serif' size=4 >Estimado(a) Alumno(a) "+ nombreAlumno+",<br/><br/>"+
+        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para informarle la desaprobación del curso <i><b>"+ nombreCurso +"</b></i> y enviarle su constancia de estudio(Adjunto).<br/>"+
+        		 "Lamentamos que haya obtenido este resultado.Lo invitamos a volver a aceptar el reto y lleve el curso nuevamente con nosotros.<br/>"+
+        		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
+        		 "Saludos<br/><br/>"+
+        		 "<img src='https://i.ibb.co/0mFGMnS/Firma-Correo.png'> </font>";
+       
+        
+        mailer.sendMail(correo, asunto,cuerpo,"","",false);
+		
 	}
 	
 	private String obtenerPrimerNombre(String nombreCompleto) {
 		String primerNombre=null;
 				
 		nombreCompleto = nombreCompleto.substring(0, nombreCompleto.lastIndexOf(" "));
-		System.out.println(nombreCompleto);
 		primerNombre = nombreCompleto.substring(nombreCompleto.lastIndexOf(" "));
 		
 		return primerNombre;
@@ -367,6 +394,5 @@ public class FAlumno implements Serializable {
 		}		
 		return cantidadDesaprobados;
 	}
-	
 
 }
