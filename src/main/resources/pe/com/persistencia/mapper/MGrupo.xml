@@ -9,8 +9,7 @@
 		<result column="FK_GRU_CUR" property="idCurso" />
 		<result column="GRU_CODIGO" property="codigo" />
 		<result column="GRU_NOMBRE" property="nombre" />
-		<result column="GRU_VAANTES" property="vacantes" />
+		<result column="GRU_VACANTES" property="vacantes" />
 		<result column="GRU_INSCRITOS" property="inscritos" />
-		<result column="GRU_FINICIO" property="fechaInicio" />
 	</resultMap>
 </mapper>

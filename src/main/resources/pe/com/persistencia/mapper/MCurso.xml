@@ -8,5 +8,8 @@
 		<id column="ID_CUR" property="id" />
 		<result column="CUR_CODIGO" property="codigo" />
 		<result column="CUR_NOMBRE" property="nombre" />
+		<result column="CUR_DURACION" property="duracion" />
+		<result column="CUR_FINICIO" property="fechaInicio" />
+		<result column="CUR_FTERMINO" property="fechaTermino" />
 	</resultMap>
 </mapper>

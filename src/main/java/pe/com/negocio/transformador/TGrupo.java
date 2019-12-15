@@ -22,9 +22,7 @@ public class TGrupo implements TransformadorEntityBO<BGrupo, BOGrupo> {
 			boGrupo.setCodigo(input.getCodigo());
 			boGrupo.setNombre(input.getNombre());
 			boGrupo.setVacantes(input.getVacantes());
-			boGrupo.setInscritos(input.getInscritos());
-			boGrupo.setFechaInicio(input.getFechaInicio());
-			
+			boGrupo.setInscritos(input.getInscritos());			
 		}
 		return boGrupo;
 	}
@@ -51,9 +49,7 @@ public class TGrupo implements TransformadorEntityBO<BGrupo, BOGrupo> {
 			bGrupo.setCodigo(input.getCodigo());
 			bGrupo.setNombre(input.getNombre());
 			bGrupo.setVacantes(input.getVacantes());
-			bGrupo.setInscritos(input.getInscritos());
-			bGrupo.setFechaInicio(input.getFechaInicio());
-			
+			bGrupo.setInscritos(input.getInscritos());			
 		}
 		return bGrupo;
 	}

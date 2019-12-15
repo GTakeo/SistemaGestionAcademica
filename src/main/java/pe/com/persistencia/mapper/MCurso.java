@@ -23,7 +23,7 @@ public interface MCurso {
 	@Delete("DELETE FROM CURSO WHERE ID_CUR = #{id}")
 	public void eliminarCurso(@Param("id")Integer id);
 
-	@Insert("INSERT INTO CURSO(CUR_CODIGO,CUR_NOMBRE) VALUES(#{codigo},#{nombre})")
+	@Insert("INSERT INTO CURSO(CUR_CODIGO,CUR_NOMBRE,CUR_DURACION,CUR_FINICIO,CUR_FTERMINO) VALUES(#{codigo},#{nombre},#{duracion},#{fechaInicio},#{fechaTermino})")
 	public void agregarCurso(BCurso entity);
 
 	@ResultMap("bCurso")
@@ -34,3 +34,6 @@ public interface MCurso {
 	public String obtenerNombreCursoXCodGrupo(@Param("codGrupo")String codGrupo);
 
 }
+
+
+

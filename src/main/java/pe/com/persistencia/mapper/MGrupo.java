@@ -14,11 +14,11 @@ import pe.com.persistencia.entity.BGrupo;
 public interface MGrupo {
 
 	@ResultMap("bGrupo")
-	@Select("INSERT INTO GRUPO (FK_GRU_CUR,GRU_CODIGO,GRU_NOMBRE,GRU_VACANTES,GRU_INSCRITOS,GRU_FINICIO) VALUES(#{idCurso},#{codigo},#{nombre},#{vacantes},#{inscritos},#{fechaInicio})")
+	@Select("INSERT INTO GRUPO (FK_GRU_CUR,GRU_CODIGO,GRU_NOMBRE,GRU_VACANTES,GRU_INSCRITOS) VALUES(#{idCurso},#{codigo},#{nombre},#{vacantes},#{inscritos})")
 	public void agregarGrupo(BGrupo bGrupo);
 
 	@ResultMap("bGrupo")
-	@Select("SELECT ID_GRU,  FK_GRU_CUR,  GRU_CODIGO,  GRU_NOMBRE,  GRU_VACANTES,  GRU_INSCRITOS,  GRU_FINICIO FROM GRUPO WHERE FK_GRU_CUR=#{idCurso}  ")
+	@Select("SELECT ID_GRU,  FK_GRU_CUR,  GRU_CODIGO,  GRU_NOMBRE,  GRU_VACANTES,  GRU_INSCRITOS FROM GRUPO WHERE FK_GRU_CUR=#{idCurso}  ")
 	public List<BGrupo> listarGruposXIdCurso(@Param("idCurso")Integer idCurso);
 	
 

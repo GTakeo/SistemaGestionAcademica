@@ -92,7 +92,6 @@ public class NProgramaImpl implements NPrograma {
 					boGrupo.setNombre("Grupo 1 - "+boCurso.getNombre());
 					boGrupo.setVacantes(30);
 					boGrupo.setInscritos(0);
-					boGrupo.setFechaInicio(new Date());
 					
 					nGrupo.agregarGrupo(boGrupo);
 					
@@ -102,6 +101,7 @@ public class NProgramaImpl implements NPrograma {
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
 		

@@ -119,7 +119,7 @@ public class FAlumno implements Serializable {
         correo = listaAlumnoNota.get(0).get("correo").toString();
         asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso",nombreCurso );
         cuerpo = "<font face='serif' size=4 >Estimado(a) Alumno(a) "+ nombreAlumno+",<br/><br/>"+
-        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para felicitarlo por la aprobación del curso <i><b>"+ nombreCurso +"</b></i> y enviarle su certificado de estudio(Adjunto).<br/>"+
+        		 "Reciba un cordial saludo por parte del CINFO. El presente mensaje es para felicitarlo por la aprobación del <i><b>''"+ nombreCurso +"''</b></i> y enviarle su respectivo certificado de estudio.<br/>"+
         		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
         		 "Saludos<br/><br/>"+
         		 "<img src='https://i.ibb.co/0mFGMnS/Firma-Correo.png'> </font>";

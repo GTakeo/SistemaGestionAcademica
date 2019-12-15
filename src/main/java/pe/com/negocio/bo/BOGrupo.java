@@ -10,7 +10,6 @@ public class BOGrupo {
 	private String nombre;
 	private Integer vacantes;
 	private Integer inscritos;
-	private Date fechaInicio;
 	public Integer getId() {
 		return id;
 	}
@@ -47,15 +46,9 @@ public class BOGrupo {
 	public void setInscritos(Integer inscritos) {
 		this.inscritos = inscritos;
 	}
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
 	@Override
 	public String toString() {
 		return "BOGrupo [id=" + id + ", idCurso=" + idCurso + ", codigo=" + codigo + ", nombre=" + nombre
-				+ ", vacantes=" + vacantes + ", inscritos=" + inscritos + ", fechaInicio=" + fechaInicio + "]";
+				+ ", vacantes=" + vacantes + ", inscritos=" + inscritos + "]";
 	}
 }

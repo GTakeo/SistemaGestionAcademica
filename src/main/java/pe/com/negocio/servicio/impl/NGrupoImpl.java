@@ -35,6 +35,7 @@ public class NGrupoImpl implements NGrupo {
 		}catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
 	}

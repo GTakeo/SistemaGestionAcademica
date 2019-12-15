@@ -1,6 +1,7 @@
 package pe.com.presentacion.controlador;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,12 +185,13 @@ public class CConsolidadoNotas {
 				apellido = map.get("ALU_APELLIDO").toString();
 				correo = map.get("ALU_CORREO").toString();
 
+				//REVISAR, SOLO VA NOMBRECURSO O CURSO
 				jasperInfo.put("nombreAlumno", apellido + " " + nombre);
 				jasperInfo.put("nombreCurso", nombreCurso);
-				jasperInfo.put("fechaHoy", "21 de Abril del 2019");
-				jasperInfo.put("fechaInicioFin", "10/02/2019 al 10/04/2019 ");
+				jasperInfo.put("fechaHoy", fechaHoy() );
+				jasperInfo.put("fechaInicioFin", "10/10/2019 al 07/11/2019 ");
 				jasperInfo.put("correo", correo);
-				jasperInfo.put("curso", "prueba");
+				jasperInfo.put("curso", nombreCurso);
 
 				jasperLista.add(jasperInfo);
 				
@@ -199,7 +201,7 @@ public class CConsolidadoNotas {
 				jasperInfo2  = new HashMap<String, Object>();
 				jasperInfo2.put("curso","Microsoft Windows");
 				jasperInfo2.put("duracion",8);
-				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("totalHoras",50);
 				jasperInfo2.put("promedioNumero",nota);
 				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
 				
@@ -207,8 +209,8 @@ public class CConsolidadoNotas {
 				
 				jasperInfo2  = new HashMap<String, Object>();
 				jasperInfo2.put("curso","Microsoft Word");
-				jasperInfo2.put("duracion",8);
-				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("duracion",12);
+				jasperInfo2.put("totalHoras",50);
 				jasperInfo2.put("promedioNumero",nota);
 				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
 				jasperLista2.add(jasperInfo2);
@@ -216,7 +218,23 @@ public class CConsolidadoNotas {
 				jasperInfo2  = new HashMap<String, Object>();
 				jasperInfo2.put("curso","Microsoft Excel");
 				jasperInfo2.put("duracion",14);
-				jasperInfo2.put("totalHoras",30);
+				jasperInfo2.put("totalHoras",50);
+				jasperInfo2.put("promedioNumero",nota);
+				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+				jasperLista2.add(jasperInfo2);
+				
+				jasperInfo2  = new HashMap<String, Object>();
+				jasperInfo2.put("curso","Microsoft Power Point");
+				jasperInfo2.put("duracion",8);
+				jasperInfo2.put("totalHoras",50);
+				jasperInfo2.put("promedioNumero",nota);
+				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+				jasperLista2.add(jasperInfo2);
+				
+				jasperInfo2  = new HashMap<String, Object>();
+				jasperInfo2.put("curso","Nuevas Tecnologías");
+				jasperInfo2.put("duracion",8);
+				jasperInfo2.put("totalHoras",50);
 				jasperInfo2.put("promedioNumero",nota);
 				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
 				jasperLista2.add(jasperInfo2);
@@ -284,6 +302,19 @@ public class CConsolidadoNotas {
 		fAlumno.obtenerSelectItemsGrupo(nGrupo.listarGrupoXIdCurso(idCurso));
 		grupoDesactivado = false;
 		consultarXIdGrupoDesactivado = false;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String fechaHoy() {
+		java.util.Date fecha = new Date();
+		
+		String fechaString= "26 de Octubre del 2019";
+		
+		fechaString = fechaString.replaceAll("$dia", String.valueOf(fecha.getDay()))
+			 .replaceAll("$mes", String.valueOf(fecha.getMonth()))
+			 .replaceAll("$anio", String.valueOf(fecha.getYear()));
+		
+		return fechaString;
 	}
 
 	public FAlumno getfAlumno() {
