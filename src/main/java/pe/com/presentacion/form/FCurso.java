@@ -1,6 +1,7 @@
 package pe.com.presentacion.form;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class FCurso implements Serializable {
 
@@ -8,7 +9,28 @@ public class FCurso implements Serializable {
 	private Integer id;
 	private String codigo;
 	private String nombre;
+	private Integer duracion;
+	private Date fechaInicio;
+	private Date fechaTermino;
 	
+	public Integer getDuracion() {
+		return duracion;
+	}
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+	public Date getFechaTermino() {
+		return fechaTermino;
+	}
+	public void setFechaTermino(Date fechaTermino) {
+		this.fechaTermino = fechaTermino;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -29,7 +51,7 @@ public class FCurso implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "FCurso [id=" + id + ", codigo=" + codigo + ", descripcion=" + nombre + "]";
-	}
-	
+		return "FCurso [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
+				+ ", fechaInicio=" + fechaInicio + ", fechaTermino=" + fechaTermino + "]";
+	}	
 }

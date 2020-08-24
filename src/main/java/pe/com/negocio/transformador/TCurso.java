@@ -22,6 +22,9 @@ public class TCurso implements TransformadorEntityBO<BCurso, BOCurso> {
 			boCurso.setId(input.getId());
 			boCurso.setCodigo(input.getCodigo());
 			boCurso.setNombre(input.getNombre());
+			boCurso.setDuracion(input.getDuracion());
+			boCurso.setFechaInicio(input.getFechaInicio());
+			boCurso.setFechaTermino(input.getFechaTermino());
 		}
 		return boCurso;
 	}
@@ -43,6 +46,9 @@ public class TCurso implements TransformadorEntityBO<BCurso, BOCurso> {
 			bCurso.setId(input.getId());
 			bCurso.setCodigo(input.getCodigo());
 			bCurso.setNombre(input.getNombre());
+			bCurso.setDuracion(input.getDuracion());
+			bCurso.setFechaInicio(input.getFechaInicio());
+			bCurso.setFechaTermino(input.getFechaTermino());
 		}
 		return bCurso;
 	}

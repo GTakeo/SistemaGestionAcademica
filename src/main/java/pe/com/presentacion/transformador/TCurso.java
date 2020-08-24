@@ -20,6 +20,9 @@ public class TCurso implements TransformadorBOForm<BOCurso, FCurso> {
 			fCurso.setId(input.getId());
 			fCurso.setCodigo(input.getCodigo());
 			fCurso.setNombre(input.getNombre());
+			fCurso.setDuracion(input.getDuracion());
+			fCurso.setFechaInicio(input.getFechaInicio());
+			fCurso.setFechaTermino(input.getFechaTermino());
 		}
 		return fCurso;
 	}
@@ -41,6 +44,9 @@ public class TCurso implements TransformadorBOForm<BOCurso, FCurso> {
 			boCurso.setId(input.getId());
 			boCurso.setCodigo(input.getCodigo());
 			boCurso.setNombre(input.getNombre());
+			boCurso.setDuracion(input.getDuracion());
+			boCurso.setFechaInicio(input.getFechaInicio());
+			boCurso.setFechaTermino(input.getFechaTermino());
 		}
 		return boCurso;
 	}

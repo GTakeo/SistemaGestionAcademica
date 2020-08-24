@@ -17,7 +17,7 @@ public interface MCurso {
 
 	
 	@ResultMap("bCurso")
-	@Select("SELECT ID_CUR ,CUR_CODIGO ,CUR_NOMBRE FROM CURSO ORDER BY CUR_CODIGO ASC")
+	@Select("SELECT ID_CUR ,CUR_CODIGO ,CUR_NOMBRE ,CUR_DURACION ,CUR_FINICIO ,CUR_FTERMINO	 FROM CURSO ORDER BY CUR_CODIGO ASC")
 	public List<BCurso> listarCursos();
 
 	@Delete("DELETE FROM CURSO WHERE ID_CUR = #{id}")

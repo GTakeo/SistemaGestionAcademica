@@ -54,6 +54,25 @@
 							style="width:300px; text-align: center;">
 							<h:outputText value="#{Curso.nombre}" />
 						</p:column>
+						
+						<p:column headerText="#{i18n['min_mantenerCurso.duracion']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Curso.duracion}" />
+						</p:column>
+
+						<p:column headerText="#{i18n['min_mantenerCurso.fechaInicio']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Curso.fechaInicio}" >
+								<f:convertDateTime pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="#{i18n['min_mantenerCurso.fechaTermino']}"
+							style="width:300px; text-align: center;">
+							<h:outputText value="#{Curso.fechaTermino}" >
+								<f:convertDateTime pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</p:column>
 
 						<p:column headerText="#{i18n['SGA.opciones']}"
 							style="width:150px;">
@@ -83,7 +102,7 @@
 					<p:inputText id="txtCodigoCurso"
 						value="#{cMantenerCurso.fCurso.codigo}" required="true"
 						requiredMessage="#{i18n['min_mantenerAlumno.codigoRequerido']}"
-						size="52" maxlength="8" />
+						size="52" maxlength="20" />
 
 					<p:spacer width="10" />
 					<p:spacer width="10" />
@@ -100,6 +119,50 @@
 					<p:spacer width="10" />
 					<p:spacer width="10" />
 					<p:spacer width="10" />
+					
+					<p:outputLabel for="txtDuracionCurso" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.duracion']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDuracionCurso"
+						value="#{cMantenerCurso.fCurso.duracion}" required="true"
+						requiredMessage="#{i18n['min_mantenerCurso.duracionRequerida']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					
+					<p:outputLabel for="txtFechaInicioCurso" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.fechaInicio']}" />
+					<p:spacer width="10" />
+					<p:calendar id="txtFechaInicioCurso"
+						value="#{cMantenerCurso.fCurso.fechaInicio}" 
+						locale="de"
+						navigator="true" 
+						required="true"
+						maxdate="12/12/2021"
+						requiredMessage="#{i18n['min_mantenerCurso.fechaInicioRequerida']}"
+						size="52" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					
+					<p:outputLabel for="txtFechaTerminoCurso" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.fechaTermino']}" />
+					<p:spacer width="10" />
+					<p:calendar id="txtFechaTerminoCurso"
+						value="#{cMantenerCurso.fCurso.fechaTermino}" 
+						locale="de"
+						navigator="true" 
+						required="true"
+						maxdate="12/12/2021"
+						requiredMessage="#{i18n['min_mantenerCurso.fechaTerminoRequerida']}"
+						size="52" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					
+
 
 				</h:panelGrid>
 
