@@ -1,7 +1,9 @@
 package pe.com.presentacion.form;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FCurso implements Serializable {
 
@@ -12,7 +14,18 @@ public class FCurso implements Serializable {
 	private Integer duracion;
 	private Date fechaInicio;
 	private Date fechaTermino;
+	private List<FTema> listaTema;
 	
+	public FCurso() {
+		listaTema = new ArrayList<FTema>();
+	}
+	
+	public List<FTema> getListaTema() {
+		return listaTema;
+	}
+	public void setListaTema(List<FTema> listaTema) {
+		this.listaTema = listaTema;
+	}
 	public Integer getDuracion() {
 		return duracion;
 	}
@@ -49,9 +62,10 @@ public class FCurso implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	@Override
 	public String toString() {
 		return "FCurso [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
-				+ ", fechaInicio=" + fechaInicio + ", fechaTermino=" + fechaTermino + "]";
+				+ ", fechaInicio=" + fechaInicio + ", fechaTermino=" + fechaTermino + ", listaTema=" + listaTema + "]";
 	}	
 }

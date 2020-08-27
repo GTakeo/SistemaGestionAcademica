@@ -95,6 +95,10 @@
 			modal="true" resizable="false" draggable="false" showEffect="fade"
 			hideEffect="fade">
 			<h:form id="frmAgregarCurso">
+			
+				<p:fieldset legend="#{i18n['SGA.informacionGeneral']}"
+					style="width: 950px;">
+				<div align="center">
 				<h:panelGrid columns="3">
 					<p:outputLabel for="txtCodigoCurso" styleClass="tipoLetra"
 						value="#{i18n['min_mantenerCurso.codigo']}" />
@@ -165,6 +169,80 @@
 
 
 				</h:panelGrid>
+				</div>
+				</p:fieldset>
+				
+				
+				
+				
+				
+				
+				
+					<br />
+					<br />
+
+					
+					
+					
+					
+				<p:fieldset legend="#{i18n['SGA.informacionTema']}"
+					style="width: 950px">
+					
+					<br />
+					<p:commandButton id="btnAgregarTema" styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionAgregar']}"
+						actionListener="#{cMantenerCurso.iniciarAgregarTema()}"
+						update=":frmAgregarTema, :frmMantenerCursos:mensajes :frmAgregarCurso">
+						<p:resetInput target=":frmAgregarTema" />
+					</p:commandButton>
+
+					<br />
+					<br />
+					<div align="center">
+						<br />
+						<p:dataTable id="tblTema" widgetVar="wgvTema"
+							value="#{cMantenerCurso.fCurso.listaTema}" var="Tema"
+							currentPageReportTemplate="{currentPage} de {totalPages}"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport}
+							 {NextPageLink} {LastPageLink}"
+							filterEvent="enter" paginator="true" rows="2"
+							paginatorPosition="bottom"
+							emptyMessage="#{i18n['min_mantenerCurso.tablaTemaVacia']}">
+							<p:column headerText="N°" style="width:50px; text-align: center;">
+							#{cMantenerCurso.fCurso.listaTema.indexOf(Tema)+1}
+						</p:column>
+
+							<p:column headerText="#{i18n['min_mantenerCurso.nombreTema']}"
+								style="width:300px; text-align: center;">
+								<h:outputText value="#{Tema.nombre}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['min_mantenerCurso.duracionTema']}"
+								style="width:300px; text-align: center;">
+								<h:outputText value="#{Tema.duracion}" />
+							</p:column>
+
+							<p:column headerText="#{i18n['SGA.opciones']}"
+								style="width:150px;">
+								<div align="center">
+									<p:commandButton id="btnModificarTema" icon="ui-icon-pencil" />
+									<p:tooltip for="btnModificarTema"
+										value="#{i18n['SGA.opcionModificar']}" />
+									<p:commandButton id="btnEliminarTema" icon="ui-icon-trash" />
+									<p:tooltip for="btnEliminarTema"
+										value="#{i18n['SGA.opcionEliminar']}" />
+								</div>
+							</p:column>
+						</p:dataTable>
+					</div>
+
+
+				</p:fieldset>
+
+
+
+
+
 
 				<br />
 				<div align="center">
@@ -202,6 +280,56 @@
 				</div>
 			</h:form>
 		</p:confirmDialog>
+		
+		
+				<!-- DIÁLOGO Agregar Tema -->
+		<p:dialog header="#{i18n['min_mantenerCurso.agregarTema']}"
+			widgetVar="wgvAgregarTema" appendTo="@(body)" id="dlgAgregarTema"
+			modal="true" resizable="false" draggable="false" showEffect="fade"
+			hideEffect="fade">
+			<h:form id="frmAgregarTema">
+			
+				<h:panelGrid columns="3">
+					<p:outputLabel for="txtNombreTema" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.nombreTema']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtNombreTema"
+						value="#{cMantenerCurso.fTema.nombre}" required="true"
+						requiredMessage="#{i18n['min_mantenerAlumno.nombreTemaRequerido']}"
+						size="52" maxlength="20" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+
+					<p:outputLabel for="txtDuracionTema" styleClass="tipoLetra"
+						value="#{i18n['min_mantenerCurso.duracionTema']}" />
+					<p:spacer width="10" />
+					<p:inputText id="txtDuracionTema"
+						value="#{cMantenerCurso.fTema.duracion}" required="true"
+						requiredMessage="#{i18n['min_mantenerCurso.duracionTemaRequerida']}"
+						size="52" maxlength="50" />
+
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					<p:spacer width="10" />
+					
+				</h:panelGrid>				
+				
+				<br />
+				<div align="center">
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionGuardar']}"
+						actionListener="#{cMantenerCurso.agregarTema()}"
+						update=":frmMantenerCursos :frmMantenerCursos:mensajes :frmAgregarCurso :frmAgregarTema" />
+					<p:spacer width="10" />
+					<p:commandButton styleClass="tipoLetra"
+						value="#{i18n['SGA.opcionCancelar']}"
+						onclick="PF('wgvAgregarTema').hide()" immediate="true" />
+				</div>
+
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

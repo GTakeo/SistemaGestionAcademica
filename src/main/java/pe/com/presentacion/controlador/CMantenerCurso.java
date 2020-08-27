@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import pe.com.negocio.bo.BOCurso;
 import pe.com.negocio.servicio.NCurso;
 import pe.com.presentacion.form.FCurso;
+import pe.com.presentacion.form.FTema;
 import pe.com.util.Constantes;
 import pe.com.util.PaginaUtil;
 import pe.com.util.excepcion.BusinessLogicException;
@@ -29,6 +30,8 @@ public class CMantenerCurso {
 
 	List<FCurso> listaCurso;
 	FCurso fCurso;
+	FTema fTema;
+	
 	@PostConstruct
 	public void init() {
 		inicializarObjetos();
@@ -37,7 +40,6 @@ public class CMantenerCurso {
 	public void inicializarObjetos() {
 		try {
 			listaCurso = transformar.toForm(nCurso.listarCursos());
-			fCurso = new FCurso();
 		} catch (DataAccessException e) {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, e.getMessage());
 		} catch (BusinessLogicException e) {
@@ -48,13 +50,14 @@ public class CMantenerCurso {
 	}
 	
 	public void iniciarAgregarCurso(){
-		fCurso = new FCurso();
+		fCurso = new FCurso();		
 		PaginaUtil.ejecutar("PF('wgvAgregarCurso').show()");
 	}
 
 	public void agregarCurso(){
 		try {
 			nCurso.agregarCurso(transformar.toBO(fCurso));
+			System.out.println(fCurso);
 			PaginaUtil.ejecutar("PF('wgvAgregarCurso').hide()");
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Curso agregado exitosamente");
 			listaCurso = transformar.toForm(nCurso.listarCursos());
@@ -87,7 +90,18 @@ public class CMantenerCurso {
 		}
 	}
 	
-
+	public void iniciarAgregarTema() {
+		fTema = new FTema();
+		PaginaUtil.ejecutar("PF('wgvAgregarTema').show()");
+	}
+	
+	public void agregarTema() {
+		fCurso.getListaTema().add(fTema);
+		fTema = null;
+		PaginaUtil.ejecutar("PF('wgvAgregarTema').hide()");
+		PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Tema agregado exitosamente");
+	}
+	
 	public List<FCurso> getListaCurso() {
 		return listaCurso;
 	}
@@ -102,6 +116,14 @@ public class CMantenerCurso {
 
 	public void setfCurso(FCurso fCurso) {
 		this.fCurso = fCurso;
+	}
+
+	public FTema getfTema() {
+		return fTema;
+	}
+
+	public void setfTema(FTema fTema) {
+		this.fTema = fTema;
 	}
 		
 }
