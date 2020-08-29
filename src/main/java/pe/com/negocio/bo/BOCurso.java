@@ -1,6 +1,8 @@
 package pe.com.negocio.bo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BOCurso {
 
@@ -10,6 +12,11 @@ public class BOCurso {
 	private Integer duracion;
 	private Date fechaInicio;
 	private Date fechaTermino;
+	private List<BOTema> listaTema;
+	
+	public BOCurso() {
+		listaTema = new ArrayList<BOTema>();
+	}
 	
 	public Integer getDuracion() {
 		return duracion;
@@ -47,9 +54,19 @@ public class BOCurso {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public List<BOTema> getListaTema() {
+		return listaTema;
+	}
+
+	public void setListaTema(List<BOTema> listaTema) {
+		this.listaTema = listaTema;
+	}
+
 	@Override
 	public String toString() {
 		return "BOCurso [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", duracion=" + duracion
-				+ ", fechaInicio=" + fechaInicio + ", fechaTermino=" + fechaTermino + "]";
-	}	
+				+ ", fechaInicio=" + fechaInicio + ", fechaTermino=" + fechaTermino + ", listaTema=" + listaTema + "]";
+	}
+
 }

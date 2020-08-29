@@ -57,7 +57,6 @@ public class CMantenerCurso {
 	public void agregarCurso(){
 		try {
 			nCurso.agregarCurso(transformar.toBO(fCurso));
-			System.out.println(fCurso);
 			PaginaUtil.ejecutar("PF('wgvAgregarCurso').hide()");
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Curso agregado exitosamente");
 			listaCurso = transformar.toForm(nCurso.listarCursos());

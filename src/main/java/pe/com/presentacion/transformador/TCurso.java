@@ -3,15 +3,21 @@ package pe.com.presentacion.transformador;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import pe.com.negocio.bo.BOCurso;
+import pe.com.negocio.bo.BOTema;
 import pe.com.presentacion.form.FCurso;
+import pe.com.presentacion.form.FTema;
 import pe.com.util.transformador.TransformadorBOForm;
 
 @Component("tCursoBOForm")
 public class TCurso implements TransformadorBOForm<BOCurso, FCurso> {
-	
+	@Autowired
+	@Qualifier("tTemaBOForm")
+	TransformadorBOForm<BOTema, FTema> transformar;
 	@Override
 	public FCurso toForm(BOCurso input) {
 		FCurso fCurso = null;
@@ -47,6 +53,9 @@ public class TCurso implements TransformadorBOForm<BOCurso, FCurso> {
 			boCurso.setDuracion(input.getDuracion());
 			boCurso.setFechaInicio(input.getFechaInicio());
 			boCurso.setFechaTermino(input.getFechaTermino());
+			for(FTema fTema: input.getListaTema()) {
+				boCurso.getListaTema().add(transformar.toBO(fTema));
+			}
 		}
 		return boCurso;
 	}

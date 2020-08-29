@@ -9,8 +9,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.com.negocio.bo.BOCurso;
-import pe.com.negocio.bo.BOGrupo;
+import pe.com.negocio.bo.BOTema;
 import pe.com.negocio.servicio.NCurso;
+import pe.com.negocio.servicio.NTema;
 import pe.com.persistencia.entity.BCurso;
 import pe.com.persistencia.mapper.MCurso;
 import pe.com.util.Constantes;
@@ -23,6 +24,9 @@ import pe.com.util.transformador.TransformadorEntityBO;
 public class NCursoImpl implements NCurso {
 	@Autowired
 	MCurso mCurso;
+	
+	@Autowired
+	NTema nTema;
 
 	@Autowired
 	@Qualifier("tCursoEntityBO")
@@ -55,7 +59,16 @@ public class NCursoImpl implements NCurso {
 	@Override
 	public void agregarCurso(BOCurso boCurso) {
 		try {
+			Integer idCurso;
 			mCurso.agregarCurso(transformar.toEntity(boCurso));
+			
+			idCurso=mCurso.obtenerUltimoId();
+			
+			for(BOTema boTema: boCurso.getListaTema()) {
+				boTema.setIdCurso(idCurso);
+				nTema.agregarTema(boTema);
+			}
+			
 		} catch (DataAccessException dae) {
 			throw dae;
 		} catch (Exception e) {

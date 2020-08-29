@@ -33,6 +33,9 @@ public interface MCurso {
 	@Select("SELECT CUR.CUR_NOMBRE FROM GRUPO GRU, CURSO CUR WHERE GRU.FK_GRU_CUR=CUR.ID_CUR AND GRU.GRU_CODIGO = #{codGrupo} ")
 	public String obtenerNombreCursoXCodGrupo(@Param("codGrupo")String codGrupo);
 
+	@Select("SELECT MAX(ID_CUR) FROM CURSO")
+	public Integer obtenerUltimoId();
+
 }
 
 
