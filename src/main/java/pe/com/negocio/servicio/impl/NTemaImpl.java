@@ -39,4 +39,17 @@ public class NTemaImpl implements NTema {
 		
 	}
 
+
+	@Override
+	public void eliminarTemaXIdCurso(Integer idCurso) {
+		try {
+			mTema.eliminarTemaXIdCurso(idCurso);
+			
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+	}
+
 }

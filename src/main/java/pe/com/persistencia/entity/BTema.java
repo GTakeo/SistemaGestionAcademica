@@ -1,6 +1,7 @@
 package pe.com.persistencia.entity;
 
 public class BTema {
+	
 	private Integer id;
 	private Integer idCurso;
 	private String nombre;

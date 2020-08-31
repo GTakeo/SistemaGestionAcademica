@@ -76,7 +76,7 @@ public class CMantenerCurso {
 
 	public void eliminarCurso() {
 		try {
-			nCurso.eleminarCurso(fCurso.getId());
+			nCurso.eliminarCurso(fCurso.getId());
 			PaginaUtil.ejecutar("PF('wgvEliminarCurso').hide()");
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Curso eliminado exitosamente");
 			listaCurso = transformar.toForm(nCurso.listarCursos());

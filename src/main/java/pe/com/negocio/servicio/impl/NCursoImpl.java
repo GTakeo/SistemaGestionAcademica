@@ -14,6 +14,7 @@ import pe.com.negocio.servicio.NCurso;
 import pe.com.negocio.servicio.NTema;
 import pe.com.persistencia.entity.BCurso;
 import pe.com.persistencia.mapper.MCurso;
+import pe.com.persistencia.mapper.MTema;
 import pe.com.util.Constantes;
 import pe.com.util.excepcion.BusinessLogicException;
 import pe.com.util.excepcion.DataAccessException;
@@ -46,8 +47,9 @@ public class NCursoImpl implements NCurso {
 	}
 
 	@Override
-	public void eleminarCurso(Integer id) {
+	public void eliminarCurso(Integer id) {
 		try {
+			nTema.eliminarTemaXIdCurso(id);
 			mCurso.eliminarCurso(id);
 		} catch (DataAccessException dae) {
 			throw dae;

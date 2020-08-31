@@ -17,7 +17,7 @@ public class TTema implements TransformadorEntityBO<BTema, BOTema>{
 		BOTema boTema = null;
 		if(input != null) {
 			boTema = new BOTema();
-			
+			boTema.setId(input.getId());
 			boTema.setIdCurso(input.getIdCurso());
 			boTema.setDuracion(input.getDuracion());
 			boTema.setNombre(input.getNombre());
@@ -39,6 +39,7 @@ public class TTema implements TransformadorEntityBO<BTema, BOTema>{
 		BTema bTema = null;
 		if(input != null) {
 			bTema = new BTema();
+			bTema.setId(input.getId());
 			bTema.setIdCurso(input.getIdCurso());
 			bTema.setDuracion(input.getDuracion());
 			bTema.setNombre(input.getNombre());

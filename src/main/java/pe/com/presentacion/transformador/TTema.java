@@ -19,6 +19,8 @@ public class TTema implements TransformadorBOForm<BOTema, FTema> {
 		FTema fTema = null;
 		if (input != null) {
 			fTema = new FTema();
+			fTema.setId(input.getId());
+			fTema.setIdCurso(input.getIdCurso());
 			fTema.setNombre(input.getNombre());
 			fTema.setDuracion(input.getDuracion());
 		}
@@ -39,6 +41,8 @@ public class TTema implements TransformadorBOForm<BOTema, FTema> {
 		BOTema boTema = null;
 		if (input != null) {
 			boTema = new BOTema();
+			boTema.setId(input.getId());
+			boTema.setIdCurso(input.getIdCurso());
 			boTema.setNombre(input.getNombre());
 			boTema.setDuracion(input.getDuracion());
 		}

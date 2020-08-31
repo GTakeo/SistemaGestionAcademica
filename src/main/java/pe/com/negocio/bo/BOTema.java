@@ -1,10 +1,18 @@
 package pe.com.negocio.bo;
 
 public class BOTema {
+	private Integer id;
+	private Integer idCurso;
 	private String nombre;
 	private Integer duracion;
-	private Integer idCurso;
+
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -25,6 +33,6 @@ public class BOTema {
 	}
 	@Override
 	public String toString() {
-		return "BOTema [nombre=" + nombre + ", duracion=" + duracion + ", idCurso=" + idCurso + "]";
+		return "BOTema [id=" + id + ", idCurso=" + idCurso + ", nombre=" + nombre + ", duracion=" + duracion + "]";
 	}
 }
