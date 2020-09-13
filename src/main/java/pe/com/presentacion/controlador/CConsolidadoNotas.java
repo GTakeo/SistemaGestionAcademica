@@ -253,6 +253,7 @@ public class CConsolidadoNotas {
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");
 		} catch (Exception e) {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " + e.getMessage());
+			System.out.println(e);
 		}
 
 	}

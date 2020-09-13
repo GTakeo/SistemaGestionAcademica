@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import javax.faces.model.SelectItem;
 import javax.mail.MessagingException;
@@ -100,11 +101,11 @@ public class FAlumno implements Serializable {
         PdfStamper stp = PdfStamper.createSignature(reader, fout, '?');
         PdfSignatureAppearance sap = stp.getSignatureAppearance();
         sap.setCrypto(key, chain, null, PdfSignatureAppearance.WINCER_SIGNED);
-        sap.setReason("Firma PKCS12");
-        sap.setLocation("Imaginanet");
-        
+        sap.setReason("it give validity of study certificate");
+        sap.setLocation("CINFO");
+               
         // Añade la firma visible. Podemos comentarla para que no sea visible.
-        //sap.setVisibleSignature(new Rectangle(100,100,200,200),1,null);
+        sap.setVisibleSignature(new Rectangle(50,50,300,150),1,null);
         stp.close();
         
         
@@ -141,7 +142,7 @@ public class FAlumno implements Serializable {
         correo = listaAlumnoNota.get(0).get("correo").toString();
         asunto = properties.getString("correoCertificado_asunto").replace("$nombreCurso",nombreCurso );
         cuerpo = "<font face='serif' size=4 >Estimado(a) Alumno(a) "+ nombreAlumno+",<br/><br/>"+
-        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para informarle la desaprobación del curso <i><b>"+ nombreCurso +"</b></i> y enviarle su constancia de estudio(Adjunto).<br/>"+
+        		 "Reciba un cordial saludo por parte del CINFO. El presente es correo es para informarle la desaprobación del curso <i><b>"+ nombreCurso +"</b></i> .<br/>"+
         		 "Lamentamos que haya obtenido este resultado.Lo invitamos a volver a aceptar el reto y lleve el curso nuevamente con nosotros.<br/>"+
         		 "Sin otro tema en particular, nos despedimos coordinalmente.<br/><br/>"+
         		 "Saludos<br/><br/>"+

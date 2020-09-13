@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" id="fview">
+
+	<title>CINFO</title>
+
+	<link rel="icon" type="image/png" href="recursos/img/icono.png"/>
+
+	<ui:debug />
+	<f:metadata>
+		<ui:insert name="metadata" />
+	</f:metadata>
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<h:outputScript library="primefaces" name="jquery/jquery.js"
+			target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js"
+			target="head" />
+	</h:head>
+	<style>
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.tipoLetra {
+	font-weight: bold;
+}
+
+footer {
+	background-color: black;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	color: white;
+}
+</style>
+	<h:body>
+
+		<p:ajaxStatus onstart="statusDialog.show();"
+			onsuccess="statusDialog.hide();" />
+
+		<p:layout fullPage="true" resizeTitle="resize">
+
+			<p:layoutUnit position="center" style="font-size: 12px">
+				<ui:include src="/secciones/menu_validacion.xhtml" />
+				<ui:insert name="content" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="25" style="font-size: 11px">
+				<ui:include src="/secciones/piePagina.xhtml" />
+			</p:layoutUnit>
+		</p:layout>
+
+		<p:dialog modal="true" widgetVar="statusDialog" showHeader="false"
+			draggable="false" closable="false" resizable="false" visible="false"
+			position="center" maximizable="false" minimizable="false">
+		</p:dialog>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<center>
+				<p:outputLabel value="Cargando.." style="font-size:12px" />
+				<br />
+			</center>
+			<img src="#{request.contextPath}/recursos/img/cargando.gif" />
+		</p:dialog>
+	</h:body>
+</f:view>
+</html>

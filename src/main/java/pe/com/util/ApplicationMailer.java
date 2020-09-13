@@ -29,7 +29,7 @@ public class ApplicationMailer {
 			MimeMessage message = mailSender.createMimeMessage();
 
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setFrom("gustavo.dlcX@gmail.com");
+			helper.setFrom("cinfo.unmsm.certificado@gmail.com");
 			helper.setTo(to);
 			helper.setSubject(subject);
 			helper.setText("", body);
@@ -42,7 +42,7 @@ public class ApplicationMailer {
 			mailSender.send(message);
 
 		} catch (MailException e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}
 
 	}
@@ -52,8 +52,8 @@ public class ApplicationMailer {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 
-		mailSender.setUsername("gustavo.dlcX@gmail.com");
-		mailSender.setPassword("cdggvqpinjakyymf");
+		mailSender.setUsername("cinfo.unmsm.certificado@gmail.com");
+		mailSender.setPassword("iekmifzojnvsdhbo");
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
