@@ -163,18 +163,21 @@ public class FAlumno implements Serializable {
 	}
 
 
-	/*
-	 * Funcionalidad no utilizada por ahora
-	 */
-	public void validarPDF(String nombreArchivo) throws IOException{
-		 Random rnd = new Random();
+	public int validarPDF(InputStream file) throws IOException{
+		
+		Random rnd = new Random();
          KeyStore kall = PdfPKCS7.loadCacertsKeyStore();
-         String ruta = "";
-         PdfReader reader = new PdfReader(ruta+nombreArchivo);
+         String ruta="", nombreArchivo="Prueba";
+         
+		 PdfReader reader = new PdfReader(file);
          AcroFields af = reader.getAcroFields();
          
-          ArrayList names = af.getSignatureNames();
+         ArrayList names = af.getSignatureNames();
+          
+         boolean tieneFirma= false;
+         
          for (int k = 0; k < names.size(); ++k) {
+        	tieneFirma = true;
             String name = (String)names.get(k);
             int random = rnd.nextInt();
             FileOutputStream out = new FileOutputStream(ruta+"revision_"+nombreArchivo);
@@ -191,16 +194,18 @@ public class FAlumno implements Serializable {
             Calendar cal = pk.getSignDate();
             Certificate pkc[] = pk.getCertificates();
             Object fails[] = PdfPKCS7.verifyCertificates(pkc, kall, null, cal);
-            if (fails == null) {
-            	System.out.println("Firma válida");
-                System.out.println(pk.getSignName());
-            }
-            else {
-                System.out.println("Firma no válida");
-            }
             File f = new File("revision_" + random + "_" + af.getRevision(name) + ".pdf");
             f.delete();
+            if (fails == null) {
+            	System.out.println(pk.getSignName());
+            	return 0;
+            }
+            else {
+            	return 1;
+            }
+
          }
+        return 2;
 	}
 	
 	public Integer getId() {
