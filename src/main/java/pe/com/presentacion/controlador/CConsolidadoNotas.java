@@ -16,13 +16,16 @@ import pe.com.negocio.bo.BOAlumno;
 import pe.com.negocio.bo.BOGrupo;
 import pe.com.negocio.bo.BOModulo;
 import pe.com.negocio.bo.BOPrograma;
+import pe.com.negocio.bo.BOTema;
 import pe.com.negocio.servicio.NAlumno;
 import pe.com.negocio.servicio.NCurso;
 import pe.com.negocio.servicio.NGrupo;
 import pe.com.negocio.servicio.NPrograma;
+import pe.com.negocio.servicio.NTema;
 import pe.com.presentacion.form.FAlumno;
 import pe.com.presentacion.form.FModulo;
 import pe.com.presentacion.form.FPrograma;
+import pe.com.presentacion.form.FTema;
 import pe.com.util.Constantes;
 import pe.com.util.PaginaUtil;
 import pe.com.util.excepcion.BusinessLogicException;
@@ -43,6 +46,9 @@ public class CConsolidadoNotas {
 
 	@Autowired
 	NGrupo nGrupo;
+	
+	@Autowired
+	NTema nTema;
 
 	@Autowired
 	@Qualifier("tAlumnoBOForm")
@@ -55,6 +61,10 @@ public class CConsolidadoNotas {
 	@Autowired
 	@Qualifier("tModuloBOForm")
 	TransformadorBOForm<BOModulo, FModulo> transfMod;
+	
+	@Autowired
+	@Qualifier("tTemaBOForm")
+	TransformadorBOForm<BOTema, FTema> transfTem;
 
 	FAlumno fAlumno;
 	Integer idPrograma;
@@ -171,7 +181,7 @@ public class CConsolidadoNotas {
 			}else {
 				nombreCurso = fAlumno.obtenerNombreCursoXIdCurso(idCurso);
 			}
-			
+			List<FTema> listaTema = null;
 			for (Map<String, Object> map : listaAlumnoNota) {
 
 				nota = Integer.parseInt(map.get("MTR_NOTA").toString());
@@ -194,6 +204,13 @@ public class CConsolidadoNotas {
 				jasperInfo.put("curso", nombreCurso);
 
 				jasperLista.add(jasperInfo);
+				
+				
+				
+				
+				listaTema=transfTem.toForm(nTema.listarTemaXIdGrupo(idGrupo));
+				
+				
 				
 				
 				jasperLista2 = new ArrayList<Map<String, Object>>();
@@ -239,17 +256,24 @@ public class CConsolidadoNotas {
 				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
 				jasperLista2.add(jasperInfo2);
 				
+				
+				
+				
+				
 				if(nota>=notaAprobatoria) {
 					fAlumno.exportarPDF(jasperLista,jasperLista2, apellido + "_" + nombre + "_" + nombreCurso);
 				}else {
 					fAlumno.enviarConstancia(jasperLista,apellido + "_" + nombre + "_" + nombreCurso);
 				}
 				
-
+				
 			}
+			
+			System.out.println(listaTema);
 
 			// fAlumno.validarPDF();
 
+			
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");
 		} catch (Exception e) {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " + e.getMessage());

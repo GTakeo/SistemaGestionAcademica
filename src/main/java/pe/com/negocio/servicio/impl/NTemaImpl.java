@@ -1,11 +1,14 @@
 package pe.com.negocio.servicio.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import pe.com.negocio.bo.BOCurso;
 import pe.com.negocio.bo.BOTema;
 import pe.com.negocio.servicio.NTema;
 import pe.com.persistencia.entity.BTema;
@@ -50,6 +53,20 @@ public class NTemaImpl implements NTema {
 		} catch (Exception e) {
 			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
 		}
+	}
+
+
+	@Override
+	public List<BOTema> listarTemaXIdGrupo(Integer idGrupo) {
+		List<BOTema> listaTema = null;
+		try {
+			listaTema = transformar.toBO(mTema.listarTemaXIdGrupo(idGrupo));
+		} catch (DataAccessException dae) {
+			throw dae;
+		} catch (Exception e) {
+			throw new BusinessLogicException(Constantes.ERROR_LOGICA_NEGOCIO_OTRO, e);
+		}
+		return listaTema;
 	}
 
 }

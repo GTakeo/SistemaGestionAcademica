@@ -3,7 +3,6 @@ package pe.com.negocio.servicio;
 import java.util.List;
 
 import pe.com.negocio.bo.BOCurso;
-import pe.com.negocio.bo.BOGrupo;
 
 public interface NCurso {
 
