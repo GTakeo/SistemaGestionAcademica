@@ -205,61 +205,24 @@ public class CConsolidadoNotas {
 
 				jasperLista.add(jasperInfo);
 				
-				
-				
-				
 				listaTema=transfTem.toForm(nTema.listarTemaXIdGrupo(idGrupo));
 				
-				
-				
+				int totalHoras = calcularTotalHoras(listaTema);
 				
 				jasperLista2 = new ArrayList<Map<String, Object>>();
 				
-				jasperInfo2  = new HashMap<String, Object>();
-				jasperInfo2.put("curso","Microsoft Windows");
-				jasperInfo2.put("duracion",8);
-				jasperInfo2.put("totalHoras",50);
-				jasperInfo2.put("promedioNumero",nota);
-				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
-				
-				jasperLista2.add(jasperInfo2);
-				
-				jasperInfo2  = new HashMap<String, Object>();
-				jasperInfo2.put("curso","Microsoft Word");
-				jasperInfo2.put("duracion",12);
-				jasperInfo2.put("totalHoras",50);
-				jasperInfo2.put("promedioNumero",nota);
-				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
-				jasperLista2.add(jasperInfo2);
-				
-				jasperInfo2  = new HashMap<String, Object>();
-				jasperInfo2.put("curso","Microsoft Excel");
-				jasperInfo2.put("duracion",14);
-				jasperInfo2.put("totalHoras",50);
-				jasperInfo2.put("promedioNumero",nota);
-				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
-				jasperLista2.add(jasperInfo2);
-				
-				jasperInfo2  = new HashMap<String, Object>();
-				jasperInfo2.put("curso","Microsoft Power Point");
-				jasperInfo2.put("duracion",8);
-				jasperInfo2.put("totalHoras",50);
-				jasperInfo2.put("promedioNumero",nota);
-				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
-				jasperLista2.add(jasperInfo2);
-				
-				jasperInfo2  = new HashMap<String, Object>();
-				jasperInfo2.put("curso","Nuevas Tecnologías");
-				jasperInfo2.put("duracion",8);
-				jasperInfo2.put("totalHoras",50);
-				jasperInfo2.put("promedioNumero",nota);
-				jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
-				jasperLista2.add(jasperInfo2);
-				
-				
-				
-				
-				
+				for(FTema fTema :listaTema) {
+					jasperInfo2  = new HashMap<String, Object>();
+					
+					jasperInfo2.put("curso",fTema.getNombre());
+					jasperInfo2.put("duracion",fTema.getDuracion());
+					jasperInfo2.put("totalHoras",totalHoras);
+					jasperInfo2.put("promedioNumero",nota);
+					jasperInfo2.put("promedioTexto",obtenerNombreNota(nota));
+					
+					jasperLista2.add(jasperInfo2);
+				}
+					
 				if(nota>=notaAprobatoria) {
 					fAlumno.exportarPDF(jasperLista,jasperLista2, apellido + "_" + nombre + "_" + nombreCurso);
 				}else {
@@ -268,12 +231,7 @@ public class CConsolidadoNotas {
 				
 				
 			}
-			
-			System.out.println(listaTema);
-
-			// fAlumno.validarPDF();
-
-			
+						
 			PaginaUtil.mensajeJSF(Constantes.INFORMACION, "Se registró con exito las notas de los alumnos");
 		} catch (Exception e) {
 			PaginaUtil.mensajeJSF(Constantes.ERROR, "Ocurrió un error: " + e.getMessage());
@@ -333,13 +291,44 @@ public class CConsolidadoNotas {
 	public String fechaHoy() {
 		java.util.Date fecha = new Date();
 		
-		String fechaString= "26 de Octubre del 2019";
+		String fechaString= "$dia de $mes del $anio";
 		
-		fechaString = fechaString.replaceAll("$dia", String.valueOf(fecha.getDay()))
-			 .replaceAll("$mes", String.valueOf(fecha.getMonth()))
-			 .replaceAll("$anio", String.valueOf(fecha.getYear()));
+		fechaString = fechaString.replace("$dia", String.valueOf(fecha.getDate()))
+			 .replace("$mes", valorMes(fecha.getMonth()+1))
+			 .replace("$anio", String.valueOf(fecha.getYear()+1900));
 		
 		return fechaString;
+	}
+	
+	private CharSequence valorMes(int numeroMes) {
+		String nombreMes = "";
+		
+		switch(numeroMes) {
+			case 1 : nombreMes = "Enero";break;
+			case 2 : nombreMes = "Febrero";break;
+			case 3 : nombreMes = "Marzo";break;
+			case 4 : nombreMes = "Abril";break;
+			case 5 : nombreMes = "Mayo";break;
+			case 6 : nombreMes = "Junio";break;
+			case 7 : nombreMes = "Julio";break;
+			case 8 : nombreMes = "Agosto";break;
+			case 9 : nombreMes = "Septiembre";break;
+			case 10 : nombreMes = "Octubre";break;
+			case 11 : nombreMes = "Noviembre";break;
+			case 12 : nombreMes = "Diciembre";break;
+		}
+		
+		return nombreMes;
+	}
+
+	private int calcularTotalHoras(List<FTema> listaTema) {
+		int totalHoras = 0;
+		
+		for(FTema fTema:listaTema) {
+			totalHoras += fTema.getDuracion() ; 
+		}
+		
+		return totalHoras;
 	}
 
 	public FAlumno getfAlumno() {
