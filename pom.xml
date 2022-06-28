@@ -24,7 +24,7 @@
 		<junit.version>4.11</junit.version>
 		<joda.time.version>2.9.1</joda.time.version>
 		<log4j.version>1.2.17</log4j.version>
-		<apache.poi.version>3.14</apache.poi.version>
+		<apache.poi.version>4.1.1</apache.poi.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jasper.reports.version>6.3.0</jasper.reports.version>
 		<jasper.fonts.version>5.6.1</jasper.fonts.version>
